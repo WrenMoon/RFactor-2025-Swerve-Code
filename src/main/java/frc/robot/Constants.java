@@ -5,8 +5,8 @@ import swervelib.math.Matter;
 import edu.wpi.first.math.util.Units;
 
 public class Constants {
-    public static final double ROBOT_MASS = 56;
-    public static final Matter CHASSIS    = new Matter(new Translation3d(0.1, 0, Units.inchesToMeters(2)), ROBOT_MASS);
+    public static final double ROBOT_MASS = 70;
+    public static final Matter CHASSIS    = new Matter(new Translation3d(-0.2, 0, Units.inchesToMeters(2)), ROBOT_MASS);
     public static final double LOOP_TIME  = 0.13; //s, 20ms + 110ms sprk max velocity lag
     public static final boolean smartEnable = false;
     public static final double ControllerDeadband = 0.05;

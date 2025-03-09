@@ -33,12 +33,12 @@ public class RobotContainer {
 
   public RobotContainer() {
 
-    NamedCommands.registerCommand("intakeCmd", new intakeCmd(intake, loader, 0.8, 0.4));
-    NamedCommands.registerCommand("shootCmd", new shootCmd(shooter, loader, true, 1));
-    NamedCommands.registerCommand("Note3Ang", new armPID(arm, 0.057, false));
-    NamedCommands.registerCommand("resetArm", new armPID(arm, 0, false));
-    NamedCommands.registerCommand("iiylsd", new armPID(arm, 0.1, false));
-    NamedCommands.registerCommand("ArmIntake", new armPID(arm, Constants.Arm.MinPose, true));
+    // NamedCommands.registerCommand("intakeCmd", new intakeCmd(intake, loader, 0.8, 0.4));
+    // NamedCommands.registerCommand("shootCmd", new shootCmd(shooter, loader, true, 1));
+    // NamedCommands.registerCommand("Note3Ang", new armPID(arm, 0.057, false));
+    // NamedCommands.registerCommand("resetArm", new armPID(arm, 0, false));
+    // NamedCommands.registerCommand("iiylsd", new armPID(arm, 0.1, false));
+    // NamedCommands.registerCommand("ArmIntake", new armPID(arm, Constants.Arm.MinPose, true));
 
     configureBindings();
 
@@ -47,28 +47,28 @@ public class RobotContainer {
         () -> -MathUtil.applyDeadband(WakakeController.getRawAxis(0), Constants.ControllerDeadband),
         () -> getAsInt(WakakeController.getRawButton(5)) - getAsInt(WakakeController.getRawButton(6)), false, true);
 
-    Command climb = new climberCmd(climber,
-        () -> -MathUtil.applyDeadband(MarkRoberController.getLeftY(), Constants.ControllerDeadband),
-        () -> -MathUtil.applyDeadband(MarkRoberController.getRightY(), Constants.ControllerDeadband));
+    // Command climb = new climberCmd(climber,
+    //     () -> -MathUtil.applyDeadband(MarkRoberController.getLeftY(), Constants.ControllerDeadband),
+    //     () -> -MathUtil.applyDeadband(MarkRoberController.getRightY(), Constants.ControllerDeadband));
 
-    climber.setDefaultCommand(climb);
+    // climber.setDefaultCommand(climb);
     swerve.setDefaultCommand(driveSwerve);
 
   }
 
   private void configureBindings() {
 
-    new JoystickButton(WakakeController, 3).whileTrue(Commands.runOnce(swerve::zeroGyro));
-    new JoystickButton(WakakeController, 8).whileTrue(new intakeCmd(intake, loader, 1, 0.7));
-    new JoystickButton(WakakeController, 7).whileTrue(new intakeCmd(intake, loader, -1, 0));
-    new JoystickButton(WakakeController, 11).whileTrue(new NoteAlign(swerve));
-    new JoystickButton(WakakeController, 2).whileTrue(new SpeakerAlign(swerve));
+    // new JoystickButton(WakakeController, 3).whileTrue(Commands.runOnce(swerve::zeroGyro));
+    // new JoystickButton(WakakeController, 8).whileTrue(new intakeCmd(intake, loader, 1, 0.7));
+    // new JoystickButton(WakakeController, 7).whileTrue(new intakeCmd(intake, loader, -1, 0));
+    // new JoystickButton(WakakeController, 11).whileTrue(new NoteAlign(swerve));
+    // new JoystickButton(WakakeController, 2).whileTrue(new SpeakerAlign(swerve));
 
-    MarkRoberController.R2().whileTrue(new armPID(arm, Constants.Arm.MaxPose, true));
-    MarkRoberController.L2().onTrue(new armPID(arm, Constants.Arm.MinPose, true));
-    MarkRoberController.cross().whileTrue(new shootCmd(shooter, loader, false, 1));
-    MarkRoberController.R1().whileTrue(new intakeCmd(intake, loader, 0, 0.8));
-    MarkRoberController.triangle().whileTrue(new shootCmd(shooter, loader, true, 1));
+    // MarkRoberController.R2().whileTrue(new armPID(arm, Constants.Arm.MaxPose, true));
+    // MarkRoberController.L2().onTrue(new armPID(arm, Constants.Arm.MinPose, true));
+    // MarkRoberController.cross().whileTrue(new shootCmd(shooter, loader, false, 1));
+    // MarkRoberController.R1().whileTrue(new intakeCmd(intake, loader, 0, 0.8));
+    // MarkRoberController.triangle().whileTrue(new shootCmd(shooter, loader, true, 1));
 
   }
 
