@@ -22,14 +22,14 @@ public class RobotContainer {
 
   private final SwerveSubsystem swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
       "JsonConstants"));
-  private final armSubystem arm = new armSubystem();
-  private final shooterSubsystem shooter = new shooterSubsystem();
-  private final loaderSubsystem loader = new loaderSubsystem();
-  private final intakeSubsystem intake = new intakeSubsystem();
-  private final climberSubsystem climber = new climberSubsystem();
+  // private final armSubystem arm = new armSubystem();
+  // private final shooterSubsystem shooter = new shooterSubsystem();
+  // private final loaderSubsystem loader = new loaderSubsystem();
+  // private final intakeSubsystem intake = new intakeSubsystem();
+  // private final climberSubsystem climber = new climberSubsystem();
   final Joystick WakakeController = new Joystick(0);
-  final CommandPS5Controller MarkRoberController = new CommandPS5Controller(1);
-  final CommandPS5Controller driveController2 = new CommandPS5Controller(0);
+  // final CommandPS5Controller MarkRoberController = new CommandPS5Controller(1);
+  // final CommandPS5Controller driveController2 = new CommandPS5Controller(0);
 
   public RobotContainer() {
 
