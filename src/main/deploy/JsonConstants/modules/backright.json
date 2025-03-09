@@ -19,13 +19,10 @@
     "angle": true,
     "drive": true
   },
-  "conversionFactor": {
-    "angle": 16.8,
-    "drive": 0.047286787200699704
-  },
+
   "encoder": {
     "type": "cancoder",
-    "id": 12,
+    "id": 17,
     "canbus": null
   },
   "absoluteEncoderInverted": false
