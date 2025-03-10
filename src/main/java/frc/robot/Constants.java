@@ -61,10 +61,10 @@ public class Constants {
     public static double loaderSpeed = 1;
   }
 
-  public static class Climber {
-    public static final int climberLeft = 22;
+  public static class Elevator {
+    public static final int elevatorLeft = 10;
     public static final boolean leftInvert = false;
-    public static final int climberRight = 23;
+    public static final int elevatorRight = 9;
     public static final boolean rightInvert = false;
     public static final double maxPose = 2600;
     public static final double minPose = 0;

@@ -26,8 +26,9 @@ public class RobotContainer {
   // private final shooterSubsystem shooter = new shooterSubsystem();
   // private final loaderSubsystem loader = new loaderSubsystem();
   // private final intakeSubsystem intake = new intakeSubsystem();
-  // private final climberSubsystem climber = new climberSubsystem();
-  final Joystick WakakeController = new Joystick(0);
+  private final elevatorSubsystem elevator = new elevatorSubsystem();
+  final Joystick Controller1 = new Joystick(0);
+  final Joystick Controller2 = new Joystick(1);
   // final CommandPS5Controller MarkRoberController = new CommandPS5Controller(1);
   // final CommandPS5Controller driveController2 = new CommandPS5Controller(0);
 
@@ -43,26 +44,25 @@ public class RobotContainer {
     configureBindings();
 
     Command driveSwerve = swerve.driveCommand(
-        () -> -MathUtil.applyDeadband(WakakeController.getRawAxis(1), Constants.ControllerDeadband),
-        () -> -MathUtil.applyDeadband(WakakeController.getRawAxis(0), Constants.ControllerDeadband),
-        () -> getAsInt(WakakeController.getRawButton(5)) - getAsInt(WakakeController.getRawButton(6)), false, true);
+        () -> -MathUtil.applyDeadband(Controller1.getRawAxis(1), Constants.ControllerDeadband),
+        () -> -MathUtil.applyDeadband(Controller1.getRawAxis(0), Constants.ControllerDeadband),
+        () -> getAsInt(Controller1.getRawButton(5)) - getAsInt(Controller1.getRawButton(6)), false, true);
 
-    // Command climb = new climberCmd(climber,
-    //     () -> -MathUtil.applyDeadband(MarkRoberController.getLeftY(), Constants.ControllerDeadband),
-    //     () -> -MathUtil.applyDeadband(MarkRoberController.getRightY(), Constants.ControllerDeadband));
+    Command elevate = new elevatorCmd(elevator,
+        () -> -MathUtil.applyDeadband(Controller2.getRawAxis(1), Constants.ControllerDeadband));
 
-    // climber.setDefaultCommand(climb);
+    elevator.setDefaultCommand(elevate);
     swerve.setDefaultCommand(driveSwerve);
 
   }
 
   private void configureBindings() {
 
-    // new JoystickButton(WakakeController, 3).whileTrue(Commands.runOnce(swerve::zeroGyro));
-    // new JoystickButton(WakakeController, 8).whileTrue(new intakeCmd(intake, loader, 1, 0.7));
-    // new JoystickButton(WakakeController, 7).whileTrue(new intakeCmd(intake, loader, -1, 0));
-    // new JoystickButton(WakakeController, 11).whileTrue(new NoteAlign(swerve));
-    // new JoystickButton(WakakeController, 2).whileTrue(new SpeakerAlign(swerve));
+    // new JoystickButton(Controller1, 3).whileTrue(Commands.runOnce(swerve::zeroGyro));
+    // new JoystickButton(Controller1, 8).whileTrue(new intakeCmd(intake, loader, 1, 0.7));
+    // new JoystickButton(Controller1, 7).whileTrue(new intakeCmd(intake, loader, -1, 0));
+    // new JoystickButton(Controller1, 11).whileTrue(new NoteAlign(swerve));
+    // new JoystickButton(Controller1, 2).whileTrue(new SpeakerAlign(swerve));
 
     // MarkRoberController.R2().whileTrue(new armPID(arm, Constants.Arm.MaxPose, true));
     // MarkRoberController.L2().onTrue(new armPID(arm, Constants.Arm.MinPose, true));

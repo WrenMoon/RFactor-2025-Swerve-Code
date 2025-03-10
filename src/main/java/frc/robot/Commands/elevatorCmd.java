@@ -1,26 +1,22 @@
 package frc.robot.Commands;
 
 import frc.robot.Constants;
-import frc.robot.Subsystems.climberSubsystem;
+import frc.robot.Subsystems.elevatorSubsystem;
 
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class climberCmd extends Command {
-  private final climberSubsystem climber;
-  // private final DoubleSupplier speed;
-  DoubleSupplier leftSpeed;
-  DoubleSupplier rightSpeed;
+public class elevatorCmd extends Command {
+  private final elevatorSubsystem elevator;
+  private final DoubleSupplier speed;
 
-  public climberCmd(climberSubsystem climber, DoubleSupplier leftSpeed, DoubleSupplier rightSpeed){//DoubleSupplier speed) {
-    this.climber = climber;
-    this.leftSpeed = leftSpeed;
-    this.rightSpeed = rightSpeed;
-    // this.speed = speed;
+  public elevatorCmd(elevatorSubsystem elevator, DoubleSupplier speed) {
+    this.elevator = elevator;
+    this.speed = speed;
 
-    addRequirements(climber);
+    addRequirements(elevator);
   }
 
   @Override
@@ -56,20 +52,20 @@ public class climberCmd extends Command {
     //   rightSpeed = 0;
     // }
 
-    climber.setMotor(leftSpeed.getAsDouble(), rightSpeed.getAsDouble());
+    elevator.setMotor(speed.getAsDouble());
     if (Constants.smartEnable) {
-      SmartDashboard.putBoolean("climberCmd", true);
-      SmartDashboard.putNumber("Left encoder", climber.getLeftEncoder());
-      SmartDashboard.putNumber("Right encoder", climber.getRightEncoder());
+      SmartDashboard.putBoolean("elevatorCmd", true);
+      SmartDashboard.putNumber("Elevator Left encoder", elevator.getLeftEncoder());
+      SmartDashboard.putNumber("Elevator Right encoder", elevator.getRightEncoder());
 
     }
   }
 
   @Override
   public void end(boolean interrupted) {
-    climber.setMotor(0, 0);
+    elevator.setMotor(0);
     if (Constants.smartEnable) {
-      SmartDashboard.putBoolean("climberCmd", false);
+      SmartDashboard.putBoolean("elevatorCmd", false);
 
     }
   }

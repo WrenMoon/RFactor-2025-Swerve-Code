@@ -8,30 +8,32 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 
 import frc.robot.Constants;
 
-public class climberSubsystem extends SubsystemBase {
+public class elevatorSubsystem extends SubsystemBase {
     
-    final SparkMax motorLeft = new SparkMax(Constants.Climber.climberLeft, MotorType.kBrushless);
-    final SparkMax motorRight = new SparkMax(Constants.Climber.climberRight, MotorType.kBrushless);
+    final SparkMax motorLeft = new SparkMax(Constants.Elevator.elevatorLeft, MotorType.kBrushless);
+    final SparkMax motorRight = new SparkMax(Constants.Elevator.elevatorRight, MotorType.kBrushless);
     final SparkMaxConfig leftConfig = new SparkMaxConfig();
     final SparkMaxConfig rightConfig = new SparkMaxConfig();
     
-    public climberSubsystem() {
+    public elevatorSubsystem() {
 
     leftConfig.idleMode(IdleMode.kBrake);
-    leftConfig.inverted(Constants.Climber.leftInvert);
-    rightConfig.inverted(Constants.Climber.rightInvert);
+    leftConfig.inverted(Constants.Elevator.leftInvert);
+    rightConfig.inverted(Constants.Elevator.rightInvert);
     rightConfig.idleMode(IdleMode.kBrake);
     motorLeft.configure(leftConfig, null, null);
     motorRight.configure(rightConfig, null, null);
+    
+    // leftConfig.follow(motorRight, (Constants.Elevator.leftInvert == Constants.Elevator.rightInvert) ? false : true);
     }
   
   @Override
   public void periodic() {
   }
 
-  public void setMotor(double speed_left, double speed_right) {
-    motorLeft.set(speed_left);
-    motorRight.set(speed_right);
+  public void setMotor(double speed) {
+    motorRight.set(speed);
+    motorLeft.set(speed);
   }
 
   public double getLeftEncoder(){
