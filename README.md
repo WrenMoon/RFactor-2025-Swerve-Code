@@ -1,3 +1,5 @@
 ﻿# RFactor-2025-Swerve-Code
 
-Basic swerve code with skeleton subsystems and commands based on RFactor 2024 code
+A full-fledged Swerve code using YAGSL Library for teleop control of a swerve drive using Neos, sparkmaxes, and CANCoders
+
+Additionally present are skeleton subsytems and commands for other robot Mechanisms
