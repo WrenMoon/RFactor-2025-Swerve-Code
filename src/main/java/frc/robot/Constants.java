@@ -19,10 +19,8 @@ public class Constants {
 
   public static class Intake
   {
-    public static int intakeLeftID = 14;
-    public static int intakeRightID = 15;
-    public static boolean leftInvert = true; 
-    public static boolean rightInvert = false; 
+    public static int intakeID = 12;
+    public static boolean Invert = false; 
 
   }
 

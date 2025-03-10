@@ -25,7 +25,7 @@ public class RobotContainer {
   // private final armSubystem arm = new armSubystem();
   // private final shooterSubsystem shooter = new shooterSubsystem();
   // private final loaderSubsystem loader = new loaderSubsystem();
-  // private final intakeSubsystem intake = new intakeSubsystem();
+  private final intakeSubsystem intake = new intakeSubsystem();
   private final elevatorSubsystem elevator = new elevatorSubsystem();
   final Joystick Controller1 = new Joystick(0);
   final Joystick Controller2 = new Joystick(1);
@@ -59,8 +59,8 @@ public class RobotContainer {
   private void configureBindings() {
 
     // new JoystickButton(Controller1, 3).whileTrue(Commands.runOnce(swerve::zeroGyro));
-    // new JoystickButton(Controller1, 8).whileTrue(new intakeCmd(intake, loader, 1, 0.7));
-    // new JoystickButton(Controller1, 7).whileTrue(new intakeCmd(intake, loader, -1, 0));
+    new JoystickButton(Controller1, 1).whileTrue(new intakeCmd(intake, 0.5));
+    new JoystickButton(Controller1, 2).whileTrue(new intakeCmd(intake, -0.5));
     // new JoystickButton(Controller1, 11).whileTrue(new NoteAlign(swerve));
     // new JoystickButton(Controller1, 2).whileTrue(new SpeakerAlign(swerve));
 
