@@ -48,11 +48,12 @@ public class RobotContainer {
         () -> -MathUtil.applyDeadband(Controller1.getRawAxis(0), Constants.ControllerDeadband),
         () -> getAsInt(Controller1.getRawButton(5)) - getAsInt(Controller1.getRawButton(6)), false, true);
 
-    Command elevate = new elevatorCmd(elevator,
-        () -> -MathUtil.applyDeadband(Controller2.getRawAxis(1), Constants.ControllerDeadband));
+    Command elevate = new rawElevatorCmd(elevator,
+        () -> -MathUtil.applyDeadband(Controller2.getRawAxis(1), Constants.ControllerDeadband),
+        () -> -MathUtil.applyDeadband(Controller2.getRawAxis(5), Constants.ControllerDeadband));
 
     Command moveArm = new rawArmCmd(arm, 
-        () -> -MathUtil.applyDeadband(Controller2.getRawAxis(5), Constants.ControllerDeadband));
+        () -> -MathUtil.applyDeadband(Controller2.getRawAxis(2) - Controller2.getRawAxis(3), Constants.ControllerDeadband));
 
     elevator.setDefaultCommand(elevate);
     swerve.setDefaultCommand(driveSwerve);
@@ -62,8 +63,8 @@ public class RobotContainer {
   private void configureBindings() {
 
     // new JoystickButton(Controller1, 3).whileTrue(Commands.runOnce(swerve::zeroGyro));
-    new JoystickButton(Controller1, 1).whileTrue(new intakeCmd(intake, 0.5));
-    new JoystickButton(Controller1, 2).whileTrue(new intakeCmd(intake, -0.5));
+    new JoystickButton(Controller2, 1).whileTrue(new intakeCmd(intake, 0.5));
+    new JoystickButton(Controller2, 2).whileTrue(new intakeCmd(intake, -0.5));
     // new JoystickButton(Controller1, 11).whileTrue(new NoteAlign(swerve));
     // new JoystickButton(Controller1, 2).whileTrue(new SpeakerAlign(swerve));
 

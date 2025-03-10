@@ -71,5 +71,5 @@ public class Constants {
     public static double robotWidth = 0.383;
   }
 
-  public static double MAX_SPEED = 1;
+  public static double MAX_SPEED = 5;
 }

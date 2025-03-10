@@ -8,12 +8,12 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class elevatorCmd extends Command {
+public class rawElevatorCmd extends Command {
   private final elevatorSubsystem elevator;
   private final DoubleSupplier leftSpeed;
   private final DoubleSupplier rightSpeed;
 
-  public elevatorCmd(elevatorSubsystem elevator, DoubleSupplier leftSpeed, DoubleSupplier rightSpeed) {
+  public rawElevatorCmd(elevatorSubsystem elevator, DoubleSupplier leftSpeed, DoubleSupplier rightSpeed) {
     this.elevator = elevator;
     this.leftSpeed = leftSpeed;
     this.rightSpeed = rightSpeed;

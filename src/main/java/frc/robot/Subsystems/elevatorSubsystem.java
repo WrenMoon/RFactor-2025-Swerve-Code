@@ -21,19 +21,22 @@ public class elevatorSubsystem extends SubsystemBase {
     leftConfig.inverted(Constants.Elevator.leftInvert);
     rightConfig.inverted(Constants.Elevator.rightInvert);
     rightConfig.idleMode(IdleMode.kBrake);
+    // leftConfig.follow(motorRight, (Constants.Elevator.leftInvert == Constants.Elevator.rightInvert) ? false : true);
+    leftConfig.follow(motorRight, false);
+
+
     motorLeft.configure(leftConfig, null, null);
     motorRight.configure(rightConfig, null, null);
     
-    // leftConfig.follow(motorRight, (Constants.Elevator.leftInvert == Constants.Elevator.rightInvert) ? false : true);
     }
   
   @Override
   public void periodic() {
   }
 
-  public void setMotor(double speed) {
-    motorRight.set(speed);
-    motorLeft.set(speed);
+  public void setMotor(double leftSpeed, double rightSpeed) {
+    motorRight.set(rightSpeed);
+    // motorLeft.set(leftSpeed);
   }
 
   public double getLeftEncoder(){
