@@ -22,7 +22,7 @@ public class RobotContainer {
 
   private final SwerveSubsystem swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
       "JsonConstants"));
-  // private final armSubystem arm = new armSubystem();
+  private final armSubystem arm = new armSubystem();
   // private final shooterSubsystem shooter = new shooterSubsystem();
   // private final loaderSubsystem loader = new loaderSubsystem();
   private final intakeSubsystem intake = new intakeSubsystem();
@@ -51,9 +51,12 @@ public class RobotContainer {
     Command elevate = new elevatorCmd(elevator,
         () -> -MathUtil.applyDeadband(Controller2.getRawAxis(1), Constants.ControllerDeadband));
 
+    Command moveArm = new rawArmCmd(arm, 
+        () -> -MathUtil.applyDeadband(Controller2.getRawAxis(5), Constants.ControllerDeadband));
+
     elevator.setDefaultCommand(elevate);
     swerve.setDefaultCommand(driveSwerve);
-
+    arm.setDefaultCommand(moveArm);
   }
 
   private void configureBindings() {

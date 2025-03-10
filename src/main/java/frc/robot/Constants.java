@@ -26,15 +26,11 @@ public class Constants {
 
   public static class Arm
   {
-    public static final int armLeftID = 16;
-    public static final int armRightID = 17;
+    public static final int ArmID = 11;
     public static final double maxSpeed = 0.5;
-    public static final boolean leftInvert = false; 
-    public static final boolean rightInvert = true; 
-    public static final double absoluteOffset = 0.582;
+    public static final boolean armInvert = false; 
     public static final double MaxPose = 0.295;
     public static final double MinPose = 0.013;
-    public static final int absoluteInvert = -1;
     public static final double kp = 13;
     public static final double kd = 0.03;
     //0.15
