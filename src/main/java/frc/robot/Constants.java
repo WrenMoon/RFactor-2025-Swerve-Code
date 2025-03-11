@@ -1,5 +1,7 @@
 package frc.robot;
 
+import java.util.zip.ZipEntry;
+
 import edu.wpi.first.math.geometry.Translation3d;
 import swervelib.math.Matter;
 import edu.wpi.first.math.util.Units;
@@ -20,7 +22,7 @@ public class Constants {
     public static int intakeID = 12;
     public static boolean Invert = false;
     public static final double angleOffset = 40;
-    public static final double Kg = 0.1;
+    public static final double Kg = 0.03;
   }
 
   public static class Arm {
@@ -32,9 +34,9 @@ public class Constants {
     public static final double MaxSpeed = 0.7;
     public static final double kp = 0.007;
     public static final double kd = 0.0007;
-    public static final double Kg = 0.025;
+    public static final double Kg = 0.027;
     public static final double degreesPerEncoder = 180 / 22;
-    public static final double zeroEncoder = -15.6;
+    public static final double zeroEncoder = -13.6;
   }
 
   public static class Elevator {

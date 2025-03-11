@@ -52,8 +52,8 @@ public class RobotContainer {
     Command moveArm = new rawArmCmd(arm, 
         () -> -MathUtil.applyDeadband(Controller2.getRawAxis(1), Constants.ControllerDeadband));
 
-    Command holdCoral = intake.setMotorSupplier(
-      () -> Math.cos(Math.toRadians(arm.getDegrees()))
+        Command holdCoral = intake.setMotorSupplier(
+          () -> Math.cos(Math.toRadians(arm.getDegrees() - Constants.Intake.angleOffset)) * -Constants.Intake.Kg
       );
 
     elevator.setDefaultCommand(elevate);

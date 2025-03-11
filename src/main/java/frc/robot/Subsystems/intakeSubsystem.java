@@ -2,6 +2,8 @@ package frc.robot.Subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import java.util.function.DoubleSupplier;
 
@@ -35,6 +37,9 @@ public class intakeSubsystem extends SubsystemBase {
   public Command setMotorSupplier(DoubleSupplier speed){
     return run(() -> {
       motor.set(speed.getAsDouble());
+      if(Constants.smartEnable){
+        SmartDashboard.putNumber("IntakeSpeed", speed.getAsDouble());
+      }
     });
   }
 
