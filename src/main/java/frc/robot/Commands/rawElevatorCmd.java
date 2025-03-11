@@ -10,14 +10,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 public class rawElevatorCmd extends Command {
   private final elevatorSubsystem elevator;
-  private final DoubleSupplier leftSpeed;
-  private final DoubleSupplier rightSpeed;
+  private final DoubleSupplier speed;
 
-  public rawElevatorCmd(elevatorSubsystem elevator, DoubleSupplier leftSpeed, DoubleSupplier rightSpeed) {
+  public rawElevatorCmd(elevatorSubsystem elevator, DoubleSupplier speed) {
     this.elevator = elevator;
-    this.leftSpeed = leftSpeed;
-    this.rightSpeed = rightSpeed;
-
+    this.speed = speed;
     addRequirements(elevator);
   }
 
@@ -27,47 +24,20 @@ public class rawElevatorCmd extends Command {
 
   @Override
   public void execute() {
-    // if (speed.getAsDouble() > 0) {
-    //   if (climber.getLeftEncoder() < Constants.Climber.maxPose) {
-    //     leftSpeed = speed.getAsDouble();
-    //   } else {
-    //     leftSpeed = 0;
-    //   }
-    //   if (climber.getRightEncoder() < Constants.Climber.maxPose) {
-    //     rightSpeed = speed.getAsDouble();
-    //   } else {
-    //     rightSpeed = 0;
-    //   }
-    // } else if (speed.getAsDouble() < 0) {
-    //   if (climber.getLeftEncoder() > Constants.Climber.minPose) {
-    //     leftSpeed = speed.getAsDouble();
-    //   } else {
-    //     leftSpeed = 0;
-    //   }
-    //   if (climber.getRightEncoder() > Constants.Climber.minPose) {
-    //     rightSpeed = speed.getAsDouble();
-    //   } else {
-    //     rightSpeed = 0;
-    //   }
-    // } else {
-    //   leftSpeed = 0;
-    //   rightSpeed = 0;
-    // }
 
-    elevator.setMotor(leftSpeed.getAsDouble(), rightSpeed.getAsDouble());
+    elevator.setMotor(speed.getAsDouble());
     if (Constants.smartEnable) {
-      SmartDashboard.putBoolean("elevatorCmd", true);
-      SmartDashboard.putNumber("Elevator Left encoder", elevator.getLeftEncoder());
-      SmartDashboard.putNumber("Elevator Right encoder", elevator.getRightEncoder());
-
+      SmartDashboard.putBoolean("rawElevatorCmd", true);
+      SmartDashboard.putNumber("Elevator encoder", elevator.getEncoder());
+      SmartDashboard.putNumber("Elevator speed", speed.getAsDouble());
     }
   }
 
   @Override
   public void end(boolean interrupted) {
-    elevator.setMotor(0, 0);
+    elevator.setMotor(0);
     if (Constants.smartEnable) {
-      SmartDashboard.putBoolean("elevatorCmd", false);
+      SmartDashboard.putBoolean("rawElevatorCmd", false);
 
     }
   }

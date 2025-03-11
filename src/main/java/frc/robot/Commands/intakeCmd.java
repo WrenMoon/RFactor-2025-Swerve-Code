@@ -2,7 +2,6 @@ package frc.robot.Commands;
 
 import frc.robot.Constants;
 import frc.robot.Subsystems.intakeSubsystem;
-import frc.robot.Subsystems.loaderSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -20,7 +19,7 @@ public class intakeCmd extends Command {
   public void initialize() {
 
   }
-        
+
   @Override
   public void execute() {
 

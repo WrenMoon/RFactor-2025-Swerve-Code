@@ -144,7 +144,6 @@ public class SwerveSubsystem extends SubsystemBase {
         }
     }
 
-
     /**
      * Setup AutoBuilder for PathPlanner.
      */
@@ -364,7 +363,7 @@ public class SwerveSubsystem extends SubsystemBase {
      */
     public Command driveCommand(DoubleSupplier translationX, DoubleSupplier translationY,
             DoubleSupplier angularRotationX, boolean headingCorrection, boolean fieldRelativity) {
-            swerveDrive.setHeadingCorrection(headingCorrection);
+        swerveDrive.setHeadingCorrection(headingCorrection);
         return run(() -> {
             // Make the robot move
             swerveDrive.drive(SwerveMath.scaleTranslation(new Translation2d(

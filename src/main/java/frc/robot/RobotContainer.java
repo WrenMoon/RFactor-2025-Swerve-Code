@@ -10,9 +10,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import java.io.File;
 import frc.robot.Commands.*;
-import frc.robot.Commands.Arm.*;
 import frc.robot.Commands.CV.*;
-import frc.robot.Commands.Transfer.*;
 
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -22,7 +20,7 @@ public class RobotContainer {
 
   private final SwerveSubsystem swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
       "JsonConstants"));
-  private final armSubystem arm = new armSubystem();
+  private final armSubsystem arm = new armSubsystem();
   // private final shooterSubsystem shooter = new shooterSubsystem();
   // private final loaderSubsystem loader = new loaderSubsystem();
   private final intakeSubsystem intake = new intakeSubsystem();
@@ -46,14 +44,13 @@ public class RobotContainer {
     Command driveSwerve = swerve.driveCommand(
         () -> -MathUtil.applyDeadband(Controller1.getRawAxis(1), Constants.ControllerDeadband),
         () -> -MathUtil.applyDeadband(Controller1.getRawAxis(0), Constants.ControllerDeadband),
-        () -> getAsInt(Controller1.getRawButton(5)) - getAsInt(Controller1.getRawButton(6)), false, true);
+        () -> -MathUtil.applyDeadband(Controller1.getRawAxis(4), Constants.ControllerDeadband), false, true);
 
     Command elevate = new rawElevatorCmd(elevator,
-        () -> -MathUtil.applyDeadband(Controller2.getRawAxis(1), Constants.ControllerDeadband),
         () -> -MathUtil.applyDeadband(Controller2.getRawAxis(5), Constants.ControllerDeadband));
 
     Command moveArm = new rawArmCmd(arm, 
-        () -> -MathUtil.applyDeadband(Controller2.getRawAxis(2) - Controller2.getRawAxis(3), Constants.ControllerDeadband));
+        () -> -MathUtil.applyDeadband(Controller2.getRawAxis(1), Constants.ControllerDeadband));
 
     elevator.setDefaultCommand(elevate);
     swerve.setDefaultCommand(driveSwerve);
@@ -61,10 +58,12 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-
     // new JoystickButton(Controller1, 3).whileTrue(Commands.runOnce(swerve::zeroGyro));
     new JoystickButton(Controller2, 1).whileTrue(new intakeCmd(intake, 0.5));
-    new JoystickButton(Controller2, 2).whileTrue(new intakeCmd(intake, -0.5));
+    new JoystickButton(Controller2, 4).whileTrue(new intakeCmd(intake, -0.5));
+    new JoystickButton(Controller2, 2).whileTrue(new elevatorPosCmd(elevator, -100));
+    new JoystickButton(Controller2, 3).whileTrue(new armPosCmd(arm, -15, true));
+
     // new JoystickButton(Controller1, 11).whileTrue(new NoteAlign(swerve));
     // new JoystickButton(Controller1, 2).whileTrue(new SpeakerAlign(swerve));
 
