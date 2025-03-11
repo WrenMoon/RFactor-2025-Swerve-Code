@@ -19,6 +19,8 @@ public class Constants {
   public static class Intake {
     public static int intakeID = 12;
     public static boolean Invert = false;
+    public static final double angleOffset = 40;
+    public static final double Kg = 0.1;
   }
 
   public static class Arm {

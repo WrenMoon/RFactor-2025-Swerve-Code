@@ -2,6 +2,9 @@ package frc.robot.Subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import edu.wpi.first.wpilibj2.command.Command;
+import java.util.function.DoubleSupplier;
+
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
@@ -27,6 +30,12 @@ public class intakeSubsystem extends SubsystemBase {
 
   public void setMotor(double speed) {
     motor.set(speed);
+  }
+
+  public Command setMotorSupplier(DoubleSupplier speed){
+    return run(() -> {
+      motor.set(speed.getAsDouble());
+    });
   }
 
   public double getEncoder() {

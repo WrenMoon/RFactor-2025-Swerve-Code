@@ -52,9 +52,14 @@ public class RobotContainer {
     Command moveArm = new rawArmCmd(arm, 
         () -> -MathUtil.applyDeadband(Controller2.getRawAxis(1), Constants.ControllerDeadband));
 
+    Command holdCoral = intake.setMotorSupplier(
+      () -> Math.cos(Math.toRadians(arm.getDegrees()))
+      );
+
     elevator.setDefaultCommand(elevate);
     swerve.setDefaultCommand(driveSwerve);
     arm.setDefaultCommand(moveArm);
+    intake.setDefaultCommand(holdCoral);
   }
 
   private void configureBindings() {
