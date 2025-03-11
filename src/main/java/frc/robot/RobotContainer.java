@@ -59,10 +59,10 @@ public class RobotContainer {
 
   private void configureBindings() {
     // new JoystickButton(Controller1, 3).whileTrue(Commands.runOnce(swerve::zeroGyro));
-    new JoystickButton(Controller2, 1).whileTrue(new intakeCmd(intake, 0.5));
-    new JoystickButton(Controller2, 4).whileTrue(new intakeCmd(intake, -0.5));
+    new JoystickButton(Controller2, 1).whileTrue(new intakeCmd(intake, 0.2));
+    new JoystickButton(Controller2, 4).whileTrue(new intakeCmd(intake, -0.2));
     new JoystickButton(Controller2, 2).whileTrue(new elevatorPosCmd(elevator, -100));
-    new JoystickButton(Controller2, 3).whileTrue(new armPosCmd(arm, -15, true));
+    new JoystickButton(Controller2, 3).whileTrue(new armPosCmd(arm, 0, true));
 
     // new JoystickButton(Controller1, 11).whileTrue(new NoteAlign(swerve));
     // new JoystickButton(Controller1, 2).whileTrue(new SpeakerAlign(swerve));

@@ -34,10 +34,10 @@ public class armPosCmd extends Command {
     @Override
     public void execute() {
 
-        double speed = PIDarm.calculate(arm.getEncoder());
-        speed = Math.min(Math.max(speed, -1), 1);
-        arm.setMotor(speed);
-
+        double speed = PIDarm.calculate(arm.getDegrees());
+        speed = Math.min(Math.max(speed, -Constants.Arm.MaxSpeed), Constants.Arm.MaxSpeed);
+        speed = speed + Constants.Arm.Kg * Math.cos(Math.toRadians(arm.getDegrees()));
+        
         if (Constants.smartEnable) {
             SmartDashboard.putBoolean("armPosCmd", true);
             SmartDashboard.putNumber("Arm encoder", arm.getEncoder());
@@ -46,15 +46,12 @@ public class armPosCmd extends Command {
             SmartDashboard.putNumber("Arm Degrees", arm.getDegrees());
             SmartDashboard.putBoolean("Arm hold", holdPID);
         }
-
-        if (speed < 0.007) {
-            if (holdPID) {
-                PIDarm = new PIDController(Constants.Arm.holdKp, 0, Constants.Arm.holdKd);
-            } else {
-                endLoop = true;
-            }
+        
+        if (Math.abs(targetPose - arm.getDegrees()) < 2 && !holdPID) {
+            endLoop = true;
         }
-
+        
+        arm.setMotor(speed);
     }
 
     @Override

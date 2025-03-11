@@ -27,13 +27,12 @@ public class Constants {
     public static final boolean armInvert = false;
     public static final double MaxPose = -22;
     public static final double MinPose = 0;
-    public static final double kp = 0.005;
-    public static final double kd = 0.005;
-    public static final double holdKp = 0.005;
-    public static final double holdKd = 0.005;
-    public static final double Kg = 0.1;
+    public static final double MaxSpeed = 0.7;
+    public static final double kp = 0.007;
+    public static final double kd = 0.0007;
+    public static final double Kg = 0.025;
     public static final double degreesPerEncoder = 180 / 22;
-    public static final double zeroEncoder = -10;
+    public static final double zeroEncoder = -15.6;
   }
 
   public static class Elevator {

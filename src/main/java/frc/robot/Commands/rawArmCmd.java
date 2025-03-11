@@ -3,6 +3,7 @@ package frc.robot.Commands;
 import frc.robot.Subsystems.armSubsystem;
 
 import java.util.function.DoubleSupplier;
+import frc.robot.Constants;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -24,12 +25,13 @@ public class rawArmCmd extends Command {
 
   @Override
   public void execute() {
-    arm.setMotor(speed.getAsDouble());
+    arm.setMotor(speed.getAsDouble() +  Constants.Arm.Kg * Math.cos(Math.toRadians(arm.getDegrees())));
     
     SmartDashboard.putBoolean("rawArmCmd", false);
     SmartDashboard.putNumber("Arm encoder", arm.getEncoder());
     SmartDashboard.putNumber("Arm speed", speed.getAsDouble());
     SmartDashboard.putNumber("Arm Degrees", arm.getDegrees());
+    SmartDashboard.putNumber("Arm Correction", Constants.Arm.Kg * Math.cos(Math.toRadians(arm.getDegrees())));
   }
 
   @Override
