@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class intakeCmd extends Command {
   private final intakeSubsystem Intake;
   private final double intakeSpeed;
+  private boolean endLoop = false;
+  private double loopCounter = 0;
 
   public intakeCmd(intakeSubsystem Intake, double intakeSpeed) {
     this.Intake = Intake;
@@ -19,6 +21,8 @@ public class intakeCmd extends Command {
 
   @Override
   public void initialize() {
+    endLoop = false;
+    loopCounter = 0;
   }
 
   @Override
@@ -30,6 +34,14 @@ public class intakeCmd extends Command {
     if (Constants.smartEnable) {
       SmartDashboard.putBoolean("Intake", true);
     }
+
+    if (Intake.getLimitSwitch() || loopCounter > 0){
+      loopCounter+=1;
+    }
+
+    if (loopCounter == Constants.Intake.waitCount){
+      endLoop = true;
+    }
   }
 
   @Override
@@ -39,6 +51,6 @@ public class intakeCmd extends Command {
 
   @Override
   public boolean isFinished() {
-    return Intake.getLimitSwitch(); //runs until the limit switch is pressed
+    return endLoop; //runs until the limit switch is pressed
   }
 }

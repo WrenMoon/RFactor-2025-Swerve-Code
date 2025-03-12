@@ -72,6 +72,6 @@ public class RobotContainer {
    * @return Autonomous Command of the robot
    */
   public Command getAutonomousCommand() {
-    return swerve.getAutonomousCommand("Three note");
+    return swerve.getAutonomousCommand("Test Auto");
   }
 }

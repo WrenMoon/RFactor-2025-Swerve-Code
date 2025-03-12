@@ -7,19 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "LS P1"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "LS P2"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "LS P3"
+            "pathName": "Test Path"
           }
         }
       ]

@@ -23,6 +23,7 @@ public class Constants {
     public static boolean Invert = false;
     public static final double angleOffset = 40;
     public static final double Kg = 0.03;
+    public static final double waitCount = 5;
   }
 
   public static class Arm {
