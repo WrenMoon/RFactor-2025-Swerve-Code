@@ -1,6 +1,8 @@
 package frc.robot;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -36,7 +38,8 @@ public class RobotContainer {
     Command driveSwerve = swerve.driveCommand(
         () -> -MathUtil.applyDeadband(Controller1.getRawAxis(1), Constants.ControllerDeadband),
         () -> -MathUtil.applyDeadband(Controller1.getRawAxis(0), Constants.ControllerDeadband),
-        () -> -MathUtil.applyDeadband(Controller1.getRawAxis(2), Constants.ControllerDeadband), false, false);
+        // () -> -MathUtil.applyDeadband(Controller1.getRawAxis(4), Constants.ControllerDeadband), false, true);
+        () -> (getBolleanAsInt(Controller1.getRawButton(5)) - getBolleanAsInt(Controller1.getRawButton(6))), false, true);
 
     //Default Elevator Command to move the elevator with one axis
     Command elevate = new rawElevatorCmd(elevator,
@@ -65,6 +68,7 @@ public class RobotContainer {
     new JoystickButton(Controller2, 4).whileTrue(new intakeCmd(intake, -0.2));
     new JoystickButton(Controller2, 2).whileTrue(new elevatorPosCmd(elevator, -100));
     new JoystickButton(Controller2, 3).whileTrue(new armPosCmd(arm, 0, true));
+    new JoystickButton(Controller2, 5).onTrue(swerve.getAutonomousCommand("Test Auto"));
   }
 
   /**
@@ -74,4 +78,15 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     return swerve.getAutonomousCommand("Test Auto");
   }
+
+
+
+public double getBolleanAsInt(boolean bollean){
+  if (bollean){
+    return 1;
+  } else{
+    return 0;
+  }
 }
+}
+
