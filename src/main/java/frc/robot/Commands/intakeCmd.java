@@ -39,6 +39,6 @@ public class intakeCmd extends Command {
 
   @Override
   public boolean isFinished() {
-    return false; //runs until interupted by the command scheduler
+    return Intake.getLimitSwitch(); //runs until the limit switch is pressed
   }
 }

@@ -3,6 +3,7 @@ package frc.robot.Subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import java.util.function.DoubleSupplier;
@@ -19,6 +20,8 @@ public class intakeSubsystem extends SubsystemBase {
 
   final SparkMax motor = new SparkMax(Constants.Intake.intakeID, MotorType.kBrushless); //Creating the SparkMax motor object
   final SparkMaxConfig config = new SparkMaxConfig(); //Creating the config for the SparkMax
+  final DigitalInput limitSwitch = new DigitalInput(9); //Create a limit switch on DIO port 9
+
 
   public intakeSubsystem() {
 
@@ -29,6 +32,11 @@ public class intakeSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+
+    //Smartdashboard for debugging
+    if (Constants.smartEnable){
+      SmartDashboard.putBoolean("Limit Switch", limitSwitch.get());
+    }
   }
 
   /**
@@ -42,7 +50,7 @@ public class intakeSubsystem extends SubsystemBase {
 
 
   /**
-   * Command to run the intake at speed
+   * Command to run the intake at a speed
    * 
    * @param speed DoubleSupplied speed to move the robot at
    * @return Intake Command
@@ -63,6 +71,15 @@ public class intakeSubsystem extends SubsystemBase {
    */
   public double getEncoder() {
     return motor.getEncoder().getPosition();
+  }
+  
+  /**
+   * Return the state of the limit switch
+   * 
+   * @return boolean state of the limit switch
+   */
+  public boolean getLimitSwitch() {
+    return limitSwitch.get();
   }
 
 }
