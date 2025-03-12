@@ -8,6 +8,8 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
+//A command to move the elevator with at a certain power
+
 public class rawElevatorCmd extends Command {
   private final elevatorSubsystem elevator;
   private final DoubleSupplier speed;
@@ -25,7 +27,9 @@ public class rawElevatorCmd extends Command {
   @Override
   public void execute() {
 
-    elevator.setMotor(speed.getAsDouble());
+    elevator.setMotor(speed.getAsDouble()); //Apply the speed to the motor
+
+    //Smardashboard for debugging
     if (Constants.smartEnable) {
       SmartDashboard.putBoolean("rawElevatorCmd", true);
       SmartDashboard.putNumber("Elevator encoder", elevator.getEncoder());
@@ -36,6 +40,8 @@ public class rawElevatorCmd extends Command {
   @Override
   public void end(boolean interrupted) {
     elevator.setMotor(0);
+
+    //Smartdashboard for debugging
     if (Constants.smartEnable) {
       SmartDashboard.putBoolean("rawElevatorCmd", false);
 
@@ -44,6 +50,6 @@ public class rawElevatorCmd extends Command {
 
   @Override
   public boolean isFinished() {
-    return false;
+    return false; //runs until interupted by the command scheduler
   }
 }

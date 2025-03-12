@@ -7,6 +7,8 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
+//A command to move the elevator to an encoder setpoint using PID Feedback
+
 public class elevatorPosCmd extends Command {
   private final elevatorSubsystem elevator;
   private final double targetPose;
@@ -24,15 +26,18 @@ public class elevatorPosCmd extends Command {
   @Override
   public void initialize() {
     endLoop = false;
-    PIDelevator.setSetpoint(targetPose);
+    PIDelevator.setSetpoint(targetPose); // PID setpoint
   }
+  
 
   @Override
   public void execute() {
 
-    double speed = PIDelevator.calculate(elevator.getEncoder());
-    elevator.setMotor(speed);
+    double speed = PIDelevator.calculate(elevator.getEncoder()); //PID Correction value
+    speed = Math.min(Math.max(speed, -Constants.Elevator.MaxSpeed), Constants.Elevator.MaxSpeed); //Applying Speed Limits
+    elevator.setMotor(speed); //applies the speed to the motor
 
+    //Smartdashboard for debugging
     if (Constants.smartEnable) {
       SmartDashboard.putBoolean("elevatorPosCmd", true);
       SmartDashboard.putNumber("Elevator encoder", elevator.getEncoder());
@@ -40,7 +45,7 @@ public class elevatorPosCmd extends Command {
       SmartDashboard.putNumber("ELevator speed", speed);
     }
 
-    if (speed < 0.07) {
+    if (speed < 0.07) { //endcase when setpoint achieved. Only if holdPID is false
       endLoop = true;
     }
 
@@ -49,6 +54,8 @@ public class elevatorPosCmd extends Command {
   @Override
   public void end(boolean interrupted) {
     elevator.setMotor(0);
+    
+    //Smartdashboard for debugging
     if (Constants.smartEnable) {
       SmartDashboard.putBoolean("elevatorPosCmd", false);
     }

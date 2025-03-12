@@ -4,15 +4,17 @@ import edu.wpi.first.math.geometry.Translation3d;
 import swervelib.math.Matter;
 import edu.wpi.first.math.util.Units;
 
+//A file to store all the constant values, offset, and other fixed numerical values and details of the robot
+
 public class Constants {
   public static final double ROBOT_MASS = 70;
   public static final Matter CHASSIS = new Matter(new Translation3d(-0.2, 0, Units.inchesToMeters(2)), ROBOT_MASS);
   public static final double LOOP_TIME = 0.13; // s, 20ms + 110ms sprk max velocity lag
   public static final boolean smartEnable = true;
   public static final double ControllerDeadband = 0.05;
+  public static final boolean VisionOdometry = false;
 
   public static final class DrivebaseConstants {
-
     public static final double WHEEL_LOCK_TIME = 100; // seconds
   }
 
@@ -40,6 +42,7 @@ public class Constants {
   public static class Elevator {
     public static final int elevatorLeft = 10;
     public static final int elevatorRight = 9;
+    public static final double MaxSpeed = 1;
     public static final boolean rightInvert = false;
     public static final double kp = 0.1;
     public static final double kd = 0.1;

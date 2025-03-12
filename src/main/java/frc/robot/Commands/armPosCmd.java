@@ -7,6 +7,8 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
+//A command to move the arm to an encoder setpoint using PID Feedback and Gravity compensation feedforward.
+
 public class armPosCmd extends Command {
     private final armSubsystem arm;
     private final double targetPose;
@@ -26,17 +28,18 @@ public class armPosCmd extends Command {
     @Override
     public void initialize() {
         endLoop = false;
-        PIDarm.setSetpoint(targetPose);
+        PIDarm.setSetpoint(targetPose); // PID setpoint
     }
 
     @Override
     public void execute() {
 
-        double speed = PIDarm.calculate(arm.getDegrees());
-        speed = Math.min(Math.max(speed, -Constants.Arm.MaxSpeed), Constants.Arm.MaxSpeed);
-        speed = speed + Constants.Arm.Kg * Math.cos(Math.toRadians(arm.getDegrees()));
+        double speed = PIDarm.calculate(arm.getDegrees()); //PID Correction value
+        speed = speed + Constants.Arm.Kg * Math.cos(Math.toRadians(arm.getDegrees())); //Feedforward Gravity compensation
+        speed = Math.min(Math.max(speed, -Constants.Arm.MaxSpeed), Constants.Arm.MaxSpeed); //Applying Speed Limits
 
-        if (Constants.smartEnable) {
+        //Smartdashboard for debugging
+        if (Constants.smartEnable) { 
             SmartDashboard.putBoolean("armPosCmd", true);
             SmartDashboard.putNumber("Arm encoder", arm.getEncoder());
             SmartDashboard.putNumber("Arm Target Pose", targetPose);
@@ -45,16 +48,18 @@ public class armPosCmd extends Command {
             SmartDashboard.putBoolean("Arm hold", holdPID);
         }
 
-        if (Math.abs(targetPose - arm.getDegrees()) < 2 && !holdPID) {
+        if (Math.abs(targetPose - arm.getDegrees()) < 2 && !holdPID) { //endcase when setpoint achieved. Only if holdPID is false
             endLoop = true;
         }
 
-        arm.setMotor(speed);
+        arm.setMotor(speed); //applies the speed to the motor
     }
 
     @Override
     public void end(boolean interrupted) {
         arm.setMotor(0);
+
+        //Smartdashboard for debugging        
         if (Constants.smartEnable) {
             SmartDashboard.putBoolean("armPosCmd", false);
         }

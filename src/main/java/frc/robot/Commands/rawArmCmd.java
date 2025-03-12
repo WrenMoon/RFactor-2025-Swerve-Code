@@ -8,6 +8,8 @@ import frc.robot.Constants;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
+//A command to move the arm with at a certain power along with gravity compensation feedforawrd.
+
 public class rawArmCmd extends Command {
   private final armSubsystem arm;
   private DoubleSupplier speed;
@@ -25,24 +27,31 @@ public class rawArmCmd extends Command {
 
   @Override
   public void execute() {
-    arm.setMotor(speed.getAsDouble() + Constants.Arm.Kg * Math.cos(Math.toRadians(arm.getDegrees())));
+    arm.setMotor(speed.getAsDouble() + Constants.Arm.Kg * Math.cos(Math.toRadians(arm.getDegrees()))); //Apply the motor speed with the gravity correction
 
-    SmartDashboard.putBoolean("rawArmCmd", false);
-    SmartDashboard.putNumber("Arm encoder", arm.getEncoder());
-    SmartDashboard.putNumber("Arm speed", speed.getAsDouble());
-    SmartDashboard.putNumber("Arm Degrees", arm.getDegrees());
-    SmartDashboard.putNumber("Arm Correction", Constants.Arm.Kg * Math.cos(Math.toRadians(arm.getDegrees())));
+    //Smartdashboard for debugging
+    if (Constants.smartEnable){
+      SmartDashboard.putBoolean("rawArmCmd", false);
+      SmartDashboard.putNumber("Arm encoder", arm.getEncoder());
+      SmartDashboard.putNumber("Arm speed", speed.getAsDouble());
+      SmartDashboard.putNumber("Arm Degrees", arm.getDegrees());
+      SmartDashboard.putNumber("Arm Correction", Constants.Arm.Kg * Math.cos(Math.toRadians(arm.getDegrees())));
+    }
   }
 
   @Override
 
   public void end(boolean interrupted) {
     arm.setMotor(0);
-    SmartDashboard.putBoolean("rawArmCmd", false);
+
+    //Smartdashboard for debugging
+    if (Constants.smartEnable){
+      SmartDashboard.putBoolean("rawArmCmd", false);
+    }
   }
 
   @Override
   public boolean isFinished() {
-    return false;
+    return false; //runs until interupted by the command scheduler
   }
 }

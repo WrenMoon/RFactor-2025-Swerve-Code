@@ -15,7 +15,8 @@ import com.pathplanner.lib.auto.NamedCommands;
 import frc.robot.Subsystems.*;
 
 public class RobotContainer {
-
+  
+  //Creating all the subsystems
   private final SwerveSubsystem swerve = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
       "JsonConstants"));
   private final armSubsystem arm = new armSubsystem();
@@ -31,26 +32,34 @@ public class RobotContainer {
 
     configureBindings();
 
+    //Default Swerve Command to drive with 3 axis
     Command driveSwerve = swerve.driveCommand(
         () -> -MathUtil.applyDeadband(Controller1.getRawAxis(1), Constants.ControllerDeadband),
         () -> -MathUtil.applyDeadband(Controller1.getRawAxis(0), Constants.ControllerDeadband),
-        () -> -MathUtil.applyDeadband(Controller1.getRawAxis(4), Constants.ControllerDeadband), false, true);
+        () -> -MathUtil.applyDeadband(Controller1.getRawAxis(2), Constants.ControllerDeadband), false, false);
 
+    //Default Elevator Command to move the elevator with one axis
     Command elevate = new rawElevatorCmd(elevator,
         () -> -MathUtil.applyDeadband(Controller2.getRawAxis(5), Constants.ControllerDeadband));
 
+    //Default Arm Command to move the arm with one axis and gravity control
     Command moveArm = new rawArmCmd(arm,
         () -> -MathUtil.applyDeadband(Controller2.getRawAxis(1), Constants.ControllerDeadband));
 
+    //Default Intake Command ot move the intake with gravity correction as per degree angle of the arm
     Command holdCoral = intake.setMotorSupplier(
         () -> Math.cos(Math.toRadians(arm.getDegrees() - Constants.Intake.angleOffset)) * -Constants.Intake.Kg);
 
+    //Applying all the default commands
     elevator.setDefaultCommand(elevate);
     swerve.setDefaultCommand(driveSwerve);
     arm.setDefaultCommand(moveArm);
     intake.setDefaultCommand(holdCoral);
   }
 
+  /**
+   * Configuring all the button bindings for all the joysticks
+   */
   private void configureBindings() {
     new JoystickButton(Controller2, 1).whileTrue(new intakeCmd(intake, 0.2));
     new JoystickButton(Controller2, 4).whileTrue(new intakeCmd(intake, -0.2));
@@ -58,16 +67,11 @@ public class RobotContainer {
     new JoystickButton(Controller2, 3).whileTrue(new armPosCmd(arm, 0, true));
   }
 
+  /**
+   * Command for the robot to run during autonomous
+   * @return Autonomous Command of the robot
+   */
   public Command getAutonomousCommand() {
     return swerve.getAutonomousCommand("Three note");
   }
-
-  public double getAsInt(boolean bollean) {
-    if (bollean) {
-      return 0.8;
-    } else {
-      return 0;
-    }
-  }
-
 }
