@@ -38,8 +38,8 @@ public class RobotContainer {
     Command driveSwerve = swerve.driveCommand(
         () -> -MathUtil.applyDeadband(Controller1.getRawAxis(1), Constants.ControllerDeadband),
         () -> -MathUtil.applyDeadband(Controller1.getRawAxis(0), Constants.ControllerDeadband),
-        // () -> -MathUtil.applyDeadband(Controller1.getRawAxis(4), Constants.ControllerDeadband), false, true);
-        () -> (getBolleanAsInt(Controller1.getRawButton(5)) - getBolleanAsInt(Controller1.getRawButton(6))), false, true);
+        // () -> -MathUtil.applyDeadband(Controller1.getRawAxis(4), Constants.ControllerDeadband), false, true); //Control heading with right joystick
+        () -> ((Controller1.getRawButton(4))? 1 : 0) - ((Controller1.getRawButton(5))? 1 : 0), false, true); //Control heading with bumpers
 
     //Default Elevator Command to move the elevator with one axis
     Command elevate = new rawElevatorCmd(elevator,
@@ -73,20 +73,10 @@ public class RobotContainer {
 
   /**
    * Command for the robot to run during autonomous
-   * @return Autonomous Command of the robot
+   * @return Autonomous Command of the robot for the command scheduler
    */
   public Command getAutonomousCommand() {
     return swerve.getAutonomousCommand("Test Auto");
   }
-
-
-
-public double getBolleanAsInt(boolean bollean){
-  if (bollean){
-    return 1;
-  } else{
-    return 0;
-  }
-}
 }
 

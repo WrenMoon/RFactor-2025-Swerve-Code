@@ -34,6 +34,7 @@ public class elevatorPosCmd extends Command {
   public void execute() {
 
     double speed = PIDelevator.calculate(elevator.getEncoder()); //PID Correction value
+    speed = speed + ((speed > 0)? Constants.Elevator.MinSpeed : -Constants.Elevator.MinSpeed); //Add the minimum speed to counteract friction
     speed = Math.min(Math.max(speed, -Constants.Elevator.MaxSpeed), Constants.Elevator.MaxSpeed); //Applying Speed Limits
     elevator.setMotor(speed); //applies the speed to the motor
 
@@ -45,7 +46,7 @@ public class elevatorPosCmd extends Command {
       SmartDashboard.putNumber("ELevator speed", speed);
     }
 
-    if (speed < 0.07) { //endcase when setpoint achieved. Only if holdPID is false
+    if (Math.abs(elevator.getEncoder() - targetPose) < 7) { //endcase when setpoint achieved. Only if holdPID is false
       endLoop = true;
     }
 

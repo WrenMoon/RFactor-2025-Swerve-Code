@@ -44,6 +44,7 @@ public class Constants {
     public static final int elevatorLeft = 10;
     public static final int elevatorRight = 9;
     public static final double MaxSpeed = 1;
+    public static final double MinSpeed = 0.1;
     public static final boolean rightInvert = false;
     public static final double kp = 0.1;
     public static final double kd = 0.1;

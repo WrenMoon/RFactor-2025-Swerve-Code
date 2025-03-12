@@ -21,6 +21,7 @@ public class intakeCmd extends Command {
 
   @Override
   public void initialize() {
+    //Initialise endLoop and loopCounter
     endLoop = false;
     loopCounter = 0;
   }
@@ -35,11 +36,14 @@ public class intakeCmd extends Command {
       SmartDashboard.putBoolean("Intake", true);
     }
 
+    //start the delay counter if the switch is pressed
+    //If the counter has already been started, no need to check the limit switch
     if (Intake.getLimitSwitch() || loopCounter > 0){
-      loopCounter+=1;
+      loopCounter+=1; //increment the counter by 1
     }
 
-    if (loopCounter == Constants.Intake.waitCount){
+    //if the required time delay(counter)is met, set endLoop to true
+    if (loopCounter == Constants.Intake.waitCount){ 
       endLoop = true;
     }
   }
@@ -51,6 +55,6 @@ public class intakeCmd extends Command {
 
   @Override
   public boolean isFinished() {
-    return endLoop; //runs until the limit switch is pressed
+    return endLoop; //runs until endLoop becomes true
   }
 }
