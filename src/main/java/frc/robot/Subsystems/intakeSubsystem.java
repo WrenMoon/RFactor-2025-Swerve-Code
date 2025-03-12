@@ -34,10 +34,10 @@ public class intakeSubsystem extends SubsystemBase {
     motor.set(speed);
   }
 
-  public Command setMotorSupplier(DoubleSupplier speed){
+  public Command setMotorSupplier(DoubleSupplier speed) {
     return run(() -> {
       motor.set(speed.getAsDouble());
-      if(Constants.smartEnable){
+      if (Constants.smartEnable) {
         SmartDashboard.putNumber("IntakeSpeed", speed.getAsDouble());
       }
     });

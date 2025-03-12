@@ -25,8 +25,8 @@ public class rawArmCmd extends Command {
 
   @Override
   public void execute() {
-    arm.setMotor(speed.getAsDouble() +  Constants.Arm.Kg * Math.cos(Math.toRadians(arm.getDegrees())));
-    
+    arm.setMotor(speed.getAsDouble() + Constants.Arm.Kg * Math.cos(Math.toRadians(arm.getDegrees())));
+
     SmartDashboard.putBoolean("rawArmCmd", false);
     SmartDashboard.putNumber("Arm encoder", arm.getEncoder());
     SmartDashboard.putNumber("Arm speed", speed.getAsDouble());
@@ -35,7 +35,7 @@ public class rawArmCmd extends Command {
   }
 
   @Override
-  
+
   public void end(boolean interrupted) {
     arm.setMotor(0);
     SmartDashboard.putBoolean("rawArmCmd", false);

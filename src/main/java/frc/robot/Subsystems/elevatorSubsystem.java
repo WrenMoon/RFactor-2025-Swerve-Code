@@ -18,11 +18,8 @@ public class elevatorSubsystem extends SubsystemBase {
   public elevatorSubsystem() {
 
     leftConfig.idleMode(IdleMode.kBrake);
-    leftConfig.inverted(Constants.Elevator.leftInvert);
     rightConfig.inverted(Constants.Elevator.rightInvert);
     rightConfig.idleMode(IdleMode.kBrake);
-    // leftConfig.follow(motorRight, (Constants.Elevator.leftInvert ==
-    // Constants.Elevator.rightInvert) ? false : true);
     leftConfig.follow(motorRight, false);
 
     motorLeft.configure(leftConfig, null, null);

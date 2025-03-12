@@ -6,9 +6,6 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
-
 import frc.robot.Constants;
 
 public class armSubsystem extends SubsystemBase {
@@ -16,8 +13,6 @@ public class armSubsystem extends SubsystemBase {
   final SparkMax motor = new SparkMax(Constants.Arm.ArmID, MotorType.kBrushless);
   final SparkMaxConfig config = new SparkMaxConfig();
 
-  // final PIDController PIDarm = new PIDController(Constants.Arm.kp, 0,
-  // Constants.Arm.kd);
 
   public armSubsystem() {
 

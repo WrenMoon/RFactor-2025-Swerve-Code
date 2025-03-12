@@ -1,7 +1,5 @@
 package frc.robot;
 
-import java.util.zip.ZipEntry;
-
 import edu.wpi.first.math.geometry.Translation3d;
 import swervelib.math.Matter;
 import edu.wpi.first.math.util.Units;
@@ -41,7 +39,6 @@ public class Constants {
 
   public static class Elevator {
     public static final int elevatorLeft = 10;
-    public static final boolean leftInvert = false;
     public static final int elevatorRight = 9;
     public static final boolean rightInvert = false;
     public static final double kp = 0.1;

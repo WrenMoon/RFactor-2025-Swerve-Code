@@ -4,8 +4,6 @@ import frc.robot.Constants;
 import frc.robot.Subsystems.armSubsystem;
 import edu.wpi.first.math.controller.PIDController;
 
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -37,7 +35,7 @@ public class armPosCmd extends Command {
         double speed = PIDarm.calculate(arm.getDegrees());
         speed = Math.min(Math.max(speed, -Constants.Arm.MaxSpeed), Constants.Arm.MaxSpeed);
         speed = speed + Constants.Arm.Kg * Math.cos(Math.toRadians(arm.getDegrees()));
-        
+
         if (Constants.smartEnable) {
             SmartDashboard.putBoolean("armPosCmd", true);
             SmartDashboard.putNumber("Arm encoder", arm.getEncoder());
@@ -46,11 +44,11 @@ public class armPosCmd extends Command {
             SmartDashboard.putNumber("Arm Degrees", arm.getDegrees());
             SmartDashboard.putBoolean("Arm hold", holdPID);
         }
-        
+
         if (Math.abs(targetPose - arm.getDegrees()) < 2 && !holdPID) {
             endLoop = true;
         }
-        
+
         arm.setMotor(speed);
     }
 
