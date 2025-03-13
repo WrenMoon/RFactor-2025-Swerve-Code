@@ -7,7 +7,6 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
-//A command to move the arm to an encoder setpoint using PID Feedback and Gravity compensation feedforward.
 
 public class armPosCmd extends Command {
     private final armSubsystem arm;
@@ -16,6 +15,13 @@ public class armPosCmd extends Command {
     private PIDController PIDarm;
     private boolean endLoop = false;
 
+    /**
+     * A command to move the arm to an encoder setpoint using PID Feedback and Gravity compensation feedforward.
+
+     * @param arm the arm subsystem to move
+     * @param targetPose the target pose in dergees to move to 
+     * @param holdPID whether or not to hold teh PID loop after acceptable error is achieved
+     */
     public armPosCmd(armSubsystem arm, double targetPose, boolean holdPID) {
         this.arm = arm;
         this.targetPose = targetPose;

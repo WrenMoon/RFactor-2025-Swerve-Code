@@ -7,14 +7,18 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
-//A command to move the elevator to an encoder setpoint using PID Feedback
-
 public class elevatorPosCmd extends Command {
   private final elevatorSubsystem elevator;
   private final double targetPose;
   private final PIDController PIDelevator;
   private boolean endLoop = false;
-
+  
+  /**
+   * A command to move the elevator to an encoder setpoint using PID Feedback
+   * 
+   * @param elevator The elevator subsystem to move
+   * @param targetPose the target setpoint to move to in encoder ticks
+   */
   public elevatorPosCmd(elevatorSubsystem elevator, double targetPose) {
     this.elevator = elevator;
     this.targetPose = targetPose;

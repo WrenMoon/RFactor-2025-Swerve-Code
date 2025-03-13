@@ -8,12 +8,16 @@ import frc.robot.Constants;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
-//A command to move the arm with at a certain power along with gravity compensation feedforawrd.
-
 public class rawArmCmd extends Command {
   private final armSubsystem arm;
   private DoubleSupplier speed;
 
+  /**
+   * A command to move the arm with at a certain power along with gravity compensation feedforawrd.
+   * 
+   * @param subsystem the arm subsystem to move
+   * @param speed the speed to move the arm at
+   */
   public rawArmCmd(armSubsystem subsystem, DoubleSupplier speed) {
     this.arm = subsystem;
     this.speed = speed;

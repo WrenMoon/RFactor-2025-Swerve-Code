@@ -8,14 +8,16 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import frc.robot.Constants;
 
-//The subsystem for the rotswing arm of the robot
+
 
 public class armSubsystem extends SubsystemBase {
 
   final SparkMax motor = new SparkMax(Constants.Arm.ArmID, MotorType.kBrushless); //Creating the SparkMax motor object
   final SparkMaxConfig config = new SparkMaxConfig(); //Creating the config for the SparkMax
 
-
+  /**
+   * The subsystem for the rotswing arm of the robot
+   */
   public armSubsystem() {
 
     config.idleMode(IdleMode.kBrake); //Setting the Config Idle mode to brake

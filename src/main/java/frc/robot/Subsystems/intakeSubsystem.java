@@ -14,15 +14,15 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 
 import frc.robot.Constants;
 
-//The subsystem for the roller on the arm of the robot
-
 public class intakeSubsystem extends SubsystemBase {
 
   final SparkMax motor = new SparkMax(Constants.Intake.intakeID, MotorType.kBrushless); //Creating the SparkMax motor object
   final SparkMaxConfig config = new SparkMaxConfig(); //Creating the config for the SparkMax
   final DigitalInput limitSwitch = new DigitalInput(9); //Create a limit switch on DIO port 9
 
-
+  /**
+   * The subsystem for the roller on the arm of the robot
+   */
   public intakeSubsystem() {
 
     config.idleMode(IdleMode.kCoast); //Setting the Config Idle mode to coast

@@ -8,7 +8,7 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 
 import frc.robot.Constants;
 
-//The subsystem for the cascade elevator of the robot
+
 
 public class elevatorSubsystem extends SubsystemBase {
 
@@ -17,6 +17,9 @@ public class elevatorSubsystem extends SubsystemBase {
   final SparkMaxConfig leftConfig = new SparkMaxConfig(); //Creating the config for the SparkMax of the left motor
   final SparkMaxConfig rightConfig = new SparkMaxConfig(); //Creating the config for the SparkMax of the right motor
 
+  /**
+   * The subsystem for the cascade elevator of the robot
+   */
   public elevatorSubsystem() {
 
     leftConfig.idleMode(IdleMode.kBrake); //Setting the Config Idle mode to brake for the left motor

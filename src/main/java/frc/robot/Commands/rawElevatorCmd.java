@@ -8,12 +8,16 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
-//A command to move the elevator with at a certain power
-
 public class rawElevatorCmd extends Command {
   private final elevatorSubsystem elevator;
   private final DoubleSupplier speed;
-
+  
+  /**
+   * A command to move the elevator with at a certain power
+   * 
+   * @param elevator the elevator subsystem to move
+   * @param speed the speed to move the elevator at
+   */
   public rawElevatorCmd(elevatorSubsystem elevator, DoubleSupplier speed) {
     this.elevator = elevator;
     this.speed = speed;

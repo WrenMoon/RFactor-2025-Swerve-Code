@@ -5,14 +5,18 @@ import frc.robot.Subsystems.intakeSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
-//A Command to move the intake at the input speed.
-
 public class intakeCmd extends Command {
   private final intakeSubsystem Intake;
   private final double intakeSpeed;
   private boolean endLoop = false;
   private double loopCounter = 0;
 
+  /**
+   * A Command to move the intake at the input speed.
+   * 
+   * @param Intake the intake subsystem to move 
+   * @param intakeSpeed the speed to move the intake at
+   */
   public intakeCmd(intakeSubsystem Intake, double intakeSpeed) {
     this.Intake = Intake;
     this.intakeSpeed = intakeSpeed;
