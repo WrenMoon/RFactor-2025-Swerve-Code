@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.947,
-        "y": 1.178
+        "x": 1.533,
+        "y": 0.778
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.2296955990151746,
-        "y": 1.2911525504630985
+        "x": 1.8156955990151744,
+        "y": 0.8911525504630992
       },
       "isLocked": false,
       "linkedName": null
@@ -33,22 +33,22 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 5.0,
-    "maxAcceleration": 4.0,
-    "maxAngularVelocity": 360.0,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
     "velocity": 3.0,
-    "rotation": -120.34324888423963
+    "rotation": 61.64998863288387
   },
   "reversed": false,
-  "folder": null,
+  "folder": "LS Auto",
   "idealStartingState": {
     "velocity": 3.0,
-    "rotation": -124.2157021324375
+    "rotation": 53.846200990881435
   },
   "useDefaultConstraints": true
 }

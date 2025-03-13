@@ -26,6 +26,6 @@
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "FRC 2025",
   "choreoAuto": false
 }
