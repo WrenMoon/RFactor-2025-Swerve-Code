@@ -129,16 +129,13 @@ public class SwerveSubsystem extends SubsystemBase {
 
             LimelightHelpers.PoseEstimate megaTagPose = LimelightHelpers
                     .getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
-            if (!(Math.abs(navx.getRate()) > 720 || megaTagPose.tagCount == 0)) // if our angular velocity is greater
-                                                                                // than 720 degrees per second, ignore
+            if (!(Math.abs(navx.getRate()) > 360 || megaTagPose.tagCount == 0)) // if our angular velocity is greater
+                                                                                // than 360 degrees per second, ignore
                                                                                 // vision updates
             {
                 swerveDrive.addVisionMeasurement(megaTagPose.pose, megaTagPose.timestampSeconds);
             }
         }
-        SmartDashboard.putNumber("MaxChassisVel", swerveDrive.getMaximumChassisVelocity());
-        SmartDashboard.putNumber("MaxModuleVel", swerveDrive.getMaximumModuleDriveVelocity());
-        SmartDashboard.putNumber("MaxAngularVel", swerveDrive.getMaximumChassisAngularVelocity());
     }
 
     /**
