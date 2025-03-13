@@ -9,6 +9,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+
 
 import java.io.File;
 import frc.robot.Commands.*;
@@ -59,6 +62,9 @@ public class RobotContainer {
     swerve.setDefaultCommand(driveSwerve);
     arm.setDefaultCommand(moveArm);
     intake.setDefaultCommand(holdCoral);
+
+    //creating command groups for depositing corals
+    SequentialCommandGroup l1 = new SequentialCommandGroup(new armPosCmd(arm, 0, false), new ParallelCommandGroup(new elevatorPosCmd(elevator, 0), new armPosCmd(arm, 0, false)));     
   }
 
   /**
