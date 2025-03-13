@@ -40,10 +40,10 @@ public class RobotContainer {
 
     //Default Swerve Command to drive with 3 axis
     Command driveSwerve = swerve.driveCommand(
-        () -> -MathUtil.applyDeadband(Controller1.getRawAxis(1), Constants.ControllerDeadband),
-        () -> -MathUtil.applyDeadband(Controller1.getRawAxis(0), Constants.ControllerDeadband),
-        // () -> -MathUtil.applyDeadband(Controller1.getRawAxis(4), Constants.ControllerDeadband), false, true); //Control heading with right joystick
-        () -> ((Controller1.getRawButton(5))? 1 : 0) - ((Controller1.getRawButton(6))? 1 : 0), false, true); //Control heading with bumpers
+        () -> MathUtil.applyDeadband(-Controller1.getRawAxis(1) * ((Controller1.getRawAxis(3)+ 1)/2) * Math.min((1 - Controller1.getRawAxis(2)), 0.2), Constants.ControllerDeadband),
+        () -> MathUtil.applyDeadband(-Controller1.getRawAxis(0) * ((Controller1.getRawAxis(3)+ 1)/2) * Math.min((1 - Controller1.getRawAxis(2)), 0.2), Constants.ControllerDeadband),
+        () -> MathUtil.applyDeadband(-Controller1.getRawAxis(4) * ((Controller1.getRawAxis(3)+ 1)/2) * Math.min((1 - Controller1.getRawAxis(2)), 0.2), Constants.ControllerDeadband), false, true); //Control heading with right joystick
+        // () -> ((Controller1.getRawButton(5))? 1 : 0) - ((Controller1.getRawButton(6))? 1 : 0), false, true); //Control heading with bumpers
 
     //Default Elevator Command to move the elevator with one axis
     Command elevate = new rawElevatorCmd(elevator,
