@@ -38,7 +38,7 @@ public class elevatorPosCmd extends Command {
   public void execute() {
 
     double speed = PIDelevator.calculate(elevator.getEncoder()); //PID Correction value
-    speed = speed + ((speed > 0)? Constants.Elevator.MinSpeed : -Constants.Elevator.MinSpeed); //Add the minimum speed to counteract friction, matching the sign of the PID speed
+    speed = speed + ((speed > 0)? Constants.Elevator.MinSpeed : -Constants.Elevator.MinSpeed) + Constants.Elevator.Kg; //Add the minimum speed to counteract friction, matching the sign of the PID speed
     speed = Math.min(Math.max(speed, -Constants.Elevator.MaxSpeed), Constants.Elevator.MaxSpeed); //Applying Speed Limits
     elevator.setMotor(speed); //applies the speed to the motor
 
