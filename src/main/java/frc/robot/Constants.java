@@ -13,6 +13,7 @@ public class Constants {
   public static final boolean smartEnable = true;
   public static final double ControllerDeadband = 0.05;
   public static final boolean VisionOdometry = false;
+  public static double MAX_SPEED = 5;
 
   public static final class DrivebaseConstants {
     public static final double WHEEL_LOCK_TIME = 100; // seconds
@@ -57,5 +58,4 @@ public class Constants {
     public static double robotWidth = 0.383;
   }
 
-  public static double MAX_SPEED = 5;
 }

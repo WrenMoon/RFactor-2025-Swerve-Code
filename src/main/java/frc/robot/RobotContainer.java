@@ -6,6 +6,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -39,7 +40,7 @@ public class RobotContainer {
         () -> -MathUtil.applyDeadband(Controller1.getRawAxis(1), Constants.ControllerDeadband),
         () -> -MathUtil.applyDeadband(Controller1.getRawAxis(0), Constants.ControllerDeadband),
         // () -> -MathUtil.applyDeadband(Controller1.getRawAxis(4), Constants.ControllerDeadband), false, true); //Control heading with right joystick
-        () -> ((Controller1.getRawButton(4))? 1 : 0) - ((Controller1.getRawButton(5))? 1 : 0), false, true); //Control heading with bumpers
+        () -> ((Controller1.getRawButton(5))? 1 : 0) - ((Controller1.getRawButton(6))? 1 : 0), false, true); //Control heading with bumpers
 
     //Default Elevator Command to move the elevator with one axis
     Command elevate = new rawElevatorCmd(elevator,
@@ -64,6 +65,7 @@ public class RobotContainer {
    * Configuring all the button bindings for all the joysticks
    */
   private void configureBindings() {
+    new JoystickButton(Controller1, 4).onTrue(Commands.runOnce(swerve::zeroGyro));
     new JoystickButton(Controller2, 1).whileTrue(new intakeCmd(intake, 0.2));
     new JoystickButton(Controller2, 4).whileTrue(new intakeCmd(intake, -0.2));
     new JoystickButton(Controller2, 2).whileTrue(new elevatorPosCmd(elevator, -100));

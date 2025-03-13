@@ -28,6 +28,7 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -135,6 +136,9 @@ public class SwerveSubsystem extends SubsystemBase {
                 swerveDrive.addVisionMeasurement(megaTagPose.pose, megaTagPose.timestampSeconds);
             }
         }
+        SmartDashboard.putNumber("MaxChassisVel", swerveDrive.getMaximumChassisVelocity());
+        SmartDashboard.putNumber("MaxModuleVel", swerveDrive.getMaximumModuleDriveVelocity());
+        SmartDashboard.putNumber("MaxAngularVel", swerveDrive.getMaximumChassisAngularVelocity());
     }
 
     /**
@@ -227,7 +231,7 @@ public class SwerveSubsystem extends SubsystemBase {
         PathConstraints constraints = new PathConstraints(
                 swerveDrive.getMaximumChassisVelocity(), 4.0,
                 swerveDrive.getMaximumChassisAngularVelocity(), Units.degreesToRadians(720));
-
+        
         // Since AutoBuilder is configured, we can use it to build pathfinding commands
         return AutoBuilder.pathfindToPose(
                 pose,
