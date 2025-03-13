@@ -79,11 +79,11 @@ public class Constants {
     public static Pose2d reef5 = new Pose2d(new Translation2d(Meter.of(12.335), Meter.of(2.521)), Rotation2d.fromDegrees(0));
     public static Pose2d reef6 = new Pose2d(new Translation2d(Meter.of(12.084), Meter.of(2.652)), Rotation2d.fromDegrees(0));
     public static Pose2d reef7 = new Pose2d(new Translation2d(Meter.of(11.4), Meter.of(3.875)), Rotation2d.fromDegrees(0));
-    public static Pose2d reef8 = new Pose2d(new Translation2d(Meter.of(1), Meter.of(1)), Rotation2d.fromDegrees(0));
-    public static Pose2d reef9 = new Pose2d(new Translation2d(Meter.of(1), Meter.of(1)), Rotation2d.fromDegrees(0));
-    public static Pose2d reef10 = new Pose2d(new Translation2d(Meter.of(1), Meter.of(1)), Rotation2d.fromDegrees(0));
-    public static Pose2d reef11 = new Pose2d(new Translation2d(Meter.of(1), Meter.of(1)), Rotation2d.fromDegrees(0));
-    public static Pose2d reef12 = new Pose2d(new Translation2d(Meter.of(1), Meter.of(1)), Rotation2d.fromDegrees(0));
+    public static Pose2d reef8 = new Pose2d(new Translation2d(Meter.of(11.376), Meter.of(4.163)), Rotation2d.fromDegrees(0));
+    public static Pose2d reef9 = new Pose2d(new Translation2d(Meter.of(12.108), Meter.of(5.41)), Rotation2d.fromDegrees(0));
+    public static Pose2d reef10 = new Pose2d(new Translation2d(Meter.of(12.395), Meter.of(5.541)), Rotation2d.fromDegrees(0));
+    public static Pose2d reef11 = new Pose2d(new Translation2d(Meter.of(13.762), Meter.of(5.541)), Rotation2d.fromDegrees(0));
+    public static Pose2d reef12 = new Pose2d(new Translation2d(Meter.of(14.026), Meter.of(5.398)), Rotation2d.fromDegrees(0));
   }
 
 }
