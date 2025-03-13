@@ -38,7 +38,7 @@ public class Constants {
     public static final double kd = 0.0007;
     public static final double Kg = 0.027;
     public static final double degreesPerEncoder = 180 / 22;
-    public static final double zeroEncoder = -13.6;
+    public static final double zeroEncoder = -15.1;
   }
 
   public static class Elevator {
