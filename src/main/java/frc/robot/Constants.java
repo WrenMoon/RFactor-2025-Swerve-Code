@@ -1,11 +1,16 @@
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import swervelib.math.Matter;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import static edu.wpi.first.units.Units.Meter;
 
-//A file to store all the constant values, offset, and other fixed numerical values and details of the robot
-
+/**
+ * A file to store all the constant values, offset, and other fixed numerical values and details of the robot
+ */
 public class Constants {
   public static final double ROBOT_MASS = 70;
   public static final Matter CHASSIS = new Matter(new Translation3d(-0.2, 0, Units.inchesToMeters(2)), ROBOT_MASS);
@@ -51,11 +56,34 @@ public class Constants {
     public static final double kd = 0.1;
   }
 
-  public static class Speaker {
-    public static double heightOfCam = Units.inchesToMeters(16);
-    public static double CamAngle = Units.degreesToRadians(28);
-    public static double heightOfAprilTag = 1.5;// 1.44855;
-    public static double robotWidth = 0.383;
+  public static class reefPosesBlue {
+    public static Pose2d reef1 = new Pose2d(new Translation2d(Meter.of(2.792), Meter.of(3.87)), Rotation2d.fromDegrees(0));
+    public static Pose2d reef2 = new Pose2d(new Translation2d(Meter.of(2.802), Meter.of(4.18)), Rotation2d.fromDegrees(0));
+    public static Pose2d reef3 = new Pose2d(new Translation2d(Meter.of(3.56), Meter.of(5.386)), Rotation2d.fromDegrees(0));
+    public static Pose2d reef4 = new Pose2d(new Translation2d(Meter.of(3.799), Meter.of(5.556)), Rotation2d.fromDegrees(0));
+    public static Pose2d reef5 = new Pose2d(new Translation2d(Meter.of(5.155), Meter.of(5.546)), Rotation2d.fromDegrees(0));
+    public static Pose2d reef6 = new Pose2d(new Translation2d(Meter.of(5.454), Meter.of(5.396)), Rotation2d.fromDegrees(0));
+    public static Pose2d reef7 = new Pose2d(new Translation2d(Meter.of(6.143), Meter.of(4.219)), Rotation2d.fromDegrees(0));
+    public static Pose2d reef8 = new Pose2d(new Translation2d(Meter.of(6.133), Meter.of(3.86)), Rotation2d.fromDegrees(0));
+    public static Pose2d reef9 = new Pose2d(new Translation2d(Meter.of(5.474), Meter.of(2.674)), Rotation2d.fromDegrees(0));
+    public static Pose2d reef10 = new Pose2d(new Translation2d(Meter.of(5.185), Meter.of(2.484)), Rotation2d.fromDegrees(0));
+    public static Pose2d reef11 = new Pose2d(new Translation2d(Meter.of(3.819), Meter.of(2.484)), Rotation2d.fromDegrees(0));
+    public static Pose2d reef12 = new Pose2d(new Translation2d(Meter.of(3.53), Meter.of(2.664)), Rotation2d.fromDegrees(0));
+  }
+
+  public static class reefPosesRed {
+    public static Pose2d reef1 = new Pose2d(new Translation2d(Meter.of(15.248), Meter.of(7.603)), Rotation2d.fromDegrees(0));
+    public static Pose2d reef2 = new Pose2d(new Translation2d(Meter.of(14.745), Meter.of(3.875)), Rotation2d.fromDegrees(0));
+    public static Pose2d reef3 = new Pose2d(new Translation2d(Meter.of(14.026), Meter.of(2.664)), Rotation2d.fromDegrees(0));
+    public static Pose2d reef4 = new Pose2d(new Translation2d(Meter.of(13.738), Meter.of(2.497)), Rotation2d.fromDegrees(0));
+    public static Pose2d reef5 = new Pose2d(new Translation2d(Meter.of(12.335), Meter.of(2.521)), Rotation2d.fromDegrees(0));
+    public static Pose2d reef6 = new Pose2d(new Translation2d(Meter.of(12.084), Meter.of(2.652)), Rotation2d.fromDegrees(0));
+    public static Pose2d reef7 = new Pose2d(new Translation2d(Meter.of(11.4), Meter.of(3.875)), Rotation2d.fromDegrees(0));
+    public static Pose2d reef8 = new Pose2d(new Translation2d(Meter.of(1), Meter.of(1)), Rotation2d.fromDegrees(0));
+    public static Pose2d reef9 = new Pose2d(new Translation2d(Meter.of(1), Meter.of(1)), Rotation2d.fromDegrees(0));
+    public static Pose2d reef10 = new Pose2d(new Translation2d(Meter.of(1), Meter.of(1)), Rotation2d.fromDegrees(0));
+    public static Pose2d reef11 = new Pose2d(new Translation2d(Meter.of(1), Meter.of(1)), Rotation2d.fromDegrees(0));
+    public static Pose2d reef12 = new Pose2d(new Translation2d(Meter.of(1), Meter.of(1)), Rotation2d.fromDegrees(0));
   }
 
 }
