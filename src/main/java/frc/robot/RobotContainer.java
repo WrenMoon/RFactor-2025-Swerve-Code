@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -15,6 +16,8 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 import java.io.File;
 import frc.robot.Commands.*;
+import frc.robot.Commands.pathfindAlign.leftAlign;
+import frc.robot.Commands.pathfindAlign.rightAlign;
 
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -28,7 +31,8 @@ public class RobotContainer {
   private final armSubsystem arm = new armSubsystem();
   private final intakeSubsystem intake = new intakeSubsystem();
   private final elevatorSubsystem elevator = new elevatorSubsystem();
-  final Joystick WakakeController = new Joystick(0);
+  // final Joystick WakakeController = new Joystick(0);
+  final CommandXboxController WakakeController = new CommandXboxController(0);
   // final Joystick AmaryanController = new Joystick(1);
   final CommandPS5Controller AmaryanController = new CommandPS5Controller(1);
 
@@ -38,12 +42,18 @@ public class RobotContainer {
 
     configureBindings();
 
-    //Default Swerve Command to drive with 3 axis
-    Command driveSwerve = swerve.driveCommand(
-        () -> MathUtil.applyDeadband(-WakakeController.getRawAxis(1) * ((WakakeController.getRawAxis(3)+ 1)/2) * Math.min((1 - WakakeController.getRawAxis(2)), 0.2), Constants.ControllerDeadband),
-        () -> MathUtil.applyDeadband(-WakakeController.getRawAxis(0) * ((WakakeController.getRawAxis(3)+ 1)/2) * Math.min((1 - WakakeController.getRawAxis(2)), 0.2), Constants.ControllerDeadband),
-        () -> MathUtil.applyDeadband(-WakakeController.getRawAxis(4) * ((WakakeController.getRawAxis(3)+ 1)/2) * Math.min((1 - WakakeController.getRawAxis(2)), 0.2), Constants.ControllerDeadband), false, true); //Control heading with right joystick
+    //Default Swerve Command to drive with 3 axis on Joystick
+    // Command driveSwerve = swerve.driveCommand(
+    //     () -> MathUtil.applyDeadband(-WakakeController.getRawAxis(1) * ((WakakeController.getRawAxis(3)+ 2)/3) * Math.max((1 - WakakeController.getRawAxis(2)), 0.2), Constants.ControllerDeadband),
+    //     () -> MathUtil.applyDeadband(-WakakeController.getRawAxis(0) * ((WakakeController.getRawAxis(3)+ 2)/3) * Math.max((1 - WakakeController.getRawAxis(2)), 0.2), Constants.ControllerDeadband),
+    //     () -> MathUtil.applyDeadband(-WakakeController.getRawAxis(4) * ((WakakeController.getRawAxis(3)+ 2)/3) * Math.max((1 - WakakeController.getRawAxis(2)), 0.2), Constants.ControllerDeadband), false, true); //Control heading with right joystick
         // () -> ((Controller1.getRawButton(5))? 1 : 0) - ((Controller1.getRawButton(6))? 1 : 0), false, true); //Control heading with bumpers
+
+    //Default Swerve Command to drive with 3 axis on XboxController
+    Command driveSwerve = swerve.driveCommand(
+        () -> MathUtil.applyDeadband(-WakakeController.getLeftX() * ((WakakeController.getRightTriggerAxis() + 2)/3) * Math.max((1 - WakakeController.getLeftTriggerAxis()), 0.2), Constants.ControllerDeadband),
+        () -> MathUtil.applyDeadband(-WakakeController.getLeftY() * ((WakakeController.getRightTriggerAxis() + 2)/3) * Math.max((1 - WakakeController.getLeftTriggerAxis()), 0.2), Constants.ControllerDeadband),
+        () -> MathUtil.applyDeadband(-WakakeController.getRightX() * ((WakakeController.getRightTriggerAxis() + 2)/3) * Math.max((1 - WakakeController.getLeftTriggerAxis()), 0.2), Constants.ControllerDeadband), false, true); //Control heading with right joystick
 
     //Default Elevator Command to move the elevator with one axis
     Command elevate = new rawElevatorCmd(elevator,
@@ -79,7 +89,11 @@ public class RobotContainer {
     SequentialCommandGroup L4 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelCommandGroup(new elevatorPosCmd(elevator, elevatorPoses.L4), new armPosCmd(arm, armPoses.L4, false)));
     SequentialCommandGroup L0 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, 0), new armPosCmd(arm, armPoses.zero, false));
 
-    new JoystickButton(WakakeController, 4).onTrue(Commands.runOnce(swerve::zeroGyro));
+    // new JoystickButton(WakakeController, 4).onTrue(Commands.runOnce(swerve::zeroGyro));
+    WakakeController.y().onTrue(Commands.runOnce(swerve::zeroGyro));
+    WakakeController.rightBumper().whileTrue(new rightAlign(swerve));
+    WakakeController.leftBumper().whileTrue(new leftAlign(swerve));
+
     // new JoystickButton(AmaryanController, 1).whileTrue(new intakeCmd(intake, 0.2));
     // new JoystickButton(AmaryanController, 4).whileTrue(new intakeCmd(intake, -0.2));
     // new JoystickButton(AmaryanController, 2).whileTrue(new elevatorPosCmd(elevator, -100));
@@ -93,7 +107,6 @@ public class RobotContainer {
     AmaryanController.triangle().onTrue(L4);
     AmaryanController.square().onTrue(L1);
     AmaryanController.povDown().onTrue(L0);
-
 
 
   }
