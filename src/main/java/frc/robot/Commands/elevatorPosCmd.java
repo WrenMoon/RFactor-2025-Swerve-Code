@@ -51,8 +51,8 @@ public class elevatorPosCmd extends Command {
       SmartDashboard.putNumber("Elevator Ks", ((speed > 0)? Constants.Elevator.MinSpeed : -Constants.Elevator.MinSpeed));
     }
 
-    if (Math.abs(elevator.getEncoder() - targetPose) < 1.5) { //endcase when setpoint achieved.
-      // endLoop = true;
+    if (Math.abs(elevator.getEncoder() - targetPose) < 1) { //endcase when setpoint achieved.
+      endLoop = true;
     }
 
   }

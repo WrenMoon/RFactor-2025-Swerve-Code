@@ -25,7 +25,7 @@ public class intakeSubsystem extends SubsystemBase {
    */
   public intakeSubsystem() {
 
-    config.idleMode(IdleMode.kCoast); //Setting the Config Idle mode to coast
+    config.idleMode(IdleMode.kBrake); //Setting the Config Idle mode to coast
     config.inverted(Constants.Intake.Invert); //Setting the invert as per the Constants file
     motor.configure(config, null, null);  //Applying the configuration to the SparkMax Motor
   }

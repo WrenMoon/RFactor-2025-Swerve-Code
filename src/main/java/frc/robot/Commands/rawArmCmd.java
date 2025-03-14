@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class rawArmCmd extends Command {
   private final armSubsystem arm;
   private DoubleSupplier speed;
+  private double finalSpeed;
 
   /**
    * A command to move the arm with at a certain power along with gravity
@@ -35,8 +36,16 @@ public class rawArmCmd extends Command {
 
     if ((speed.getAsDouble() > 0 && speed.getAsDouble() < Constants.Arm.poses.maxPose)
         || (speed.getAsDouble() < 0 && speed.getAsDouble() > Constants.Arm.poses.minPose)) {
-      arm.setMotor(speed.getAsDouble() + Constants.Arm.Kg * Math.cos(Math.toRadians(arm.getDegrees()))); // Apply the motor speed correction
+      finalSpeed =(speed.getAsDouble() + Constants.Arm.Kg * Math.cos(Math.toRadians(arm.getDegrees()))); // Apply the motor speed correction
+    } else{
+      finalSpeed =(Constants.Arm.Kg * Math.cos(Math.toRadians(arm.getDegrees())));
     }
+
+    if(arm.getDegrees() > 85){
+      finalSpeed = finalSpeed - 0.013;
+    }
+
+    arm.setMotor(finalSpeed);
 
     // Smartdashboard for debugging
     if (Constants.smartEnable) {

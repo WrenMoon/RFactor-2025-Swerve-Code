@@ -31,9 +31,11 @@ public class rawElevatorCmd extends Command {
   @Override
   public void execute() {
 
-    if ((speed.getAsDouble() > 0 && speed.getAsDouble() < Constants.Elevator.poses.maxPose)
-        || (speed.getAsDouble() < 0 && speed.getAsDouble() > Constants.Elevator.poses.minPose)) {
+    if ((speed.getAsDouble() > 0 && elevator.getEncoder() < Constants.Elevator.poses.maxPose)
+        || (speed.getAsDouble() < 0 && elevator.getEncoder() > Constants.Elevator.poses.minPose)) {
       elevator.setMotor(speed.getAsDouble() + Constants.Elevator.Kg); // Apply the speed to the motor
+    } else{
+      elevator.setMotor(0);
     }
 
     // Smardashboard for debugging
