@@ -35,17 +35,17 @@ public class leftAlign extends Command {
       if (Math.abs(heading - 0) < 30 ){
         swerve.driveToPose(Constants.reefPosesBlue.reef2, 0);
       } else if(Math.abs(heading - -60) < 30 ){
-        swerve.driveToPose(Constants.reefPosesBlue.reef4, 0);
+        swerve.driveToPose(Constants.reefPosesBlue.reef4, 0).schedule();
       } else if(Math.abs(heading - -120) < 30 ){
-        swerve.driveToPose(Constants.reefPosesBlue.reef6, 0);
+        swerve.driveToPose(Constants.reefPosesBlue.reef6, 0).schedule();
       } else if(Math.abs(heading - -180) < 30 ){
-        swerve.driveToPose(Constants.reefPosesBlue.reef8, 0);
+        swerve.driveToPose(Constants.reefPosesBlue.reef8, 0).schedule();
       } else if(Math.abs(heading - 180) < 30 ){
-        swerve.driveToPose(Constants.reefPosesBlue.reef8, 0);
+        swerve.driveToPose(Constants.reefPosesBlue.reef8, 0).schedule();
       } else if(Math.abs(heading - 120) < 30 ){
-        swerve.driveToPose(Constants.reefPosesBlue.reef10, 0);
+        swerve.driveToPose(Constants.reefPosesBlue.reef10, 0).schedule();
       } else if(Math.abs(heading - 60) < 30 ){
-        swerve.driveToPose(Constants.reefPosesBlue.reef12, 0);
+        swerve.driveToPose(Constants.reefPosesBlue.reef12, 0).schedule();
       }
     } else{
       if (Math.abs(heading - 0) < 30 ){

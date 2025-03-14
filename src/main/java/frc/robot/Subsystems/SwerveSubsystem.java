@@ -236,7 +236,7 @@ public class SwerveSubsystem extends SubsystemBase {
       return AutoBuilder.pathfindToPose(
           pose,
           constraints,
-          edu.wpi.first.units.Units.MetersPerSecond.of(0) // Goal end velocity in meters/sec
+          edu.wpi.first.units.Units.MetersPerSecond.of(endVelocity) // Goal end velocity in meters/sec
                                        );
     }
 

@@ -1,6 +1,9 @@
 package frc.robot;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS5Controller;
@@ -12,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import static edu.wpi.first.units.Units.Meter;
 
 
 import java.io.File;
@@ -91,7 +95,7 @@ public class RobotContainer {
     SequentialCommandGroup L3 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, elevatorPoses.L3));
     SequentialCommandGroup L4 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, elevatorPoses.L4));
     // SequentialCommandGroup L0 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, 0), new armPosCmd(arm, armPoses.zero, false));
-    SequentialCommandGroup L0 = new SequentialCommandGroup(new ParallelDeadlineGroup(new elevatorPosCmd(elevator, 0), new armPosCmd(arm, armPoses.elevate, true)), new armPosCmd(arm, armPoses.zero, false));
+    SequentialCommandGroup L0 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, 0), new armPosCmd(arm, armPoses.elevate, true)), new armPosCmd(arm, armPoses.zero, false));
     
 
     NamedCommands.registerCommand("L4", L4);
@@ -100,8 +104,9 @@ public class RobotContainer {
     // WakakeController.rightBumper().whileTrue(new rightAlign(swerve));
     // WakakeController.leftBumper().whileTrue(new leftAlign(swerve));
     WakakeController.triangle().onTrue(Commands.runOnce(swerve::zeroGyro));
-    WakakeController.R1().whileTrue(new rightAlign(swerve));
-    WakakeController.L1().whileTrue(new leftAlign(swerve));
+    // WakakeController.R1().whileTrue(new rightAlign(swerve));
+    // WakakeController.R1().onTrue(swerve.driveToPose(new Pose2d(new Translation2d(Meter.of(5), Meter.of(5)), Rotation2d.fromDegrees(0)),0));
+    // WakakeController.L1().whileTrue(new leftAlign(swerve));
 
     AmaryanController.R2().whileTrue(new intakeCmd(intake, 0.3));
     AmaryanController.L2().whileTrue(new intakeCmd(intake, 0.6));

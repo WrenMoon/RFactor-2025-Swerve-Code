@@ -42,7 +42,7 @@ public class rawArmCmd extends Command {
     }
 
     if(arm.getDegrees() > 85){
-      finalSpeed = finalSpeed - 0.013;
+      finalSpeed = finalSpeed - 0.007;
     }
 
     arm.setMotor(finalSpeed);
