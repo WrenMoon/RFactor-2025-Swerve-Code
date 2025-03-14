@@ -36,6 +36,7 @@ public class rightAlign extends Command {
     if (allianceBlue){
       if (Math.abs(heading - 0) < 30 ){
         swerve.driveToPose(Constants.reefPosesBlue.reef1, 0);
+        SmartDashboard.putBoolean("DrivingToPose", true);
       } else if(Math.abs(heading - -60) < 30 ){
         swerve.driveToPose(Constants.reefPosesBlue.reef3, 0);
       } else if(Math.abs(heading - -120) < 30 ){
