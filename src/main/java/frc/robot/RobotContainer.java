@@ -33,12 +33,10 @@ public class RobotContainer {
   private final elevatorSubsystem elevator = new elevatorSubsystem();
   // final Joystick WakakeController = new Joystick(0);
   final CommandXboxController WakakeController = new CommandXboxController(0);
-  // final Joystick AmaryanController = new Joystick(1);
-  final CommandPS5Controller AmaryanController = new CommandPS5Controller(1);
+  final Joystick AmaryanController = new Joystick(1);
+  // final CommandPS5Controller AmaryanController = new CommandPS5Controller(1);
 
   public RobotContainer() {
-
-    // NamedCommands.registerCommand("intakeCmd", new intakeCmd(intake, loader, 0.8, 0.4));
 
     configureBindings();
 
@@ -89,24 +87,25 @@ public class RobotContainer {
     SequentialCommandGroup L4 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelCommandGroup(new elevatorPosCmd(elevator, elevatorPoses.L4), new armPosCmd(arm, armPoses.L4, false)));
     SequentialCommandGroup L0 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, 0), new armPosCmd(arm, armPoses.zero, false));
 
-    // new JoystickButton(WakakeController, 4).onTrue(Commands.runOnce(swerve::zeroGyro));
+    NamedCommands.registerCommand("L4", L4);
+
     WakakeController.y().onTrue(Commands.runOnce(swerve::zeroGyro));
     WakakeController.rightBumper().whileTrue(new rightAlign(swerve));
     WakakeController.leftBumper().whileTrue(new leftAlign(swerve));
 
-    // new JoystickButton(AmaryanController, 1).whileTrue(new intakeCmd(intake, 0.2));
-    // new JoystickButton(AmaryanController, 4).whileTrue(new intakeCmd(intake, -0.2));
-    // new JoystickButton(AmaryanController, 2).whileTrue(new elevatorPosCmd(elevator, -100));
-    // new JoystickButton(AmaryanController, 3).whileTrue(new armPosCmd(arm, 0, true));
-    // new JoystickButton(AmaryanController, 5).onTrue(swerve.getAutonomousCommand("Test Auto"));
-    AmaryanController.axisGreaterThan(3, Constants.ControllerDeadband).whileTrue(new intakeCmd(intake, AmaryanController.getR2Axis()));
-    AmaryanController.axisGreaterThan(2, Constants.ControllerDeadband).whileTrue(new intakeCmd(intake, -AmaryanController.getL2Axis()));
-    AmaryanController.povUp().onTrue(new armPosCmd(arm, armPoses.algae, false));
-    AmaryanController.cross().onTrue(L2);
-    AmaryanController.circle().onTrue(L3);
-    AmaryanController.triangle().onTrue(L4);
-    AmaryanController.square().onTrue(L1);
-    AmaryanController.povDown().onTrue(L0);
+    new JoystickButton(AmaryanController, 1).whileTrue(new intakeCmd(intake, 0.2));
+    new JoystickButton(AmaryanController, 4).whileTrue(new intakeCmd(intake, -0.2));
+    new JoystickButton(AmaryanController, 2).whileTrue(new elevatorPosCmd(elevator, -100));
+    new JoystickButton(AmaryanController, 3).whileTrue(new armPosCmd(arm, 125, true));
+
+    // AmaryanController.axisGreaterThan(3, Constants.ControllerDeadband).whileTrue(new intakeCmd(intake, AmaryanController.getR2Axis()));
+    // AmaryanController.axisGreaterThan(2, Constants.ControllerDeadband).whileTrue(new intakeCmd(intake, -AmaryanController.getL2Axis()));
+    // AmaryanController.povUp().onTrue(new armPosCmd(arm, armPoses.algae, false));
+    // AmaryanController.cross().onTrue(L2);
+    // AmaryanController.circle().onTrue(L3);
+    // AmaryanController.triangle().onTrue(L4);
+    // AmaryanController.square().onTrue(L1);
+    // AmaryanController.povDown().onTrue(L0);
 
 
   }
