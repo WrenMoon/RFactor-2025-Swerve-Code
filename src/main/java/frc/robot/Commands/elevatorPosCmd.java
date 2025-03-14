@@ -47,11 +47,12 @@ public class elevatorPosCmd extends Command {
       SmartDashboard.putBoolean("elevatorPosCmd", true);
       SmartDashboard.putNumber("Elevator encoder", elevator.getEncoder());
       SmartDashboard.putNumber("Elevator Target Pose", targetPose);
-      SmartDashboard.putNumber("ELevator speed", speed);
+      SmartDashboard.putNumber("ELevator PID speed", speed);
+      SmartDashboard.putNumber("Elevator Ks", ((speed > 0)? Constants.Elevator.MinSpeed : -Constants.Elevator.MinSpeed));
     }
 
-    if (Math.abs(elevator.getEncoder() - targetPose) < 7) { //endcase when setpoint achieved.
-      endLoop = true;
+    if (Math.abs(elevator.getEncoder() - targetPose) < 1.5) { //endcase when setpoint achieved.
+      // endLoop = true;
     }
 
   }

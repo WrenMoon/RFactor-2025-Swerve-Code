@@ -31,7 +31,7 @@ public class rawElevatorCmd extends Command {
   @Override
   public void execute() {
 
-    elevator.setMotor(speed.getAsDouble()); //Apply the speed to the motor
+    elevator.setMotor(speed.getAsDouble() + Constants.Elevator.Kg); //Apply the speed to the motor
 
     //Smardashboard for debugging
     if (Constants.smartEnable) {

@@ -69,7 +69,7 @@ public class RobotContainer {
     elevator.setDefaultCommand(elevate);
     swerve.setDefaultCommand(driveSwerve);
     arm.setDefaultCommand(moveArm);
-    intake.setDefaultCommand(holdCoral);
+    // intake.setDefaultCommand(holdCoral);
   }
 
   /**
@@ -94,8 +94,8 @@ public class RobotContainer {
     WakakeController.leftBumper().whileTrue(new leftAlign(swerve));
 
     new JoystickButton(AmaryanController, 1).whileTrue(new intakeCmd(intake, 0.2));
-    new JoystickButton(AmaryanController, 4).whileTrue(new intakeCmd(intake, -0.2));
-    new JoystickButton(AmaryanController, 2).whileTrue(new elevatorPosCmd(elevator, -100));
+    new JoystickButton(AmaryanController, 4).whileTrue(new intakeCmd(intake, 0.8));
+    new JoystickButton(AmaryanController, 2).whileTrue(new elevatorPosCmd(elevator, 100));
     new JoystickButton(AmaryanController, 3).whileTrue(new armPosCmd(arm, 125, true));
 
     // AmaryanController.axisGreaterThan(3, Constants.ControllerDeadband).whileTrue(new intakeCmd(intake, AmaryanController.getR2Axis()));

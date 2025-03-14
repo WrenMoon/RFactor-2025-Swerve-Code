@@ -48,8 +48,8 @@ public class Constants {
     public static class poses {
       public final double zero = 123;
       public final double elevate = 85;
-      public final double L1 = 0;
-      public final double L2 = 0;
+      public final double L1 = 80;
+      public final double L2 = 80;
       public final double L4 = 0;
       public final double algae = 0;
     }
@@ -59,11 +59,11 @@ public class Constants {
     public static final int elevatorLeft = 10;
     public static final int elevatorRight = 9;
     public static final double MaxSpeed = 1;
-    public static final double MinSpeed = 0;
+    public static final double MinSpeed = 0.01;
     public static final boolean rightInvert = false;
-    public static final double kp = 0.1;
-    public static final double kd = 0.1;
-    public static final double Kg = 0.1;
+    public static final double kp = 0.045;
+    public static final double kd = 0.005;
+    public static final double Kg = 0.01;
 
     public static class poses {
       public final double L1 = 0;

@@ -10,6 +10,7 @@ public class intakeCmd extends Command {
   private final double intakeSpeed;
   private boolean endLoop = false;
   private double loopCounter = 0;
+  private boolean limitStart = false;
 
   /**
    * A Command to move the intake at the input speed.
@@ -28,6 +29,7 @@ public class intakeCmd extends Command {
     //Initialise endLoop and loopCounter
     endLoop = false;
     loopCounter = 0;
+    limitStart = Intake.getLimitSwitch();
   }
 
   @Override
@@ -37,7 +39,8 @@ public class intakeCmd extends Command {
 
     //Smartdashboard for debugging
     if (Constants.smartEnable) {
-      SmartDashboard.putBoolean("Intake", true);
+      SmartDashboard.putBoolean("IntakeCmd", true);
+      SmartDashboard.putBoolean("Limit Start", limitStart);
     }
 
     //start the delay counter if the switch is pressed
@@ -47,14 +50,20 @@ public class intakeCmd extends Command {
     }
 
     //if the required time delay(counter)is met, set endLoop to true
-    if (loopCounter == Constants.Intake.waitCount){ 
+    if (loopCounter == Constants.Intake.waitCount && !limitStart){ 
       endLoop = true;
+      if (Constants.smartEnable){
+        SmartDashboard.putBoolean("IntakeCmd", false);
+      }
     }
   }
 
   @Override
   public void end(boolean interrupted) {
     Intake.setMotor(0);
+    if (Constants.smartEnable){
+      SmartDashboard.putBoolean("IntakeCmd", false);
+    }
   }
 
   @Override
