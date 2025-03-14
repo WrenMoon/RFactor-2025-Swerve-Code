@@ -13,10 +13,11 @@ public class rawArmCmd extends Command {
   private DoubleSupplier speed;
 
   /**
-   * A command to move the arm with at a certain power along with gravity compensation feedforawrd.
+   * A command to move the arm with at a certain power along with gravity
+   * compensation feedforawrd.
    * 
    * @param subsystem the arm subsystem to move
-   * @param speed the speed to move the arm at
+   * @param speed     the speed to move the arm at
    */
   public rawArmCmd(armSubsystem subsystem, DoubleSupplier speed) {
     this.arm = subsystem;
@@ -31,10 +32,14 @@ public class rawArmCmd extends Command {
 
   @Override
   public void execute() {
-    arm.setMotor(speed.getAsDouble() + Constants.Arm.Kg * Math.cos(Math.toRadians(arm.getDegrees()))); //Apply the motor speed with the gravity correction
 
-    //Smartdashboard for debugging
-    if (Constants.smartEnable){
+    if ((speed.getAsDouble() > 0 && speed.getAsDouble() < Constants.Arm.poses.maxPose)
+        || (speed.getAsDouble() < 0 && speed.getAsDouble() > Constants.Arm.poses.minPose)) {
+      arm.setMotor(speed.getAsDouble() + Constants.Arm.Kg * Math.cos(Math.toRadians(arm.getDegrees()))); // Apply the motor speed correction
+    }
+
+    // Smartdashboard for debugging
+    if (Constants.smartEnable) {
       SmartDashboard.putBoolean("rawArmCmd", false);
       SmartDashboard.putNumber("Arm encoder", arm.getEncoder());
       SmartDashboard.putNumber("Arm speed", speed.getAsDouble());
@@ -48,14 +53,14 @@ public class rawArmCmd extends Command {
   public void end(boolean interrupted) {
     arm.setMotor(0);
 
-    //Smartdashboard for debugging
-    if (Constants.smartEnable){
+    // Smartdashboard for debugging
+    if (Constants.smartEnable) {
       SmartDashboard.putBoolean("rawArmCmd", false);
     }
   }
 
   @Override
   public boolean isFinished() {
-    return false; //runs until interupted by the command scheduler
+    return false; // runs until interupted by the command scheduler
   }
 }

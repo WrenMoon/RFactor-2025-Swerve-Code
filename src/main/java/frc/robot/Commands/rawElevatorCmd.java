@@ -11,12 +11,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class rawElevatorCmd extends Command {
   private final elevatorSubsystem elevator;
   private final DoubleSupplier speed;
-  
+
   /**
    * A command to move the elevator with at a certain power
    * 
    * @param elevator the elevator subsystem to move
-   * @param speed the speed to move the elevator at
+   * @param speed    the speed to move the elevator at
    */
   public rawElevatorCmd(elevatorSubsystem elevator, DoubleSupplier speed) {
     this.elevator = elevator;
@@ -31,9 +31,12 @@ public class rawElevatorCmd extends Command {
   @Override
   public void execute() {
 
-    elevator.setMotor(speed.getAsDouble() + Constants.Elevator.Kg); //Apply the speed to the motor
+    if ((speed.getAsDouble() > 0 && speed.getAsDouble() < Constants.Elevator.poses.maxPose)
+        || (speed.getAsDouble() < 0 && speed.getAsDouble() > Constants.Elevator.poses.minPose)) {
+      elevator.setMotor(speed.getAsDouble() + Constants.Elevator.Kg); // Apply the speed to the motor
+    }
 
-    //Smardashboard for debugging
+    // Smardashboard for debugging
     if (Constants.smartEnable) {
       SmartDashboard.putBoolean("rawElevatorCmd", true);
       SmartDashboard.putNumber("Elevator encoder", elevator.getEncoder());
@@ -45,7 +48,7 @@ public class rawElevatorCmd extends Command {
   public void end(boolean interrupted) {
     elevator.setMotor(0);
 
-    //Smartdashboard for debugging
+    // Smartdashboard for debugging
     if (Constants.smartEnable) {
       SmartDashboard.putBoolean("rawElevatorCmd", false);
 
@@ -54,6 +57,6 @@ public class rawElevatorCmd extends Command {
 
   @Override
   public boolean isFinished() {
-    return false; //runs until interupted by the command scheduler
+    return false; // runs until interupted by the command scheduler
   }
 }

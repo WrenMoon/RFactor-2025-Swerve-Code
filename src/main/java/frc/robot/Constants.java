@@ -52,6 +52,8 @@ public class Constants {
       public final double L2 = 80;
       public final double L4 = 0;
       public final double algae = 0;
+      public static final double maxPose = 123;
+      public static final double minPose = -90;
     }
   }
 
@@ -70,6 +72,8 @@ public class Constants {
       public final double L2 = 0;
       public final double L3 = 0;
       public final double L4 = 435;
+      public final static double maxPose = 435;
+      public final static double minPose = 0;
     }
   }
 
