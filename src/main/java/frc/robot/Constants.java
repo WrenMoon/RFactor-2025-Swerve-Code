@@ -40,7 +40,7 @@ public class Constants {
     public static final double MinPose = 0;
     public static final double MaxSpeed = 0.7;
     public static final double kp = 0.007;
-    public static final double kd = 0.0007;
+    public static final double kd = 0.001;
     public static final double Kg = 0.027;
     public static final double degreesPerEncoder = 180 / 22;
     public static final double zeroEncoder = -15.1;
@@ -70,8 +70,8 @@ public class Constants {
       public final double L1 = 0;
       public final double L2 = 62;
       public final double L3 = 205;
-      public final double L4 = 430;
-      public final static double maxPose = 450;
+      public final double L4 = 436;
+      public final static double maxPose = 436;
       public final static double minPose = 5;
     }
   }

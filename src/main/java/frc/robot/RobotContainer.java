@@ -1,8 +1,6 @@
 package frc.robot;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS5Controller;
@@ -12,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 
@@ -90,8 +89,10 @@ public class RobotContainer {
     SequentialCommandGroup L1 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, elevatorPoses.L1), new armPosCmd(arm, armPoses.L1, false));
     SequentialCommandGroup L2 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, elevatorPoses.L2));
     SequentialCommandGroup L3 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, elevatorPoses.L3));
-    SequentialCommandGroup L4 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, elevatorPoses.L4), new armPosCmd(arm, armPoses.L4, false));
-    SequentialCommandGroup L0 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, 0), new armPosCmd(arm, armPoses.zero, false));
+    SequentialCommandGroup L4 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, elevatorPoses.L4));
+    // SequentialCommandGroup L0 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, 0), new armPosCmd(arm, armPoses.zero, false));
+    SequentialCommandGroup L0 = new SequentialCommandGroup(new ParallelDeadlineGroup(new elevatorPosCmd(elevator, 0), new armPosCmd(arm, armPoses.elevate, true)), new armPosCmd(arm, armPoses.zero, false));
+    
 
     NamedCommands.registerCommand("L4", L4);
 
@@ -112,6 +113,8 @@ public class RobotContainer {
     AmaryanController.triangle().onTrue(L4);
     AmaryanController.square().onTrue(L1);
     AmaryanController.povDown().onTrue(L0);
+
+    AmaryanController.povLeft().whileTrue(new armPosCmd(arm, 0, true));
   }
 
   /**
