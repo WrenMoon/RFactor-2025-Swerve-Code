@@ -76,6 +76,14 @@ public class Constants {
     }
   }
 
+  public static class CV {
+    public static final double kp = 0.001;
+    public static final double kd = 0.001;
+    public static final double MaxSpeed = 0.2;
+    public static final double leftAngle = 0;
+    public static final double rightAngle = 0;
+  }
+
   public static class reefPosesBlue {
     public static Pose2d reef1 = new Pose2d(new Translation2d(Meter.of(2.792), Meter.of(3.87)), Rotation2d.fromDegrees(0));
     public static Pose2d reef2 = new Pose2d(new Translation2d(Meter.of(2.802), Meter.of(4.18)), Rotation2d.fromDegrees(0));
