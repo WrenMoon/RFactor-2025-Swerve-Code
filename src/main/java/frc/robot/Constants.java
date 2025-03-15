@@ -17,7 +17,7 @@ public class Constants {
   public static final double LOOP_TIME = 0.13; // s, 20ms + 110ms sprk max velocity lag
   public static final boolean smartEnable = true;
   public static final double ControllerDeadband = 0.05;
-  public static final boolean VisionOdometry = false;
+  public static final boolean VisionOdometry = true;
   public static double MAX_SPEED = 5;
 
   public static final class DrivebaseConstants {

@@ -19,7 +19,7 @@ import com.pathplanner.lib.util.swerve.SwerveSetpoint;
 import com.pathplanner.lib.util.swerve.SwerveSetpointGenerator;
 import com.studica.frc.AHRS;
 import frc.robot.LimelightHelpers;
-
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -132,11 +132,16 @@ public class SwerveSubsystem extends SubsystemBase {
             if (!(Math.abs(navx.getRate()) > 360 || megaTagPose.tagCount == 0)) // if our angular velocity is greater
                                                                                 // than 360 degrees per second, ignore
                                                                                 // vision updates
-            {
+            {   
+                swerveDrive.setVisionMeasurementStdDevs(VecBuilder.fill(.7,.7,9999999));
                 swerveDrive.addVisionMeasurement(megaTagPose.pose, megaTagPose.timestampSeconds);
                 SmartDashboard.putBoolean("visionOdometry", true);
+                SmartDashboard.putBoolean("UpdatingVision", true);
                 // ("VisionPose", megaTagPose.pose);
             }
+
+            SmartDashboard.putNumber("MegaTagCount", megaTagPose.tagCount);
+            SmartDashboard.putNumber("NavX rate", navx.getRate());
         }
     }
 
