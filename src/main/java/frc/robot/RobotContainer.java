@@ -77,8 +77,9 @@ public class RobotContainer {
     NamedCommands.registerCommand("L4", L4);
 
     WakakeController.triangle().onTrue(Commands.runOnce(swerve::zeroGyro));
-    WakakeController.R1().whileTrue(swerve.driveToPose(getTargetPose(false, swerve.getHeading().getDegrees()), 0));
-    WakakeController.L1().whileTrue(swerve.driveToPose(getTargetPose(true, swerve.getHeading().getDegrees()), 0));
+    // WakakeController.R1().whileTrue(swerve.driveToPose(getTargetPose(false, swerve.getHeading().getDegrees()), 0));
+    // WakakeController.L1().whileTrue(swerve.driveToPose(getTargetPose(true, swerve.getHeading().getDegrees()), 0));
+    WakakeController.cross().whileTrue(new reefAlign(swerve, true, Constants.CV.leftAngle));
 
     AmaryanController.R2().whileTrue(new intakeCmd(intake, 0.3));
     AmaryanController.L2().whileTrue(new intakeCmd(intake, 0.6));

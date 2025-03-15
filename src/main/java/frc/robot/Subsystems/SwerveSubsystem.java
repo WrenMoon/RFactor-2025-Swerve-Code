@@ -97,11 +97,11 @@ public class SwerveSubsystem extends SubsystemBase {
         // swerveDrive.pushOffsetsToEncoders(); // Set the absolute encoder to be used
         // over the internal encoder and push the offsets onto it. Throws warning if not
         // possible
-        if (Constants.VisionOdometry) {
-            // Stop the odometry thread if we are using vision that way we can synchronize
-            // updates better.
-            swerveDrive.stopOdometryThread();
-        }
+        // if (Constants.VisionOdometry) {
+        //     // Stop the odometry thread if we are using vision that way we can synchronize
+        //     // updates better.
+        //     swerveDrive.stopOdometryThread();
+        // }
         setupPathPlanner();
     }
 
@@ -129,7 +129,8 @@ public class SwerveSubsystem extends SubsystemBase {
 
             LimelightHelpers.PoseEstimate megaTagPose = LimelightHelpers
                     .getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
-            if (!(Math.abs(navx.getRate()) > 360 || megaTagPose.tagCount == 0)) // if our angular velocity is greater
+            if (megaTagPose != null){
+                    if (!(Math.abs(navx.getRate()) > 360 || megaTagPose.tagCount == 0)) // if our angular velocity is greater
                                                                                 // than 360 degrees per second, ignore
                                                                                 // vision updates
             {   
@@ -137,12 +138,19 @@ public class SwerveSubsystem extends SubsystemBase {
                 swerveDrive.addVisionMeasurement(megaTagPose.pose, megaTagPose.timestampSeconds);
                 SmartDashboard.putBoolean("visionOdometry", true);
                 SmartDashboard.putBoolean("UpdatingVision", true);
-                // ("VisionPose", megaTagPose.pose);
-            }
+                SmartDashboard.putNumber("VisionX:", megaTagPose.pose.getX());
+                SmartDashboard.putNumber("VisionY:", megaTagPose.pose.getY());
+                SmartDashboard.putNumber("VisionRotation:", megaTagPose.pose.getRotation().getDegrees());
 
+            }
+            // ("VisionPose", megaTagPose.pose);
             SmartDashboard.putNumber("MegaTagCount", megaTagPose.tagCount);
+        }
+
             SmartDashboard.putNumber("NavX rate", navx.getRate());
         }
+
+        // swerveDrive.addVisionMeasurement(new Pose2d(3,3,Rotation2d.fromDegrees(65)), Timer.getFPGATimestamp());
     }
 
     /**

@@ -42,20 +42,23 @@ public class reefAlign extends Command {
     @Override
     public void execute() {
 
-        LimelightHelpers.LimelightResults llresults = LimelightHelpers.getLatestResults("");
+        LimelightHelpers.LimelightResults llresults = LimelightHelpers.getLatestResults("limelight");
 
         if (llresults != null) {
 
-            double speed = PIDcv.calculate(LimelightHelpers.getTX(""));
+            double speed = PIDcv.calculate(LimelightHelpers.getTX("limelight"));
 
-            if ((Math.abs(targetAngle - LimelightHelpers.getTX("")) < 0.05) && !holdPID) {
+            if ((Math.abs(targetAngle - LimelightHelpers.getTX("limelight")) < 0.05) && !holdPID) {
                 endLoop = true;
             }
 
-            swerve.drive(new Translation2d(0, speed), 0, false);
+            // swerve.drive(new Translation2d(0, speed), 0, false);
 
             if (Constants.smartEnable) {
-                SmartDashboard.putNumber("Reef Tag TX", LimelightHelpers.getTX(""));
+                SmartDashboard.putNumber("Reef Tag TX limelight", LimelightHelpers.getTX("limelight"));
+                SmartDashboard.putNumber("Reef Tag TX nothing", LimelightHelpers.getTX(""));
+                SmartDashboard.putNumber("Reef Tag TX MainPipeline", LimelightHelpers.getTX("MainPipeline"));
+
                 SmartDashboard.putNumber("Reef Align Correction", speed);
                 SmartDashboard.putBoolean("ReefAlign", true);
             }

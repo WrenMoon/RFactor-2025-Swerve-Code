@@ -25,6 +25,7 @@ public class elevatorSubsystem extends SubsystemBase {
     leftConfig.idleMode(IdleMode.kBrake); //Setting the Config Idle mode to brake for the left motor
     rightConfig.idleMode(IdleMode.kBrake); //Setting the Config Idle mode to brake for the right motor
     rightConfig.inverted(Constants.Elevator.rightInvert); //Setting the invert for the right motor as per the Constants file
+    leftConfig.inverted(Constants.Elevator.leftInvert); //Setting the invert for the left motor as per the Constants file
     // leftConfig.follow(motorRight, false); //Setting the Config of the left motor to follow the right motor
 
     motorLeft.configure(leftConfig, null, null); //Applying the configuration for the left SparkMax Motor

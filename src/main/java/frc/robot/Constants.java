@@ -62,6 +62,7 @@ public class Constants {
     public static final double MaxSpeed = 1;
     public static final double MinSpeed = 0.01;
     public static final boolean rightInvert = false;
+    public static final boolean leftInvert = true;
     public static final double kp = 0.045;
     public static final double kd = 0.005;
     public static final double Kg = 0.01;
@@ -71,10 +72,12 @@ public class Constants {
       public final double L2 = 62;
       public final double L3 = 205;
       public final double L4 = 436;
-      public final static double maxPose = 436;
-      public final static double minPose = 5;
+      // public final static double maxPose = 436;
+      // public final static double minPose = 5;
+      public final static double maxPose = 5000;
+      public final static double minPose = -5000;
     }
-  }
+   }
 
   public static class CV {
     public static final double kp = 0.001;
