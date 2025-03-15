@@ -47,17 +47,17 @@ public class reefAlign extends Command {
         if (llresults != null) {
 
             double speed = PIDcv.calculate(LimelightHelpers.getTX("limelight"));
+            speed = Math.min(Math.max(speed, -Constants.CV.MaxSpeed), Constants.CV.MaxSpeed); //Applying Speed Limits
+            
 
-            if ((Math.abs(targetAngle - LimelightHelpers.getTX("limelight")) < 0.05) && !holdPID) {
+            if ((Math.abs(targetAngle - LimelightHelpers.getTX("limelight")) < 0.5) && !holdPID) {
                 endLoop = true;
             }
 
             // swerve.drive(new Translation2d(0, speed), 0, false);
 
             if (Constants.smartEnable) {
-                SmartDashboard.putNumber("Reef Tag TX limelight", LimelightHelpers.getTX("limelight"));
-                SmartDashboard.putNumber("Reef Tag TX nothing", LimelightHelpers.getTX(""));
-                SmartDashboard.putNumber("Reef Tag TX MainPipeline", LimelightHelpers.getTX("MainPipeline"));
+                SmartDashboard.putNumber("Reef Tag TX", LimelightHelpers.getTX("limelight"));
 
                 SmartDashboard.putNumber("Reef Align Correction", speed);
                 SmartDashboard.putBoolean("ReefAlign", true);

@@ -97,11 +97,6 @@ public class SwerveSubsystem extends SubsystemBase {
         // swerveDrive.pushOffsetsToEncoders(); // Set the absolute encoder to be used
         // over the internal encoder and push the offsets onto it. Throws warning if not
         // possible
-        // if (Constants.VisionOdometry) {
-        //     // Stop the odometry thread if we are using vision that way we can synchronize
-        //     // updates better.
-        //     swerveDrive.stopOdometryThread();
-        // }
         setupPathPlanner();
     }
 
@@ -136,18 +131,23 @@ public class SwerveSubsystem extends SubsystemBase {
             {   
                 swerveDrive.setVisionMeasurementStdDevs(VecBuilder.fill(.7,.7,9999999));
                 swerveDrive.addVisionMeasurement(megaTagPose.pose, megaTagPose.timestampSeconds);
-                SmartDashboard.putBoolean("visionOdometry", true);
-                SmartDashboard.putBoolean("UpdatingVision", true);
-                SmartDashboard.putNumber("VisionX:", megaTagPose.pose.getX());
-                SmartDashboard.putNumber("VisionY:", megaTagPose.pose.getY());
-                SmartDashboard.putNumber("VisionRotation:", megaTagPose.pose.getRotation().getDegrees());
 
-            }
-            // ("VisionPose", megaTagPose.pose);
-            SmartDashboard.putNumber("MegaTagCount", megaTagPose.tagCount);
+                    if (Constants.smartEnable){
+                        SmartDashboard.putBoolean("visionOdometry", true);
+                    }
+                }
+                
+                if(Constants.VisionOdometry){
+                    SmartDashboard.putNumber("VisionX:", megaTagPose.pose.getX());
+                    SmartDashboard.putNumber("VisionY:", megaTagPose.pose.getY());
+                    SmartDashboard.putNumber("VisionRotation:", megaTagPose.pose.getRotation().getDegrees());
+                    SmartDashboard.putNumber("MegaTagCount", megaTagPose.tagCount);
+                }
         }
 
+        if(Constants.smartEnable){
             SmartDashboard.putNumber("NavX rate", navx.getRate());
+        }
         }
 
         // swerveDrive.addVisionMeasurement(new Pose2d(3,3,Rotation2d.fromDegrees(65)), Timer.getFPGATimestamp());
