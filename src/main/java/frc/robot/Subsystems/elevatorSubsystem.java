@@ -38,7 +38,7 @@ public class elevatorSubsystem extends SubsystemBase {
   }
 
   /**
-   * Sets the speed for both motors of the elevator by making the left motor follow the right motor
+   * Sets the same speed for both motors of the elevator 
    * 
    * @param speed the speed in percentage from 0-1 to set the motor speed
    */
@@ -48,7 +48,7 @@ public class elevatorSubsystem extends SubsystemBase {
   }
 
   /**
-   * Get the position of the elevator in encoder ticks
+   * Get the position of the right motor of the elevator in encoder ticks
    * 
    * @return encoder position in ticks
    */

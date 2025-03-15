@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class rawArmCmd extends Command {
   private final armSubsystem arm;
   private DoubleSupplier speed;
-  private double finalSpeed;
+  private double finalSpeed = 0;
 
   /**
    * A command to move the arm with at a certain power along with gravity
@@ -29,23 +29,25 @@ public class rawArmCmd extends Command {
 
   @Override
   public void initialize() {
+    finalSpeed = 0;
   }
 
   @Override
   public void execute() {
 
     if ((speed.getAsDouble() > 0 && speed.getAsDouble() < Constants.Arm.poses.maxPose)
-        || (speed.getAsDouble() < 0 && speed.getAsDouble() > Constants.Arm.poses.minPose)) {
-      finalSpeed =(speed.getAsDouble() + Constants.Arm.Kg * Math.cos(Math.toRadians(arm.getDegrees()))); // Apply the motor speed correction
-    } else{
-      finalSpeed =(Constants.Arm.Kg * Math.cos(Math.toRadians(arm.getDegrees())));
-    }
+        || (speed.getAsDouble() < 0 && speed.getAsDouble() > Constants.Arm.poses.minPose)) { // Check if the arm is going out of bounds
+      finalSpeed = speed.getAsDouble(); 
+      }
+
+      finalSpeed = finalSpeed + (Constants.Arm.Kg * Math.cos(Math.toRadians(arm.getDegrees()))); // Apply the feedfroward gravity correction
+    
 
     if(arm.getDegrees() > 85){
-      finalSpeed = finalSpeed - 0.007;
+      finalSpeed = finalSpeed - 0.007; // Apply play correction
     }
 
-    arm.setMotor(finalSpeed);
+    arm.setMotor(finalSpeed); // Apply the speed to the motor
 
     // Smartdashboard for debugging
     if (Constants.smartEnable) {
@@ -58,9 +60,8 @@ public class rawArmCmd extends Command {
   }
 
   @Override
-
   public void end(boolean interrupted) {
-    arm.setMotor(0);
+    arm.setMotor(0); // Stop the motor when the command is stopped
 
     // Smartdashboard for debugging
     if (Constants.smartEnable) {

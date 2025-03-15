@@ -60,7 +60,7 @@ public class RobotContainer {
   }
 
   /**
-   * Configuring all the button bindings for all the joysticks
+   * Configuring all the button bindings for all the controllers
    */
   private void configureBindings() {
 
@@ -74,7 +74,7 @@ public class RobotContainer {
     SequentialCommandGroup L4 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, elevatorPoses.L4));
     SequentialCommandGroup L0 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, 0), new armPosCmd(arm, armPoses.elevate, true)), new armPosCmd(arm, armPoses.zero, false));
     
-    NamedCommands.registerCommand("L4", L4);
+    NamedCommands.registerCommand("L4", L4); // registering L4 command group for auto
 
     WakakeController.triangle().onTrue(Commands.runOnce(swerve::zeroGyro));
     // WakakeController.R1().whileTrue(swerve.driveToPose(getTargetPose(false, swerve.getHeading().getDegrees()), 0));
@@ -103,6 +103,13 @@ public class RobotContainer {
     return swerve.getAutonomousCommand("Test Auto");
   }
 
+  /**
+   * A small function to return the reef pose for alignment
+   * 
+   * @param left true if the alignment pose is on the left, false if on the right
+   * @param heading The current heading of the robot
+   * @return the Pose2d for alignment
+   */
   public Pose2d getTargetPose(boolean left, double heading){
     
     boolean allianceBlue = DriverStation.getAlliance().get() == DriverStation.Alliance.Blue; //get the alliance colour

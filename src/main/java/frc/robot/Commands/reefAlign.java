@@ -16,13 +16,11 @@ public class reefAlign extends Command {
     private boolean endLoop;
 
     /**
-     * A command to move the swerve to an encoder setpoint using PID Feedback and
-     * Gravity compensation feedforward.
+     * A command to move the swerve horizontally to align it to an april tag
      * 
-     * @param swerve     the swerve subsystem to move
-     * @param targetPose the target pose in dergees to move to
-     * @param holdPID    whether or not to hold teh PID loop after acceptable error
-     *                   is achieved
+     * @param swerve      the swerve subsystem to move
+     * @param holdPID     whether to hold the PID after reaching the setpoint
+     * @param targetAngle the target TX angle from the april tag
      */
     public reefAlign(SwerveSubsystem swerve, boolean holdPID, double targetAngle) {
         this.swerve = swerve;
@@ -44,37 +42,36 @@ public class reefAlign extends Command {
 
         LimelightHelpers.LimelightResults llresults = LimelightHelpers.getLatestResults("limelight");
 
-        if (llresults != null) {
+        if (llresults != null) { // Check if the limelight is returning any values
 
-            double speed = PIDcv.calculate(LimelightHelpers.getTX("limelight"));
-            speed = Math.min(Math.max(speed, -Constants.CV.MaxSpeed), Constants.CV.MaxSpeed); //Applying Speed Limits
-            
+            double speed = PIDcv.calculate(LimelightHelpers.getTX("limelight")); // Calculate the PID correction
+            speed = Math.min(Math.max(speed, -Constants.CV.MaxSpeed), Constants.CV.MaxSpeed); // Applying Speed Limits
 
-            if ((Math.abs(targetAngle - LimelightHelpers.getTX("limelight")) < 0.5) && !holdPID) {
+            if ((Math.abs(targetAngle - LimelightHelpers.getTX("limelight")) < 0.5) && !holdPID) { // endcase when setpoint achieved. Only if holdPID is false
                 endLoop = true;
             }
 
-            // swerve.drive(new Translation2d(0, speed), 0, false);
+            // swerve.drive(new Translation2d(0, speed), 0, false); // Drive the swerve to align it
 
+            // Smartdashboard for debuggign
             if (Constants.smartEnable) {
                 SmartDashboard.putNumber("Reef Tag TX", LimelightHelpers.getTX("limelight"));
-
                 SmartDashboard.putNumber("Reef Align Correction", speed);
                 SmartDashboard.putBoolean("ReefAlign", true);
             }
         } else {
-            endLoop = true;
+            endLoop = true; // Stop the command if the limelight isnt seeing anything
         }
 
     }
 
     @Override
     public void end(boolean interrupted) {
-        swerve.drive(new Translation2d(0, 0), 0, false);
+        swerve.drive(new Translation2d(0, 0), 0, false); // Stop the swerve when the command is stopped
     }
 
     @Override
     public boolean isFinished() {
-        return endLoop;
+        return endLoop; // End the command when the setpoint is achieved or if the limelight isnt seeing anything
     }
 }

@@ -15,7 +15,7 @@ public class intakeCmd extends Command {
   /**
    * A Command to move the intake at the input speed.
    * 
-   * @param Intake the intake subsystem to move 
+   * @param Intake      the intake subsystem to move
    * @param intakeSpeed the speed to move the intake at
    */
   public intakeCmd(intakeSubsystem Intake, double intakeSpeed) {
@@ -26,33 +26,37 @@ public class intakeCmd extends Command {
 
   @Override
   public void initialize() {
-    //Initialise endLoop and loopCounter
+    // Initialise endLoop and loopCounter
     endLoop = false;
     loopCounter = 0;
-    limitStart = Intake.getLimitSwitch();
+    limitStart = Intake.getLimitSwitch(); // The limit switch state at the start of the command
   }
 
   @Override
   public void execute() {
 
-    Intake.setMotor(intakeSpeed); //apply the motor speed
+    Intake.setMotor(intakeSpeed); // apply the motor speed
 
-    //Smartdashboard for debugging
+    // Smartdashboard for debugging
     if (Constants.smartEnable) {
       SmartDashboard.putBoolean("IntakeCmd", true);
       SmartDashboard.putBoolean("Limit Start", limitStart);
     }
 
-    //start the delay counter if the switch is pressed
-    //If the counter has already been started, no need to check the limit switch
-    if (Intake.getLimitSwitch() || loopCounter > 0){
-      loopCounter+=1; //increment the counter by 1
+    // start the delay counter if the switch is pressed
+    // If the counter has already been started, no need to check the limit switch
+    if (Intake.getLimitSwitch() || loopCounter > 0) {
+      loopCounter += 1; // increment the counter by 1
     }
 
-    //if the required time delay(counter)is met, set endLoop to true
-    if (loopCounter == Constants.Intake.waitCount && !limitStart){ 
+    // if the required time delay(counter)is met, set endLoop to true, check if
+    // limit start is false, to avoid stopping the motor while depositing corals
+    if (loopCounter == Constants.Intake.waitCount && !limitStart) {
+
       endLoop = true;
-      if (Constants.smartEnable){
+
+      // Smartdashboard for debugging
+      if (Constants.smartEnable) {
         SmartDashboard.putBoolean("IntakeCmd", false);
       }
     }
@@ -60,14 +64,16 @@ public class intakeCmd extends Command {
 
   @Override
   public void end(boolean interrupted) {
-    Intake.setMotor(0);
-    if (Constants.smartEnable){
+    Intake.setMotor(0); // Stop the motor when the command is stopped
+
+    // Smartdashboard for debugging
+    if (Constants.smartEnable) {
       SmartDashboard.putBoolean("IntakeCmd", false);
     }
   }
 
   @Override
   public boolean isFinished() {
-    return endLoop; //runs until endLoop becomes true
+    return endLoop; // runs until endLoop becomes true
   }
 }
