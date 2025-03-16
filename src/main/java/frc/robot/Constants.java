@@ -17,8 +17,8 @@ public class Constants {
   public static final double LOOP_TIME = 0.13; // s, 20ms + 110ms sprk max velocity lag
   public static final boolean smartEnable = true;
   public static final double ControllerDeadband = 0.05;
-  public static final boolean VisionOdometry = true;
-  public static double MAX_SPEED = 1;
+  public static final boolean VisionOdometry = false;
+  public static double MAX_SPEED = 5;
 
   public static final class DrivebaseConstants {
     public static final double WHEEL_LOCK_TIME = 100; // seconds
@@ -38,7 +38,7 @@ public class Constants {
     public static final boolean armInvert = false;
     public static final double MaxPose = -22;
     public static final double MinPose = 0;
-    public static final double MaxSpeed = 0.7;
+    public static final double MaxSpeed = 0.2;
     public static final double kp = 0.007;
     public static final double kd = 0.001;
     public static final double Kg = 0.027;
@@ -49,8 +49,8 @@ public class Constants {
       public final double zero = 123;
       public final double elevate = 87;
       public final double L1 = 70;
-      public final double L4 = 101;
-      public final double algae = -25;
+      public final double L4 = 98;
+      public final double algae = -40;
       public static final double maxPose = 123;
       public static final double minPose = -90;
     }
@@ -70,22 +70,24 @@ public class Constants {
     public static class poses {
       public final double L1 = 0;
       public final double L2 = 62;
-      public final double L3 = 205;
+      public final double L3 = 210;
       public final double L4 = 436;
       public final static double maxPose = 436;
-      public final static double minPose = -200;
-      public final double algae = 91.5;
+      public final static double minPose = 5;
+      public final double algae1 = 137;
+      public final double algae2 = 276;
       // public final static double maxPose = 5000;
       // public final static double minPose = -5000;
     }
    }
 
   public static class CV {
-    public static final double kp = 0.09;
-    public static final double kd = 0.02;
+    public static final double kp = 0.15;
+    public static final double kd = 0.01;
     public static final double MaxSpeed = 0.35;
-    public static final double leftAngle = 11;
-    public static final double rightAngle = -17;
+    public static final double leftAngle = 9.8;
+    public static final double rightAngle = -16.3;
+    public static final double middleAngle = -2.5;
   }
 
   public static class reefPosesBlue {
@@ -116,6 +118,11 @@ public class Constants {
     public static Pose2d reef10 = new Pose2d(new Translation2d(Meter.of(12.395), Meter.of(5.541)), Rotation2d.fromDegrees(120));
     public static Pose2d reef11 = new Pose2d(new Translation2d(Meter.of(13.762), Meter.of(5.541)), Rotation2d.fromDegrees(60));
     public static Pose2d reef12 = new Pose2d(new Translation2d(Meter.of(14.026), Meter.of(5.398)), Rotation2d.fromDegrees(60));
+  }
+
+  public static final class stationPoses{
+    public static Pose2d Blue = new Pose2d(new Translation2d(Meter.of(1.213), Meter.of(1.010)), Rotation2d.fromDegrees(-125));
+    public static Pose2d Red = new Pose2d(new Translation2d(Meter.of(16.090), Meter.of(0.851)), Rotation2d.fromDegrees(-55));
   }
 
 }

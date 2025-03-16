@@ -2,17 +2,23 @@ package frc.robot;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 
 
 import java.io.File;
+
+import javax.print.attribute.standard.PageRanges;
+
 import frc.robot.Commands.*;
 
 import com.pathplanner.lib.auto.NamedCommands;
@@ -74,35 +80,44 @@ public class RobotContainer {
     //creating command groups for depositing corals
     SequentialCommandGroup L1 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, elevatorPoses.L1, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.L1, false));
     SequentialCommandGroup L2 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, elevatorPoses.L2, Constants.Elevator.MaxSpeed));
-    SequentialCommandGroup Lge = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, elevatorPoses.algae, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.algae, false));
+    SequentialCommandGroup Lge1 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, elevatorPoses.algae1, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.algae, false));
+    SequentialCommandGroup Lge2 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, elevatorPoses.algae2, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.algae, false));
     SequentialCommandGroup L3 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, elevatorPoses.L3, Constants.Elevator.MaxSpeed));
     SequentialCommandGroup L4 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, elevatorPoses.L4, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.L4, false));
-    // SequentialCommandGroup L0 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.WHY, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, (elevator.getEncoder() > 100)? (elevator.getEncoder() - 100) : 0), new armPosCmd(arm, armPoses.zero, true)), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, 0), new armPosCmd(arm, armPoses.WHY, true)), new armPosCmd(arm, armPoses.zero, false));
-    SequentialCommandGroup L0 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, 0,0.5), new armPosCmd(arm, armPoses.elevate, true)), new armPosCmd(arm, armPoses.zero, false));
+    SequentialCommandGroup L0 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.algae, false),new elevatorPosCmd(elevator, 0,Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.zero, false));
+    SequentialCommandGroup Lauto4 = new SequentialCommandGroup(new ParallelDeadlineGroup(new armPosCmd(arm, armPoses.elevate, false), new intakeCmd(intake, -0.1)), new elevatorPosCmd(elevator, elevatorPoses.L4, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.elevate, false));
 
 
-    NamedCommands.registerCommand("L4", L4); // registering L4 command group for auto
     NamedCommands.registerCommand("L0", L0); // registering L0 command group for auto
-    NamedCommands.registerCommand("L0", new intakeCmd(intake, 0.3)); // registering intake command for auto
+    NamedCommands.registerCommand("Intake", new intakeCmd(intake, 0.3)); // registering intake command for auto
+    NamedCommands.registerCommand("L4", Lauto4);
 
     WakakeController.triangle().onTrue(Commands.runOnce(swerve::zeroGyro));
-    // WakakeController.R1().whileTrue(swerve.driveToPose(getTargetPose(false, swerve.getHeading().getDegrees()), 0));
-    // WakakeController.L1().whileTrue(swerve.driveToPose(getTargetPose(true, swerve.getHeading().getDegrees()), 0));
+    WakakeController.povRight().whileTrue(swerve.driveToPose(getTargetPose(false, swerve.getHeading().getDegrees()), 0));
+    WakakeController.povLeft().whileTrue(swerve.driveToPose(getTargetPose(true, swerve.getHeading().getDegrees()), 0));
+    WakakeController.povUp().whileTrue(new reefAlign(swerve, false, Constants.CV.middleAngle));
     WakakeController.R1().whileTrue(new reefAlign(swerve, false, Constants.CV.rightAngle));
     WakakeController.L1().whileTrue(new reefAlign(swerve, false, Constants.CV.leftAngle));
+
+    // if(DriverStation.getAlliance().get() == DriverStation.Alliance.Blue){
+    //   WakakeController.povUp().whileTrue(swerve.driveToPose(Constants.stationPoses.Blue, 0));
+    // } else{
+    //   WakakeController.povUp().whileTrue(swerve.driveToPose(Constants.stationPoses.Red, 0));
+
+    // }
 
     AmaryanController.R2().whileTrue(new intakeCmd(intake, 0.3));
     AmaryanController.L2().whileTrue(new intakeCmd(intake, 0.6));
     AmaryanController.R1().whileTrue(new intakeCmd(intake, -0.3));
     AmaryanController.L1().whileTrue(new intakeCmd(intake, -0.1));
-    AmaryanController.povUp().onTrue(Lge);
+    AmaryanController.povUp().onTrue(Lge2);
+    AmaryanController.povLeft().onTrue(Lge1);
     AmaryanController.cross().onTrue(L2);
     AmaryanController.circle().onTrue(L3);
     AmaryanController.triangle().onTrue(L4);
     AmaryanController.square().onTrue(L1);
     AmaryanController.povDown().onTrue(L0);
     AmaryanController.touchpad().whileTrue(new SequentialCommandGroup(new rawArmCmd(arm, () -> 0), new rawElevatorCmd(elevator, () -> 0)));
-    AmaryanController.povLeft().whileTrue(new armPosCmd(arm, 0, true));
   }
 
   /**
@@ -110,7 +125,7 @@ public class RobotContainer {
    * @return Autonomous Command of the robot for the command scheduler
    */
   public Command getAutonomousCommand() {
-    return swerve.getAutonomousCommand("LS");
+    return swerve.getAutonomousCommand("New Auto");
   }
 
   /**

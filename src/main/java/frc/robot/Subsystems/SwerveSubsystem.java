@@ -143,6 +143,10 @@ public class SwerveSubsystem extends SubsystemBase {
                     SmartDashboard.putNumber("VisionRotation:", megaTagPose.pose.getRotation().getDegrees());
                     SmartDashboard.putNumber("MegaTagCount", megaTagPose.tagCount);
                 }
+
+                if (Constants.smartEnable){
+                    SmartDashboard.putBoolean("visionOdometry", false);
+                }
         }
 
         if(Constants.smartEnable){
@@ -246,8 +250,8 @@ public class SwerveSubsystem extends SubsystemBase {
     {
   // Create the constraints to use while pathfinding
       PathConstraints constraints = new PathConstraints(
-          swerveDrive.getMaximumChassisVelocity(), 4.0,
-          swerveDrive.getMaximumChassisAngularVelocity(), Units.degreesToRadians(720));
+          5, 4.0,
+          Units.degreesToRadians(360), Units.degreesToRadians(720));
   
   // Since AutoBuilder is configured, we can use it to build pathfinding commands
       return AutoBuilder.pathfindToPose(

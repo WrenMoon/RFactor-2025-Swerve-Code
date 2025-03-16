@@ -42,7 +42,7 @@ public class reefAlign extends Command {
 
         LimelightHelpers.LimelightResults llresults = LimelightHelpers.getLatestResults("limelight");
 
-        if (llresults != null) { // Check if the limelight is returning any values
+        if (llresults != null && LimelightHelpers.getTX("limelight") != 0) { // Check if the limelight is returning any values
 
             double speed = PIDcv.calculate(LimelightHelpers.getTX("limelight")); // Calculate the PID correction
             speed = Math.min(Math.max(speed, -Constants.CV.MaxSpeed), Constants.CV.MaxSpeed); // Applying Speed Limits

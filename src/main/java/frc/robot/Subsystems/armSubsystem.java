@@ -12,7 +12,7 @@ import frc.robot.Constants;
 
 public class armSubsystem extends SubsystemBase {
 
-  final SparkMax motor = new SparkMax(Constants.Arm.ArmID, MotorType.kBrushless); //Creating the SparkMax motor object
+    final SparkMax motor = new SparkMax(Constants.Arm.ArmID, MotorType.kBrushless); //Creating the SparkMax motor object
   final SparkMaxConfig config = new SparkMaxConfig(); //Creating the config for the SparkMax
 
   /**
