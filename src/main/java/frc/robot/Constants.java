@@ -18,7 +18,7 @@ public class Constants {
   public static final boolean smartEnable = true;
   public static final double ControllerDeadband = 0.05;
   public static final boolean VisionOdometry = true;
-  public static double MAX_SPEED = 5;
+  public static double MAX_SPEED = 1;
 
   public static final class DrivebaseConstants {
     public static final double WHEEL_LOCK_TIME = 100; // seconds
@@ -29,7 +29,7 @@ public class Constants {
     public static boolean Invert = false;
     public static final double angleOffset = 40;
     public static final double Kg = 0.03;
-    public static final double waitCount = 2;
+    public static final double waitCount = 1;
   }
 
   public static class Arm {
@@ -49,8 +49,8 @@ public class Constants {
       public final double zero = 123;
       public final double elevate = 87;
       public final double L1 = 70;
-      public final double L4 = 0;
-      public final double algae = 0;
+      public final double L4 = 101;
+      public final double algae = -25;
       public static final double maxPose = 123;
       public static final double minPose = -90;
     }
@@ -72,19 +72,20 @@ public class Constants {
       public final double L2 = 62;
       public final double L3 = 205;
       public final double L4 = 436;
-      // public final static double maxPose = 436;
-      // public final static double minPose = 5;
-      public final static double maxPose = 5000;
-      public final static double minPose = -5000;
+      public final static double maxPose = 436;
+      public final static double minPose = -200;
+      public final double algae = 91.5;
+      // public final static double maxPose = 5000;
+      // public final static double minPose = -5000;
     }
    }
 
   public static class CV {
-    public static final double kp = 0.05;
-    public static final double kd = 0.05;
-    public static final double MaxSpeed = 0.2;
-    public static final double leftAngle = 0;
-    public static final double rightAngle = 0;
+    public static final double kp = 0.09;
+    public static final double kd = 0.02;
+    public static final double MaxSpeed = 0.35;
+    public static final double leftAngle = 11;
+    public static final double rightAngle = -17;
   }
 
   public static class reefPosesBlue {

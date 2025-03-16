@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "CS P1"
+            "pathName": "LS P1"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "FRC 2025",
+  "folder": null,
   "choreoAuto": false
 }

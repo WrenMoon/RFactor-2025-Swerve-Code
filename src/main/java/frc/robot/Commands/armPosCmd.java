@@ -56,7 +56,7 @@ public class armPosCmd extends Command {
             SmartDashboard.putBoolean("Arm hold", holdPID);
         }
 
-        if (Math.abs(targetPose - arm.getDegrees()) < 2 && !holdPID) { // endcase when setpoint achieved. Only if holdPID is false
+        if (Math.abs(targetPose - arm.getDegrees()) < 3.5 && !holdPID) { // endcase when setpoint achieved. Only if holdPID is false
             endLoop = true;
         }
 

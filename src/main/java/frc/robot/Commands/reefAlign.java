@@ -51,7 +51,7 @@ public class reefAlign extends Command {
                 endLoop = true;
             }
 
-            // swerve.drive(new Translation2d(0, speed), 0, false); // Drive the swerve to align it
+            swerve.drive(new Translation2d(0, speed), 0, false); // Drive the swerve to align it
 
             // Smartdashboard for debuggign
             if (Constants.smartEnable) {
@@ -61,6 +61,7 @@ public class reefAlign extends Command {
             }
         } else {
             endLoop = true; // Stop the command if the limelight isnt seeing anything
+            swerve.drive(new Translation2d(0, 0), 0, false); // Stop the swerve when the command is stopped
         }
 
     }
@@ -68,6 +69,9 @@ public class reefAlign extends Command {
     @Override
     public void end(boolean interrupted) {
         swerve.drive(new Translation2d(0, 0), 0, false); // Stop the swerve when the command is stopped
+        if (Constants.smartEnable){
+            SmartDashboard.putBoolean("ReefAlign", false);
+        }
     }
 
     @Override

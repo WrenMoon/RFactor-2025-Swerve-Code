@@ -36,18 +36,17 @@ public class rawArmCmd extends Command {
   public void execute() {
 
     if ((speed.getAsDouble() > 0 && speed.getAsDouble() < Constants.Arm.poses.maxPose)
-        || (speed.getAsDouble() < 0 && speed.getAsDouble() > Constants.Arm.poses.minPose)) { // Check if the arm is going out of bounds
-      finalSpeed = speed.getAsDouble(); 
-      }
-
-      finalSpeed = finalSpeed + (Constants.Arm.Kg * Math.cos(Math.toRadians(arm.getDegrees()))); // Apply the feedfroward gravity correction
-    
-
-    if(arm.getDegrees() > 85){
-      finalSpeed = finalSpeed - 0.007; // Apply play correction
+        || (speed.getAsDouble() < 0 && speed.getAsDouble() > Constants.Arm.poses.minPose)) {
+      finalSpeed =(speed.getAsDouble() + Constants.Arm.Kg * Math.cos(Math.toRadians(arm.getDegrees()))); // Apply the motor speed correction
+    } else{
+      finalSpeed =(Constants.Arm.Kg * Math.cos(Math.toRadians(arm.getDegrees())));
     }
 
-    arm.setMotor(finalSpeed); // Apply the speed to the motor
+    if(arm.getDegrees() > 85){
+      finalSpeed = finalSpeed - 0.007;
+    }
+
+    arm.setMotor(finalSpeed);
 
     // Smartdashboard for debugging
     if (Constants.smartEnable) {
