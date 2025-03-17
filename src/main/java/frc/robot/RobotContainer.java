@@ -85,26 +85,16 @@ public class RobotContainer {
     SequentialCommandGroup L3 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, elevatorPoses.L3, Constants.Elevator.MaxSpeed));
     SequentialCommandGroup L4 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, elevatorPoses.L4, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.L4, false));
     SequentialCommandGroup L0 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.algae, false),new elevatorPosCmd(elevator, 5,Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.zero, false));
-    SequentialCommandGroup Lauto4 = new SequentialCommandGroup(new ParallelDeadlineGroup(new armPosCmd(arm, armPoses.elevate, false), new intakeCmd(intake, -0.1)), new elevatorPosCmd(elevator, elevatorPoses.L4, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.elevate, false));
 
 
     NamedCommands.registerCommand("L0", L0); // registering L0 command group for auto
     NamedCommands.registerCommand("Intake", new intakeCmd(intake, 0.3)); // registering intake command for auto
-    NamedCommands.registerCommand("L4", Lauto4);
+    NamedCommands.registerCommand("L4", L4);
 
-    WakakeController.triangle().onTrue(Commands.runOnce(swerve::zeroGyro));
-    WakakeController.povRight().whileTrue(swerve.driveToPose(getTargetPose(false, swerve.getHeading().getDegrees()), 0));
-    WakakeController.povLeft().whileTrue(swerve.driveToPose(getTargetPose(true, swerve.getHeading().getDegrees()), 0));
-    // WakakeController.povUp().whileTrue(new reefAlign(swerve, false, Constants.CV.middleAngle));
+    WakakeController.touchpad().onTrue(Commands.runOnce(swerve::zeroGyro));
+    WakakeController.povUp().whileTrue(new reefAlign(swerve, false, Constants.CV.middleAngle));
     WakakeController.R1().whileTrue(new reefAlign(swerve, false, Constants.CV.rightAngle));
     WakakeController.L1().whileTrue(new reefAlign(swerve, false, Constants.CV.leftAngle));
-
-    if(DriverStation.getAlliance().get() == DriverStation.Alliance.Blue){
-      WakakeController.povUp().whileTrue(swerve.driveToPose(Constants.stationPoses.Blue, 0));
-    } else{
-      WakakeController.povUp().whileTrue(swerve.driveToPose(Constants.stationPoses.Red, 0));
-
-    }
 
     AmaryanController.R2().whileTrue(new intakeCmd(intake, 0.3));
     AmaryanController.L2().whileTrue(new intakeCmd(intake, 0.6));
@@ -118,6 +108,28 @@ public class RobotContainer {
     AmaryanController.square().onTrue(L1);
     AmaryanController.povDown().onTrue(L0);
     AmaryanController.touchpad().whileTrue(new SequentialCommandGroup(new rawArmCmd(arm, () -> 0), new rawElevatorCmd(elevator, () -> 0)));
+
+    if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue){
+      WakakeController.cross().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef1, 0));
+      WakakeController.circle().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef6, 0));
+      WakakeController.triangle().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef5, 0));
+      WakakeController.povDown().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef2, 0));
+      WakakeController.povLeft().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef3, 0));
+      WakakeController.povUp().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef4, 0));
+      WakakeController.povRight().whileTrue(swerve.driveToPose(Constants.PosesBlue.stationLeft, 0));
+      WakakeController.square().whileTrue(swerve.driveToPose(Constants.PosesBlue.stationRight, 0));
+      SmartDashboard.putBoolean("Blue", true);
+    } else{ 
+      WakakeController.cross().whileTrue(swerve.driveToPose(Constants.PosesRed.reef1, 0));
+      WakakeController.circle().whileTrue(swerve.driveToPose(Constants.PosesRed.reef6, 0));
+      WakakeController.triangle().whileTrue(swerve.driveToPose(Constants.PosesRed.reef5, 0));
+      WakakeController.povDown().whileTrue(swerve.driveToPose(Constants.PosesRed.reef2, 0));
+      WakakeController.povLeft().whileTrue(swerve.driveToPose(Constants.PosesRed.reef3, 0));
+      WakakeController.povUp().whileTrue(swerve.driveToPose(Constants.PosesRed.reef4, 0));
+      WakakeController.povRight().whileTrue(swerve.driveToPose(Constants.PosesRed.stationLeft, 0));
+      WakakeController.square().whileTrue(swerve.driveToPose(Constants.PosesRed.stationRight, 0));
+    }
+
   }
 
   /**
@@ -127,91 +139,4 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     return swerve.getAutonomousCommand("New Auto");
   }
-
-  /**
-   * A small function to return the reef pose for alignment
-   * 
-   * @param left true if the alignment pose is on the left, false if on the right
-   * @param heading The current heading of the robot
-   * @return the Pose2d for alignment
-   */
-  public Pose2d getTargetPose(boolean left, double heading){
-    
-    boolean allianceBlue = DriverStation.getAlliance().get() == DriverStation.Alliance.Blue; //get the alliance colour
-    Pose2d pose = new Pose2d();
-
-    if(left){
-    if (allianceBlue){
-      if (Math.abs(heading - 0) < 30 ){
-        pose = Constants.reefPosesBlue.reef1;
-        SmartDashboard.putBoolean("DrivingToPose", true);
-      } else if(Math.abs(heading - -60) < 30 ){
-        pose = Constants.reefPosesBlue.reef3;
-      } else if(Math.abs(heading - -120) < 30 ){
-        pose = Constants.reefPosesBlue.reef5;
-      } else if(Math.abs(heading - -180) < 30 ){
-        pose = Constants.reefPosesBlue.reef7;
-      } else if(Math.abs(heading - 180) < 30 ){
-        pose = Constants.reefPosesBlue.reef7;
-      } else if(Math.abs(heading - 120) < 30 ){
-        pose = Constants.reefPosesBlue.reef9;
-      } else if(Math.abs(heading - 60) < 30 ){
-        pose = Constants.reefPosesBlue.reef11;
-      }
-    } else{
-      if (Math.abs(heading - 0) < 30 ){
-        pose = Constants.reefPosesRed.reef1;
-      } else if(Math.abs(heading - -60) < 30 ){
-        pose = Constants.reefPosesRed.reef3;
-      } else if(Math.abs(heading - -120) < 30 ){
-        pose = Constants.reefPosesRed.reef5;
-      } else if(Math.abs(heading - -180) < 30 ){
-        pose = Constants.reefPosesRed.reef7;
-      } else if(Math.abs(heading - 180) < 30 ){
-        pose = Constants.reefPosesRed.reef7;
-      } else if(Math.abs(heading - 120) < 30 ){
-        pose = Constants.reefPosesRed.reef9;
-      } else if(Math.abs(heading - 60) < 30 ){
-        pose = Constants.reefPosesRed.reef11;
-      }
-    }
-  } else{
-    if (allianceBlue){
-      if (Math.abs(heading - 0) < 30 ){
-        pose = Constants.reefPosesBlue.reef2;
-        SmartDashboard.putBoolean("DrivingToPose", true);
-      } else if(Math.abs(heading - -60) < 30 ){
-        pose = Constants.reefPosesBlue.reef4;
-      } else if(Math.abs(heading - -120) < 30 ){
-        pose = Constants.reefPosesBlue.reef6;
-      } else if(Math.abs(heading - -180) < 30 ){
-        pose = Constants.reefPosesBlue.reef8;
-      } else if(Math.abs(heading - 180) < 30 ){
-        pose = Constants.reefPosesBlue.reef8;
-      } else if(Math.abs(heading - 120) < 30 ){
-        pose = Constants.reefPosesBlue.reef10;
-      } else if(Math.abs(heading - 60) < 30 ){
-        pose = Constants.reefPosesBlue.reef12;
-      }
-    } else{
-      if (Math.abs(heading - 0) < 30 ){
-        pose = Constants.reefPosesRed.reef2;
-      } else if(Math.abs(heading - -60) < 30 ){
-        pose = Constants.reefPosesRed.reef4;
-      } else if(Math.abs(heading - -120) < 30 ){
-        pose = Constants.reefPosesRed.reef6;
-      } else if(Math.abs(heading - -180) < 30 ){
-        pose = Constants.reefPosesRed.reef8;
-      } else if(Math.abs(heading - 180) < 30 ){
-        pose = Constants.reefPosesRed.reef8;
-      } else if(Math.abs(heading - 120) < 30 ){
-        pose = Constants.reefPosesRed.reef10;
-      } else if(Math.abs(heading - 60) < 30 ){
-        pose = Constants.reefPosesRed.reef12;
-      }
-    }
-  }
-    return pose;
-  }
 }
-
