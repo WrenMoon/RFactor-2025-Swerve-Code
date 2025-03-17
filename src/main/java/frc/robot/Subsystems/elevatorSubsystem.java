@@ -1,5 +1,7 @@
 package frc.robot.Subsystems;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
@@ -15,7 +17,8 @@ public class elevatorSubsystem extends SubsystemBase {
   final SparkMax motorLeft = new SparkMax(Constants.Elevator.elevatorLeft, MotorType.kBrushless); //Creating the SparkMax motor object for the left motor
   final SparkMax motorRight = new SparkMax(Constants.Elevator.elevatorRight, MotorType.kBrushless); //Creating the SparkMax motor object for the right motor
   final SparkMaxConfig leftConfig = new SparkMaxConfig(); //Creating the config for the SparkMax of the left motor
-  final SparkMaxConfig rightConfig = new SparkMaxConfig(); //Creating the config for the SparkMax of the right motor
+  final SparkMaxConfig rightConfig = new SparkMaxConfig(); //Creating the config for the SparkMax of the right 
+  final DigitalInput limitSwitch = new DigitalInput(8); //Create a limit switch on DIO port 8
 
   /**
    * The subsystem for the cascade elevator of the robot
@@ -35,6 +38,12 @@ public class elevatorSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    if(limitSwitch.get()){
+      motorRight.getEncoder().setPosition(0);
+    }
+    if (Constants.smartEnable){
+      SmartDashboard.putBoolean("Elevator Limit Switch", limitSwitch.get());
+    }
   }
 
   /**
@@ -43,8 +52,17 @@ public class elevatorSubsystem extends SubsystemBase {
    * @param speed the speed in percentage from 0-1 to set the motor speed
    */
   public void setMotor(double rightSpeed) {
-    motorRight.set(rightSpeed);
-    motorLeft.set(rightSpeed);
+
+    double finalSpeed = 0;
+    
+    if(rightSpeed<0 && limitSwitch.get()){
+      finalSpeed = 0;
+    } else{
+      finalSpeed = rightSpeed;
+    }
+    motorRight.set(finalSpeed);
+    motorLeft.set(finalSpeed);
+
   }
 
   /**

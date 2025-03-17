@@ -35,7 +35,7 @@ public class rawElevatorCmd extends Command {
         || (speed.getAsDouble() < 0 && elevator.getEncoder() > Constants.Elevator.poses.minPose)) { // Check if the elevator is goind out of bounds
       elevator.setMotor(speed.getAsDouble() + Constants.Elevator.Kg); // Apply the speed to the motor with feedforward gravity correction
     } else{
-      elevator.setMotor(0); // Stop the motor from going out of bounds
+      elevator.setMotor(Constants.Elevator.Kg); // Stop the motor from going out of bounds
     }
 
     // Smardashboard for debugging
