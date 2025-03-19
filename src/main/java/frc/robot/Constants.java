@@ -47,11 +47,11 @@ public class Constants {
 
     public static class poses {
       public final double zero = 123;
-      public final double elevate = 87;
+      public final double elevate = 89;
       public final double L1 = 70;
       public final double L4 = 98;
       public final double algae = -40;
-      public static final double maxPose = 123;
+      public static final double maxPose = 120;
       public static final double minPose = -90;
     }
   }

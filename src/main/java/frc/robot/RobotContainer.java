@@ -79,7 +79,7 @@ public class RobotContainer {
 
     //creating command groups for depositing corals
     SequentialCommandGroup L1 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, elevatorPoses.L1, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.L1, false));
-    SequentialCommandGroup L2 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, elevatorPoses.L2, Constants.Elevator.MaxSpeed));
+    SequentialCommandGroup L2 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, elevatorPoses.L2, 0.1));
     SequentialCommandGroup Lge1 = new SequentialCommandGroup(new elevatorPosCmd(elevator, 0, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.algae, false), new elevatorPosCmd(elevator, elevatorPoses.algae1, Constants.Elevator.MaxSpeed));
     SequentialCommandGroup Lge2 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, elevatorPoses.algae2, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.algae, false));
     SequentialCommandGroup L3 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, elevatorPoses.L3, Constants.Elevator.MaxSpeed));

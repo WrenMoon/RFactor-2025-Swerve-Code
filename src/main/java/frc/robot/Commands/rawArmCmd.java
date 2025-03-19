@@ -42,9 +42,10 @@ public class rawArmCmd extends Command {
       finalSpeed =(Constants.Arm.Kg * Math.cos(Math.toRadians(arm.getDegrees())));
     }
 
-    if(arm.getDegrees() > 85){
-      finalSpeed = finalSpeed - 0.007;
-    }
+    finalSpeed = finalSpeed + ((arm.getDegrees() > 80) ? -0.014 : 0); // play correction
+    finalSpeed = finalSpeed + ((arm.getDegrees() > 93) ? 0.007 : 0); // play correction
+
+
 
     arm.setMotor(finalSpeed);
 

@@ -13,6 +13,7 @@ public class elevatorPosCmd extends Command {
   private final PIDController PIDelevator;
   private boolean endLoop = false;
   private double maxSpeed;
+  private double lastSpeed;
   
   /**
    * A command to move the elevator to an encoder setpoint using PID Feedback
@@ -33,6 +34,7 @@ public class elevatorPosCmd extends Command {
   public void initialize() {
     endLoop = false;
     PIDelevator.setSetpoint(targetPose); // PID setpoint
+    lastSpeed = 0;
   }
   
 
@@ -42,6 +44,8 @@ public class elevatorPosCmd extends Command {
     double speed = PIDelevator.calculate(elevator.getEncoder()); //PID Correction value
     speed = speed + ((speed > 0)? Constants.Elevator.MinSpeed : -Constants.Elevator.MinSpeed) + Constants.Elevator.Kg; //Add the minimum speed to counteract friction, matching the sign of the PID speed and add the gravity correction speed, always positive
     speed = Math.min(Math.max(speed, -maxSpeed), maxSpeed); //Applying Speed Limits
+
+
     elevator.setMotor(speed); //applies the speed to the motor
 
     //Smartdashboard for debugging

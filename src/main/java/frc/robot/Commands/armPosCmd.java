@@ -43,7 +43,10 @@ public class armPosCmd extends Command {
 
         double speed = PIDarm.calculate(arm.getDegrees()); // PID Correction value
         speed = speed + Constants.Arm.Kg * Math.cos(Math.toRadians(arm.getDegrees())); // Feedforward Gravity compensation
-        speed = speed + ((arm.getDegrees() > 85) ? -0.07 : 0); // play correction
+
+        speed = speed + ((arm.getDegrees() > 80) ? -0.014 : 0); // play correction
+        speed = speed + ((arm.getDegrees() > 93) ? 0.007 : 0); // play correction
+
         speed = Math.min(Math.max(speed, -Constants.Arm.MaxSpeed), Constants.Arm.MaxSpeed); // Applying Speed Limits
 
         // Smartdashboard for debugging
