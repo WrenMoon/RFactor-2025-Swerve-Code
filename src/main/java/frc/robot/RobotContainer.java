@@ -78,18 +78,22 @@ public class RobotContainer {
     Constants.Elevator.poses elevatorPoses = new Constants.Elevator.poses();
 
     //creating command groups for depositing corals
-    SequentialCommandGroup L1 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, elevatorPoses.L1, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.L1, false));
-    SequentialCommandGroup L2 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, elevatorPoses.L2, 0.1));
-    SequentialCommandGroup Lge1 = new SequentialCommandGroup(new elevatorPosCmd(elevator, 0, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.algae, false), new elevatorPosCmd(elevator, elevatorPoses.algae1, Constants.Elevator.MaxSpeed));
-    SequentialCommandGroup Lge2 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, elevatorPoses.algae2, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.algae, false));
-    SequentialCommandGroup L3 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, elevatorPoses.L3, Constants.Elevator.MaxSpeed));
-    SequentialCommandGroup L4 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new elevatorPosCmd(elevator, elevatorPoses.L4, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.L4, false));
+    SequentialCommandGroup L1 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, elevatorPoses.L1, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.elevate, true)), new armPosCmd(arm, armPoses.L1, true));
+    SequentialCommandGroup L2 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelCommandGroup(new elevatorPosCmd(elevator, elevatorPoses.L2, 0.1), new armPosCmd(arm, armPoses.elevate, true)));
+    SequentialCommandGroup Lge1 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.algae, false), new ParallelCommandGroup(new elevatorPosCmd(elevator, elevatorPoses.algae1, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.algae, true)));
+    SequentialCommandGroup Lge2 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, elevatorPoses.algae2, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.elevate, true)), new armPosCmd(arm, armPoses.algae, true));
+    SequentialCommandGroup L3 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelCommandGroup(new elevatorPosCmd(elevator, elevatorPoses.L3, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.elevate, true)));
+    SequentialCommandGroup L4 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, elevatorPoses.L4a, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.elevate, true)), new armPosCmd(arm, armPoses.L4, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, elevatorPoses.L4b, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.L4, true)), new armPosCmd(arm, armPoses.L4, true));
     SequentialCommandGroup L0 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.algae, false),new elevatorPosCmd(elevator, 5,Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.zero, false));
 
 
     NamedCommands.registerCommand("L0", L0); // registering L0 command group for auto
+    NamedCommands.registerCommand("ElevatorMid", new elevatorPosCmd(elevator, elevatorPoses.L4a, Constants.Elevator.MaxSpeed));
     NamedCommands.registerCommand("Intake", new intakeCmd(intake, 0.3)); // registering intake command for auto
     NamedCommands.registerCommand("L4", L4);
+    NamedCommands.registerCommand("Right Align", new reefAlign(swerve, false, Constants.CV.rightAngle));
+    NamedCommands.registerCommand("Left Align", new reefAlign(swerve, false, Constants.CV.leftAngle));
+    
 
     WakakeController.touchpad().onTrue(Commands.runOnce(swerve::zeroGyro));
     WakakeController.povUp().whileTrue(new reefAlign(swerve, false, Constants.CV.middleAngle));
@@ -108,6 +112,7 @@ public class RobotContainer {
     AmaryanController.square().onTrue(L1);
     AmaryanController.povDown().onTrue(L0);
     AmaryanController.touchpad().whileTrue(new SequentialCommandGroup(new rawArmCmd(arm, () -> 0), new rawElevatorCmd(elevator, () -> 0)));
+    // AmaryanController.cross().whileTrue(new elevatorPosCmd(elevator, 100, Constants.Elevator.MaxSpeed));
 
     if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue){
       WakakeController.cross().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef1, 0));

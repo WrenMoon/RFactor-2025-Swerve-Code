@@ -5,28 +5,47 @@
     "data": {
       "commands": [
         {
-          "type": "path",
-          "data": {
-            "pathName": "New New Path"
-          }
-        },
-        {
-          "type": "deadline",
+          "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "wait",
+                "type": "path",
                 "data": {
-                  "waitTime": 5.0
+                  "pathName": "M1"
                 }
               },
               {
-                "type": "named",
+                "type": "deadline",
                 "data": {
-                  "name": "L4"
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 5.5
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "L4"
+                      }
+                    }
+                  ]
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Right Align"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Right Align"
           }
         },
         {
@@ -49,28 +68,21 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 5.0
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "L0"
-                }
-              }
-            ]
+            "pathName": "M2"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Intake"
+            "name": "ElevatorMid"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "L0"
           }
         }
       ]
