@@ -116,7 +116,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        if (Constants.VisionOdometry) {
+        if (Constants.VisionOdometry && !DriverStation.isAutonomous()){ 
             AHRS navx = (AHRS) swerveDrive.swerveDriveConfiguration.imu.getIMU();
 
             LimelightHelpers.SetRobotOrientation("limelight", swerveDrive.getOdometryHeading().getDegrees(),
@@ -153,12 +153,6 @@ public class SwerveSubsystem extends SubsystemBase {
             SmartDashboard.putNumber("NavX rate", navx.getRate());
         }
         }
-        AHRS navx = (AHRS) swerveDrive.swerveDriveConfiguration.imu.getIMU();
-
-    SmartDashboard.putNumber("AccelX", navx.getRawAccelX());
-    SmartDashboard.putNumber("AccelY", navx.getRawAccelX());
-    SmartDashboard.putNumber("AccelZ", navx.getRawAccelX());
-        // swerveDrive.addVisionMeasurement(new Pose2d(3,3,Rotation2d.fromDegrees(65)), Timer.getFPGATimestamp());
     }
 
     /**

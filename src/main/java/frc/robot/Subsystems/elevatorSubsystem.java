@@ -18,7 +18,7 @@ public class elevatorSubsystem extends SubsystemBase {
   final SparkMax motorRight = new SparkMax(Constants.Elevator.elevatorRight, MotorType.kBrushless); //Creating the SparkMax motor object for the right motor
   final SparkMaxConfig leftConfig = new SparkMaxConfig(); //Creating the config for the SparkMax of the left motor
   final SparkMaxConfig rightConfig = new SparkMaxConfig(); //Creating the config for the SparkMax of the right 
-  final DigitalInput limitSwitch = new DigitalInput(8); //Create a limit switch on DIO port 8
+  // final DigitalInput limitSwitch = new DigitalInput(8); //Create a limit switch on DIO port 8
 
   /**
    * The subsystem for the cascade elevator of the robot
@@ -38,12 +38,12 @@ public class elevatorSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if(limitSwitch.get()){
-      motorRight.getEncoder().setPosition(0);
-    }
-    if (Constants.smartEnable){
-      SmartDashboard.putBoolean("Elevator Limit Switch", limitSwitch.get());
-    }
+    // if(limitSwitch.get()){
+    //   motorRight.getEncoder().setPosition(0);
+    // }
+    // if (Constants.smartEnable){
+    //   SmartDashboard.putBoolean("Elevator Limit Switch", limitSwitch.get());
+    // }
   }
 
   /**
@@ -55,11 +55,11 @@ public class elevatorSubsystem extends SubsystemBase {
 
     double finalSpeed = 0;
     
-    if(rightSpeed<0 && limitSwitch.get()){
-      finalSpeed = 0;
-    } else{
+    // if(rightSpeed<0 && limitSwitch.get()){
+    //   finalSpeed = 0;
+    // } else{
       finalSpeed = rightSpeed;
-    }
+    // }
     motorRight.set(finalSpeed);
     motorLeft.set(finalSpeed);
 

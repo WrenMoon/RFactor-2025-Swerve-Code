@@ -7,19 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RS P1"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "RS P2"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "RS P3"
+            "pathName": "Line"
           }
         }
       ]

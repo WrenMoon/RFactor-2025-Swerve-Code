@@ -43,9 +43,9 @@ public class RobotContainer {
 
      //Default Swerve Command to drive with 3 axis on PS5 Controller
      Command driveSwerve = swerve.driveCommand(
-      () -> MathUtil.applyDeadband((-WakakeController.getLeftY() * (((WakakeController.getR2Axis()+ 1)/2) + 2)/3) * Math.max(1 - ((WakakeController.getL2Axis()+ 1)/2), 0.2), Constants.ControllerDeadband),
-      () -> MathUtil.applyDeadband((-WakakeController.getLeftX() * (((WakakeController.getR2Axis()+ 1)/2) + 2)/3) * Math.max(1 - ((WakakeController.getL2Axis()+ 1)/2), 0.2), Constants.ControllerDeadband),
-      () -> MathUtil.applyDeadband((-WakakeController.getRightX() * (((WakakeController.getR2Axis()+ 1)/2) + 2)/3) * Math.max(1 - ((WakakeController.getL2Axis()+ 1)/2), 0.2), Constants.ControllerDeadband), false, true); //Control heading with right joystick
+      () -> MathUtil.applyDeadband((-WakakeController.getLeftY() * (((WakakeController.getR2Axis()+ 1)/2) + 3)/4) * Math.max(1 - ((WakakeController.getL2Axis()+ 1)/2), 0.3), Constants.ControllerDeadband),
+      () -> MathUtil.applyDeadband((-WakakeController.getLeftX() * (((WakakeController.getR2Axis()+ 1)/2) + 3)/4) * Math.max(1 - ((WakakeController.getL2Axis()+ 1)/2), 0.3), Constants.ControllerDeadband),
+      () -> MathUtil.applyDeadband((-WakakeController.getRightX()) * Math.max(1 - ((WakakeController.getL2Axis()+ 1)/2), 0.3), Constants.ControllerDeadband), false, true); //Control heading with right joystick
 
     //Default Elevator Command to move the elevator with one axis
     Command elevate = new rawElevatorCmd(elevator,
@@ -54,9 +54,6 @@ public class RobotContainer {
     //Default Arm Command to move the arm with one axis and gravity control
     Command moveArm = new rawArmCmd(arm,
         () -> -MathUtil.applyDeadband(AmaryanController.getRawAxis(1) * 0.35, Constants.ControllerDeadband));
-
-    AHRS navx = (AHRS) swerve.getSwerveDriveConfiguration().imu.getIMU();
-
 
     //Default Intake Command ot move the intake with gravity correction as per degree angle of the arm
     Command holdCoral = intake.setMotorSupplier(
@@ -89,10 +86,14 @@ public class RobotContainer {
 
     NamedCommands.registerCommand("L0", L0); // registering L0 command group for auto
     NamedCommands.registerCommand("ElevatorMid", new elevatorPosCmd(elevator, elevatorPoses.L4a, Constants.Elevator.MaxSpeed));
-    NamedCommands.registerCommand("Intake", new intakeCmd(intake, 0.3)); // registering intake command for auto
+    NamedCommands.registerCommand("Intake", new intakeCmd(intake, 0.3, false)); // registering intake command for auto
     NamedCommands.registerCommand("L4", L4);
     NamedCommands.registerCommand("Right Align", new reefAlign(swerve, false, Constants.CV.rightAngle));
     NamedCommands.registerCommand("Left Align", new reefAlign(swerve, false, Constants.CV.leftAngle));
+    NamedCommands.registerCommand("Slow Forward", swerve.driveCommand(
+      () -> 0.3,
+      () -> 0,
+      () -> 0, false, false));
     
 
     WakakeController.touchpad().onTrue(Commands.runOnce(swerve::zeroGyro));
@@ -100,10 +101,10 @@ public class RobotContainer {
     WakakeController.R1().whileTrue(new reefAlign(swerve, false, Constants.CV.rightAngle));
     WakakeController.L1().whileTrue(new reefAlign(swerve, false, Constants.CV.leftAngle));
 
-    AmaryanController.R2().whileTrue(new intakeCmd(intake, 0.3));
-    AmaryanController.L2().whileTrue(new intakeCmd(intake, 0.6));
-    AmaryanController.R1().whileTrue(new intakeCmd(intake, -0.3));
-    AmaryanController.L1().whileTrue(new intakeCmd(intake, -0.1));
+    AmaryanController.R2().whileTrue(new intakeCmd(intake, 0.3, true));
+    AmaryanController.L2().whileTrue(new intakeCmd(intake, 0.6, true));
+    AmaryanController.R1().whileTrue(new intakeCmd(intake, -0.3, true));
+    AmaryanController.L1().whileTrue(new intakeCmd(intake, -0.1, true));
     AmaryanController.povUp().onTrue(Lge2);
     AmaryanController.povLeft().onTrue(Lge1);
     AmaryanController.cross().onTrue(L2);
@@ -112,36 +113,35 @@ public class RobotContainer {
     AmaryanController.square().onTrue(L1);
     AmaryanController.povDown().onTrue(L0);
     AmaryanController.touchpad().whileTrue(new SequentialCommandGroup(new rawArmCmd(arm, () -> 0), new rawElevatorCmd(elevator, () -> 0)));
-    // AmaryanController.cross().whileTrue(new elevatorPosCmd(elevator, 100, Constants.Elevator.MaxSpeed));
-
-    if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue){
+    
+    // if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue){
       WakakeController.cross().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef1, 0));
       WakakeController.circle().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef6, 0));
       WakakeController.triangle().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef5, 0));
       WakakeController.povDown().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef2, 0));
       WakakeController.povLeft().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef3, 0));
-      WakakeController.povUp().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef4, 0));
+      // WakakeController.povUp().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef4, 0));
       WakakeController.povRight().whileTrue(swerve.driveToPose(Constants.PosesBlue.stationLeft, 0));
       WakakeController.square().whileTrue(swerve.driveToPose(Constants.PosesBlue.stationRight, 0));
-      SmartDashboard.putBoolean("Blue", true);
-    } else{ 
-      WakakeController.cross().whileTrue(swerve.driveToPose(Constants.PosesRed.reef1, 0));
-      WakakeController.circle().whileTrue(swerve.driveToPose(Constants.PosesRed.reef6, 0));
-      WakakeController.triangle().whileTrue(swerve.driveToPose(Constants.PosesRed.reef5, 0));
-      WakakeController.povDown().whileTrue(swerve.driveToPose(Constants.PosesRed.reef2, 0));
-      WakakeController.povLeft().whileTrue(swerve.driveToPose(Constants.PosesRed.reef3, 0));
-      WakakeController.povUp().whileTrue(swerve.driveToPose(Constants.PosesRed.reef4, 0));
-      WakakeController.povRight().whileTrue(swerve.driveToPose(Constants.PosesRed.stationLeft, 0));
-      WakakeController.square().whileTrue(swerve.driveToPose(Constants.PosesRed.stationRight, 0));
-    }
+    // } else{ 
+    //   WakakeController.cross().whileTrue(swerve.driveToPose(Constants.PosesRed.reef1, 0));
+    //   WakakeController.circle().whileTrue(swerve.driveToPose(Constants.PosesRed.reef6, 0));
+    //   WakakeController.triangle().whileTrue(swerve.driveToPose(Constants.PosesRed.reef5, 0));
+    //   WakakeController.povDown().whileTrue(swerve.driveToPose(Constants.PosesRed.reef2, 0));
+    //   WakakeController.povLeft().whileTrue(swerve.driveToPose(Constants.PosesRed.reef3, 0));
+    //   // WakakeController.povUp().whileTrue(swerve.driveToPose(Constants.PosesRed.reef4, 0));
+    //   WakakeController.povRight().whileTrue(swerve.driveToPose(Constants.PosesRed.stationLeft, 0));
+    //   WakakeController.square().whileTrue(swerve.driveToPose(Constants.PosesRed.stationRight, 0));
+    // // }
 
   }
+
 
   /**
    * Command for the robot to run during autonomous
    * @return Autonomous Command of the robot for the command scheduler
    */
   public Command getAutonomousCommand() {
-    return swerve.getAutonomousCommand("New Auto");
+    return swerve.getAutonomousCommand("Low Auto");
   }
 }

@@ -15,7 +15,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "M1"
+                        "pathName": "L1"
                       }
                     },
                     {
@@ -40,13 +40,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Right Align"
+                        "name": "Left Align"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "Right Align"
+                        "name": "Left Align"
                       }
                     }
                   ]
@@ -81,19 +81,13 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "M2"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "M3"
+                  "pathName": "L2"
                 }
               },
               {

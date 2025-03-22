@@ -11,6 +11,7 @@ public class intakeCmd extends Command {
   private boolean endLoop = false;
   private double loopCounter = 0;
   private boolean limitStart = false;
+  private final boolean limitStop;
 
   /**
    * A Command to move the intake at the input speed.
@@ -18,9 +19,10 @@ public class intakeCmd extends Command {
    * @param Intake      the intake subsystem to move
    * @param intakeSpeed the speed to move the intake at
    */
-  public intakeCmd(intakeSubsystem Intake, double intakeSpeed) {
+  public intakeCmd(intakeSubsystem Intake, double intakeSpeed, boolean limitStop) {
     this.Intake = Intake;
     this.intakeSpeed = intakeSpeed;
+    this.limitStop = limitStop;
     addRequirements(Intake);
   }
 
@@ -51,7 +53,7 @@ public class intakeCmd extends Command {
 
     // if the required time delay(counter)is met, set endLoop to true, check if
     // limit start is false, to avoid stopping the motor while depositing corals
-    if (loopCounter == Constants.Intake.waitCount && !limitStart) {
+    if (loopCounter == Constants.Intake.waitCount && !limitStart && limitStop) {
 
       endLoop = true;
 
