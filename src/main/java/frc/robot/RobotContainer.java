@@ -142,6 +142,6 @@ public class RobotContainer {
    * @return Autonomous Command of the robot for the command scheduler
    */
   public Command getAutonomousCommand() {
-    return swerve.getAutonomousCommand("Low Auto");
+    return swerve.getAutonomousCommand("Left Low Auto");
   }
-}
+} 
