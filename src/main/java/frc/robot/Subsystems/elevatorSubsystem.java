@@ -1,7 +1,5 @@
 package frc.robot.Subsystems;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
@@ -38,12 +36,6 @@ public class elevatorSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // if(limitSwitch.get()){
-    //   motorRight.getEncoder().setPosition(0);
-    // }
-    // if (Constants.smartEnable){
-    //   SmartDashboard.putBoolean("Elevator Limit Switch", limitSwitch.get());
-    // }
   }
 
   /**
@@ -53,15 +45,8 @@ public class elevatorSubsystem extends SubsystemBase {
    */
   public void setMotor(double rightSpeed) {
 
-    double finalSpeed = 0;
-    
-    // if(rightSpeed<0 && limitSwitch.get()){
-    //   finalSpeed = 0;
-    // } else{
-      finalSpeed = rightSpeed;
-    // }
-    motorRight.set(finalSpeed);
-    motorLeft.set(finalSpeed);
+    motorRight.set(rightSpeed);
+    motorLeft.set(rightSpeed);
 
   }
 

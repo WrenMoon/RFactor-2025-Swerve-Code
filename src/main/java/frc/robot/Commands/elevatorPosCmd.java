@@ -13,7 +13,6 @@ public class elevatorPosCmd extends Command {
   private final PIDController PIDelevator;
   private boolean endLoop = false;
   private double maxSpeed;
-  private double lastSpeed;
   
   /**
    * A command to move the elevator to an encoder setpoint using PID Feedback
@@ -34,7 +33,6 @@ public class elevatorPosCmd extends Command {
   public void initialize() {
     endLoop = false;
     PIDelevator.setSetpoint(targetPose); // PID setpoint
-    lastSpeed = 0;
   }
   
 
