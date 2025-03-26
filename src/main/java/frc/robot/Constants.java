@@ -29,7 +29,7 @@ public class Constants {
     public static boolean Invert = false;
     public static final double angleOffset = 40;
     public static final double Kg = 0.03;
-    public static final double waitCount = 5  ;
+    public static final double waitCount = 6;
   }
 
   public static class Arm {
@@ -72,8 +72,8 @@ public class Constants {
       public final double L2 = 31;
       public final double L3 = 105;
       public final double L4a = 150;
-      public final double L4b = 217;
-      public final static double maxPose = 212;
+      public final double L4b = 220;
+      public final static double maxPose = 220;
       public final static double minPose = 0;
       public final double algae1 = 66;
       public final double algae2 = 138;
