@@ -171,8 +171,39 @@ public class RobotContainer {
       headingX = 1;
     } else if (WakakeController.cross().getAsBoolean()){
       headingX = 0;
-    } else {
-      headingX = -WakakeController.getRightX();
+    } else if (Math.abs(WakakeController.getRightX()) > 0.7 || Math.abs(WakakeController.getRightY()) > 0.7){
+      
+      double heading = JoystickHeading();
+
+      if (Math.abs(heading - 0) < 30){
+
+        headingX = 0;
+
+      } else if  (Math.abs(heading - 60) < 30){
+
+        headingX = -1;
+
+      } else if  (Math.abs(heading - 120) < 30){
+
+        headingX = -1;
+
+      } else if  (Math.abs(heading - 180) < 30){
+
+        headingX = 0;
+
+      } else if  (Math.abs(heading - 240) < 30){
+
+        headingX = 1;
+
+      } else if  (Math.abs(heading - 300) < 30){
+
+        headingX = 1;
+
+      } else if  (Math.abs(heading - 360) < 30){
+
+        headingX = 0;
+
+      }
     }
     return headingX;
   }
@@ -180,6 +211,7 @@ public class RobotContainer {
   public double getHeadingAngleY(){
     
     double headingY = 0;
+    
     if(WakakeController.triangle().getAsBoolean()){
       headingY = 1;
     } else if (WakakeController.square().getAsBoolean()){
@@ -188,9 +220,59 @@ public class RobotContainer {
       headingY = 0.7;
     } else if (WakakeController.cross().getAsBoolean()){
       headingY = -1;
-    } else {
-      headingY = -WakakeController.getRightY();
+    } else if (Math.abs(WakakeController.getRightX()) > 0.7 || Math.abs(WakakeController.getRightY()) > 0.7){
+
+      double heading = JoystickHeading();
+
+      if (Math.abs(heading - 0) <= 30){
+
+        headingY = 1;
+
+      } else if  (Math.abs(heading - 60) <= 30){
+
+        headingY = 0.5773502691896258;
+
+      } else if  (Math.abs(heading - 120) <= 30){
+
+        headingY = -0.5773502691896258;
+
+      } else if  (Math.abs(heading - 180) <= 30){
+
+        headingY = -1;
+
+      } else if  (Math.abs(heading - 240) <= 30){
+
+        headingY = -0.5773502691896258;
+
+      } else if  (Math.abs(heading - 300) <= 30){
+
+        headingY = 0.5773502691896258;
+
+      } else if  (Math.abs(heading - 360) <= 30){
+
+        headingY = 1;
+
+      }
+
     }
     return headingY;
+  }
+
+  public double JoystickHeading(){
+      double X = -WakakeController.getRightX();  // X component (leftward, so -X)
+      double Y = -WakakeController.getRightY();  // Y component (upward)
+
+      double resultX = -X;
+      double resultY = Y;
+
+      double angleRad = Math.atan2(resultX, resultY);
+
+      double angleDeg = Math.toDegrees(angleRad);
+
+      if (angleDeg < 0) {
+          angleDeg += 360;
+      }
+
+      return angleDeg;
   }
 } 
