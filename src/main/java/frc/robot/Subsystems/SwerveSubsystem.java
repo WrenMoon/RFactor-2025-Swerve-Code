@@ -402,7 +402,7 @@ public class SwerveSubsystem extends SubsystemBase {
      */
     public Command driveCommand(DoubleSupplier translationX, DoubleSupplier translationY, DoubleSupplier headingX,
             DoubleSupplier headingY, BooleanSupplier headingCorrection) {
-        swerveDrive.setHeadingCorrection(headingCorrection.getAsBoolean()); // Normally you would want heading
+        // swerveDrive.setHeadingCorrection(headingCorrection.getAsBoolean()); // Normally you would want heading
         // correction for this kind of control.
         return run(() -> {
 
@@ -419,10 +419,10 @@ public class SwerveSubsystem extends SubsystemBase {
         });
     }
 
-    public Command setHeadingCorrection(boolean headingCorrection){
-        SmartDashboard.putBoolean("headingCorrection", headingCorrection);
-        return run(() -> {swerveDrive.setHeadingCorrection(headingCorrection);});
-    }
+    // public Command setHeadingCorrection(boolean headingCorrection){
+    //     SmartDashboard.putBoolean("headingCorrection", headingCorrection);
+    //     return run(() -> {swerveDrive.setHeadingCorrection(headingCorrection);});
+    // }
 
     // public void setHeadingCorrection(){
     //     swerveDrive.setHeadingCorrection(true);

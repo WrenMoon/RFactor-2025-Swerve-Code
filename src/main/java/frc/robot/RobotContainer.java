@@ -126,8 +126,10 @@ public class RobotContainer {
     AmaryanController.touchpad().whileTrue(new SequentialCommandGroup(new rawArmCmd(arm, () -> 0), new rawElevatorCmd(elevator, () -> 0)));
 
     // RobotModeTriggers.autonomous().onTrue(swerve.setHeadingCorrection(false));
-    WakakeController.L3().onTrue(swerve.setHeadingCorrection(true));
-    RobotModeTriggers.teleop().onTrue(swerve.setHeadingCorrection(false));
+    // WakakeController.L3().onTrue(swerve.setHeadingCorrection(true));
+    // RobotModeTriggers.teleop().onTrue(swerve.setHeadingCorrection(false));
+
+
     // if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue){
       // WakakeController.cross().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef1, 0));
       // WakakeController.circle().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef6, 0));
@@ -156,8 +158,7 @@ public class RobotContainer {
    * @return Autonomous Command of the robot for the command scheduler
    */
   public Command getAutonomousCommand() {
-    // return swerve.getAutonomousCommand("Copy of Test Auto");
-    return null;
+    return swerve.getAutonomousCommand("Right Auto");
   }
 
   public double getHeadingAngleX(){
