@@ -39,6 +39,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 import org.json.simple.parser.ParseException;
@@ -375,7 +376,7 @@ public class SwerveSubsystem extends SubsystemBase {
      */
     public Command driveCommand(DoubleSupplier translationX, DoubleSupplier translationY,
             DoubleSupplier angularRotationX, boolean headingCorrection, boolean fieldRelativity) {
-        swerveDrive.setHeadingCorrection(headingCorrection);
+        // swerveDrive.setHeadingCorrection(headingCorrection);
         return run(() -> {
             // Make the robot move
             swerveDrive.drive(SwerveMath.scaleTranslation(new Translation2d(
@@ -400,8 +401,8 @@ public class SwerveSubsystem extends SubsystemBase {
      * @return Drive command.
      */
     public Command driveCommand(DoubleSupplier translationX, DoubleSupplier translationY, DoubleSupplier headingX,
-            DoubleSupplier headingY) {
-        swerveDrive.setHeadingCorrection(true); // Normally you would want heading
+            DoubleSupplier headingY, BooleanSupplier headingCorrection) {
+        swerveDrive.setHeadingCorrection(headingCorrection.getAsBoolean()); // Normally you would want heading
         // correction for this kind of control.
         return run(() -> {
 
@@ -417,6 +418,15 @@ public class SwerveSubsystem extends SubsystemBase {
                     // 0.3));
         });
     }
+
+    public Command setHeadingCorrection(boolean headingCorrection){
+        SmartDashboard.putBoolean("headingCorrection", headingCorrection);
+        return run(() -> {swerveDrive.setHeadingCorrection(headingCorrection);});
+    }
+
+    // public void setHeadingCorrection(){
+    //     swerveDrive.setHeadingCorrection(true);
+    // }
 
     /**
      * The primary method for controlling the drivebase. Takes a

@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
+import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 
@@ -51,7 +52,8 @@ public class RobotContainer {
       () -> MathUtil.applyDeadband((-WakakeController.getLeftY() * (((WakakeController.getR2Axis()+ 1)/2) + 3)/4) * Math.max(1 - ((WakakeController.getL2Axis()+ 1)/2), 0.3), Constants.ControllerDeadband),
       () -> MathUtil.applyDeadband((-WakakeController.getLeftX() * (((WakakeController.getR2Axis()+ 1)/2) + 3)/4) * Math.max(1 - ((WakakeController.getL2Axis()+ 1)/2), 0.3), Constants.ControllerDeadband),
       () -> getHeadingAngleX(),
-      () -> getHeadingAngleY()
+      () -> getHeadingAngleY(),
+      () -> !DriverStation.isAutonomous()
     );
     //Default Elevator Command to move the elevator with one axis
     Command elevate = new rawElevatorCmd(elevator,
@@ -87,13 +89,14 @@ public class RobotContainer {
     SequentialCommandGroup Lge2 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, elevatorPoses.algae2, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.elevate, true)), new armPosCmd(arm, armPoses.algae, true));
     SequentialCommandGroup L3 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelCommandGroup(new elevatorPosCmd(elevator, elevatorPoses.L3, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.elevate, true)));
     // SequentialCommandGroup L4 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, elevatorPoses.L4a, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.elevate, true)), new armPosCmd(arm, armPoses.L4, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, elevatorPoses.L4b, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.L4, true)), new armPosCmd(arm, armPoses.L4, true));
-    SequentialCommandGroup L4 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelCommandGroup(new elevatorPosCmd(elevator, elevatorPoses.L4b, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.elevate, true)));
+    SequentialCommandGroup L4 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelCommandGroup(new elevatorPosCmd(elevator, elevatorPoses.L4b, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.L4, true)));
     SequentialCommandGroup L0 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, 5, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.elevate, true)), new armPosCmd(arm, armPoses.zero, false));
 
 
     NamedCommands.registerCommand("L0",new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, -0.5,Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.elevate, true)), new armPosCmd(arm, armPoses.zero, false))); // registering L0 command group for auto
     NamedCommands.registerCommand("ElevatorMid", new elevatorPosCmd(elevator, elevatorPoses.L4a, Constants.Elevator.MaxSpeed));
     NamedCommands.registerCommand("Intake", new intakeCmd(intake, 0.3, false)); // registering intake command for auto
+    NamedCommands.registerCommand("IntakeCoral", new intakeCmd(intake, 0.3, true)); // registering intake command for auto
     NamedCommands.registerCommand("L4", L4);
     NamedCommands.registerCommand("Right Align", new reefAlign(swerve, false, Constants.CV.rightAngle));
     NamedCommands.registerCommand("Left Align", new reefAlign(swerve, false, Constants.CV.leftAngle));
@@ -104,6 +107,7 @@ public class RobotContainer {
     
 
     WakakeController.touchpad().onTrue(Commands.runOnce(swerve::zeroGyro));
+    // WakakeController.touchpad().onTrue(Commands.runOnce(swerve::setHeadingCorrection));
     WakakeController.povUp().whileTrue(new reefAlign(swerve, false, Constants.CV.middleAngle));
     WakakeController.R1().whileTrue(new reefAlign(swerve, false, Constants.CV.rightAngle));
     WakakeController.L1().whileTrue(new reefAlign(swerve, false, Constants.CV.leftAngle));
@@ -120,7 +124,10 @@ public class RobotContainer {
     AmaryanController.square().onTrue(L1);
     AmaryanController.povDown().onTrue(L0);
     AmaryanController.touchpad().whileTrue(new SequentialCommandGroup(new rawArmCmd(arm, () -> 0), new rawElevatorCmd(elevator, () -> 0)));
-    
+
+    // RobotModeTriggers.autonomous().onTrue(swerve.setHeadingCorrection(false));
+    WakakeController.L3().onTrue(swerve.setHeadingCorrection(true));
+    RobotModeTriggers.teleop().onTrue(swerve.setHeadingCorrection(false));
     // if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue){
       // WakakeController.cross().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef1, 0));
       // WakakeController.circle().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef6, 0));
@@ -144,12 +151,13 @@ public class RobotContainer {
   }
 
 
-  /**
+  /**%
    * Command for the robot to run during autonomous
    * @return Autonomous Command of the robot for the command scheduler
    */
   public Command getAutonomousCommand() {
-    return swerve.getAutonomousCommand("Left Low Auto");
+    // return swerve.getAutonomousCommand("Copy of Test Auto");
+    return null;
   }
 
   public double getHeadingAngleX(){
@@ -161,7 +169,9 @@ public class RobotContainer {
       headingX = -1;
     } else if (WakakeController.circle().getAsBoolean()){
       headingX = 1;
-    } else if (Math.abs(WakakeController.getRightY()) > 0.7 || Math.abs(WakakeController.getRightX()) > 0.7){
+    } else if (WakakeController.cross().getAsBoolean()){
+      headingX = 0;
+    } else {
       headingX = -WakakeController.getRightX();
     }
     return headingX;
@@ -176,7 +186,9 @@ public class RobotContainer {
       headingY= 0.7;
     } else if (WakakeController.circle().getAsBoolean()){
       headingY = 0.7;
-    } else if (Math.abs(WakakeController.getRightY()) > 0.7 || Math.abs(WakakeController.getRightX()) > 0.7){
+    } else if (WakakeController.cross().getAsBoolean()){
+      headingY = -1;
+    } else {
       headingY = -WakakeController.getRightY();
     }
     return headingY;

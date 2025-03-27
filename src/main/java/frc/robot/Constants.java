@@ -49,7 +49,7 @@ public class Constants {
       public final double zero = 123;
       public final double elevate = 96;
       public final double L1 = 70;
-      public final double L4 = 45;
+      public final double L4 = 80;
       public final double algae = -40;
       public static final double maxPose = 120;
       public static final double minPose = -40;
@@ -72,8 +72,8 @@ public class Constants {
       public final double L2 = 31;
       public final double L3 = 105;
       public final double L4a = 150;
-      public final double L4b = 220;
-      public final static double maxPose = 220;
+      public final double L4b = 225;
+      public final static double maxPose = 225;
       public final static double minPose = 0;
       public final double algae1 = 66;
       public final double algae2 = 138;
@@ -87,7 +87,7 @@ public class Constants {
     public static final double kd = 0.01;
     public static final double MaxSpeed = 0.35;
     public static final double leftAngle = 11.3;
-    public static final double rightAngle = -18.8;
+    public static final double rightAngle = -18.3;
     public static final double middleAngle = 0;
   }
 
