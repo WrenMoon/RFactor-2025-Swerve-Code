@@ -86,8 +86,8 @@ public class Constants {
     public static final double kp = 0.15;
     public static final double kd = 0.01;
     public static final double MaxSpeed = 0.35;
-    public static final double leftAngle = 11.3;
-    public static final double rightAngle = -18.3;
+    public static final double leftAngle = 8.22;
+    public static final double rightAngle = -20.16;
     public static final double middleAngle = 0;
   }
 

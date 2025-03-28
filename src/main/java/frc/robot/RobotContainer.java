@@ -52,8 +52,7 @@ public class RobotContainer {
       () -> MathUtil.applyDeadband((-WakakeController.getLeftY() * (((WakakeController.getR2Axis()+ 1)/2) + 3)/4) * Math.max(1 - ((WakakeController.getL2Axis()+ 1)/2), 0.3), Constants.ControllerDeadband),
       () -> MathUtil.applyDeadband((-WakakeController.getLeftX() * (((WakakeController.getR2Axis()+ 1)/2) + 3)/4) * Math.max(1 - ((WakakeController.getL2Axis()+ 1)/2), 0.3), Constants.ControllerDeadband),
       () -> getHeadingAngleX(),
-      () -> getHeadingAngleY(),
-      () -> !DriverStation.isAutonomous()
+      () -> getHeadingAngleY()
     );
     //Default Elevator Command to move the elevator with one axis
     Command elevate = new rawElevatorCmd(elevator,
@@ -107,7 +106,7 @@ public class RobotContainer {
     
 
     WakakeController.touchpad().onTrue(Commands.runOnce(swerve::zeroGyro));
-    // WakakeController.touchpad().onTrue(Commands.runOnce(swerve::setHeadingCorrection));
+    WakakeController.touchpad().onTrue(Commands.runOnce(swerve::setHeadingCorrection));
     WakakeController.povUp().whileTrue(new reefAlign(swerve, false, Constants.CV.middleAngle));
     WakakeController.R1().whileTrue(new reefAlign(swerve, false, Constants.CV.rightAngle));
     WakakeController.L1().whileTrue(new reefAlign(swerve, false, Constants.CV.leftAngle));
@@ -172,6 +171,10 @@ public class RobotContainer {
       headingX = 1;
     } else if (WakakeController.cross().getAsBoolean()){
       headingX = 0;
+    } else if (WakakeController.R3().getAsBoolean()){
+
+      headingX = -WakakeController.getRightX();
+
     } else if (Math.abs(WakakeController.getRightX()) > 0.7 || Math.abs(WakakeController.getRightY()) > 0.7){
       
       double heading = JoystickHeading();
@@ -206,6 +209,8 @@ public class RobotContainer {
 
       }
     }
+
+    SmartDashboard.putNumber("HeadingX", headingX);
     return headingX;
   }
 
@@ -221,6 +226,11 @@ public class RobotContainer {
       headingY = 0.7;
     } else if (WakakeController.cross().getAsBoolean()){
       headingY = -1;
+
+    } else if (WakakeController.R3().getAsBoolean()){
+
+      headingY = -WakakeController.getRightY();
+
     } else if (Math.abs(WakakeController.getRightX()) > 0.7 || Math.abs(WakakeController.getRightY()) > 0.7){
 
       double heading = JoystickHeading();
@@ -254,6 +264,8 @@ public class RobotContainer {
         headingY = 1;
 
       }
+
+    SmartDashboard.putNumber("HeadingY", headingY);
 
     }
     return headingY;

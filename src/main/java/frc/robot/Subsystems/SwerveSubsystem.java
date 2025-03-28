@@ -401,8 +401,8 @@ public class SwerveSubsystem extends SubsystemBase {
      * @return Drive command.
      */
     public Command driveCommand(DoubleSupplier translationX, DoubleSupplier translationY, DoubleSupplier headingX,
-            DoubleSupplier headingY, BooleanSupplier headingCorrection) {
-        // swerveDrive.setHeadingCorrection(headingCorrection.getAsBoolean()); // Normally you would want heading
+            DoubleSupplier headingY) {
+        // swerveDrive.setHeadingCorrection(true); // Normally you would want heading
         // correction for this kind of control.
         return run(() -> {
 
@@ -424,9 +424,9 @@ public class SwerveSubsystem extends SubsystemBase {
     //     return run(() -> {swerveDrive.setHeadingCorrection(headingCorrection);});
     // }
 
-    // public void setHeadingCorrection(){
-    //     swerveDrive.setHeadingCorrection(true);
-    // }
+    public void setHeadingCorrection(){
+        swerveDrive.setHeadingCorrection(true);
+    }
 
     /**
      * The primary method for controlling the drivebase. Takes a
