@@ -8,3 +8,5 @@ The complete code used by team 6024 RFactor in the Long Island and Phantom Lakes
 - Swerve and Vision Odometry
 - Pathplanner autonomous
 - Pathfinder navigation in teleop
+- Motor control using PID and gravity correction feedforward
+- Automatic setpoints for subsystems
