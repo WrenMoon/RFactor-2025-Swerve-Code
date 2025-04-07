@@ -44,7 +44,7 @@ public class Constants {
     public static final double zeroEncoder = -16.1;
 
     public static class poses {
-      public final double zero = 127;
+      public final double zero = 127.5;
       public final double elevate = 99;
       public final double L1 = 70;
       public final double L4 = 26.7;
@@ -63,7 +63,7 @@ public class Constants {
     public static final boolean leftInvert = true;
     public static final double kp = 0.045;
     public static final double kd = 0.005;
-    public static final double Kg = 0.04;
+    public static final double Kg = 0.03;
 
     public static class poses {
       public final double L1 = 0;
@@ -81,11 +81,11 @@ public class Constants {
    }
 
   public static class CV {
-    public static final double kp = 0.15;
-    public static final double kd = 0.01;
-    public static final double MaxSpeed = 0.35;
+    public static final double kp = 0.2;
+    public static final double kd = 0.03;
+    public static final double MaxSpeed = 0.5;
     public static final double leftAngle = 8.22;
-    public static final double rightAngle = -20.16;
+    public static final double rightAngle = -17.5;
     public static final double middleAngle = 0;
   }
 

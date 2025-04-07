@@ -37,6 +37,8 @@ public class RobotContainer {
   private final elevatorSubsystem elevator = new elevatorSubsystem();
   final CommandPS5Controller WakakeController = new CommandPS5Controller(0);
   final CommandPS5Controller AmaryanController = new CommandPS5Controller(1);
+  final CommandPS5Controller Testpad = new CommandPS5Controller(2);
+
 
   public RobotContainer() {
 
@@ -107,7 +109,7 @@ public class RobotContainer {
 
     WakakeController.touchpad().onTrue(Commands.runOnce(swerve::zeroGyro));
     WakakeController.touchpad().onTrue(Commands.runOnce(swerve::setHeadingCorrection));
-    WakakeController.povUp().whileTrue(new reefAlign(swerve, false, Constants.CV.middleAngle));
+    // WakakeController.povUp().whileTrue(new reefAlign(swerve, false, Constants.CV.middleAngle));
     WakakeController.R1().whileTrue(new reefAlign(swerve, false, Constants.CV.rightAngle));
     WakakeController.L1().whileTrue(new reefAlign(swerve, false, Constants.CV.leftAngle));
 
@@ -124,29 +126,30 @@ public class RobotContainer {
     AmaryanController.povDown().onTrue(L0);
     AmaryanController.touchpad().whileTrue(new SequentialCommandGroup(new rawArmCmd(arm, () -> 0), new rawElevatorCmd(elevator, () -> 0)));
 
+
     // RobotModeTriggers.autonomous().onTrue(swerve.setHeadingCorrection(false));
     // WakakeController.L3().onTrue(swerve.setHeadingCorrection(true));
     // RobotModeTriggers.teleop().onTrue(swerve.setHeadingCorrection(false));
 
 
     // if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue){
-      // WakakeController.cross().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef1, 0));
-      // WakakeController.circle().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef6, 0));
-      // WakakeController.triangle().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef5, 0));
-      // WakakeController.povDown().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef2, 0));
-      // WakakeController.povLeft().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef3, 0));
-      // // WakakeController.povUp().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef4, 0));
-      // WakakeController.povRight().whileTrue(swerve.driveToPose(Constants.PosesBlue.stationLeft, 0));
-      // WakakeController.square().whileTrue(swerve.driveToPose(Constants.PosesBlue.stationRight, 0));
+      // Testpad.cross().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef1, 0));
+      // Testpad.circle().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef6, 0));
+      // Testpad.triangle().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef5, 0));
+      // Testpad.povDown().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef2, 0));
+      // Testpad.povLeft().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef3, 0));
+      // // Testpad.povUp().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef4, 0));
+      // Testpad.povRight().whileTrue(swerve.driveToPose(Constants.PosesBlue.stationLeft, 0));
+      // Testpad.square().whileTrue(swerve.driveToPose(Constants.PosesBlue.stationRight, 0));
     // } else{ 
-    //   WakakeController.cross().whileTrue(swerve.driveToPose(Constants.PosesRed.reef1, 0));
-    //   WakakeController.circle().whileTrue(swerve.driveToPose(Constants.PosesRed.reef6, 0));
-    //   WakakeController.triangle().whileTrue(swerve.driveToPose(Constants.PosesRed.reef5, 0));
-    //   WakakeController.povDown().whileTrue(swerve.driveToPose(Constants.PosesRed.reef2, 0));
-    //   WakakeController.povLeft().whileTrue(swerve.driveToPose(Constants.PosesRed.reef3, 0));
-    //   // WakakeController.povUp().whileTrue(swerve.driveToPose(Constants.PosesRed.reef4, 0));
-    //   WakakeController.povRight().whileTrue(swerve.driveToPose(Constants.PosesRed.stationLeft, 0));
-    //   WakakeController.square().whileTrue(swerve.driveToPose(Constants.PosesRed.stationRight, 0));
+      Testpad.cross().whileTrue(swerve.driveToPose(Constants.PosesRed.reef1, 0));
+      Testpad.circle().whileTrue(swerve.driveToPose(Constants.PosesRed.reef6, 0));
+      Testpad.triangle().whileTrue(swerve.driveToPose(Constants.PosesRed.reef5, 0));
+      Testpad.povDown().whileTrue(swerve.driveToPose(Constants.PosesRed.reef2, 0));
+      Testpad.povLeft().whileTrue(swerve.driveToPose(Constants.PosesRed.reef3, 0));
+      Testpad.povUp().whileTrue(swerve.driveToPose(Constants.PosesRed.reef4, 0));
+      Testpad.povRight().whileTrue(swerve.driveToPose(Constants.PosesRed.stationLeft, 0));
+      Testpad.square().whileTrue(swerve.driveToPose(Constants.PosesRed.stationRight, 0));
     // // }
 
   }
@@ -157,7 +160,7 @@ public class RobotContainer {
    * @return Autonomous Command of the robot for the command scheduler
    */
   public Command getAutonomousCommand() {
-    return swerve.getAutonomousCommand("Middle Auto");
+    return swerve.getAutonomousCommand("New Auto");
   }
 
   public double getHeadingAngleX(){
