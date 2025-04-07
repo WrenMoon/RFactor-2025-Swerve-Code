@@ -1,5 +1,6 @@
 package frc.robot.Subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
@@ -44,6 +45,10 @@ public class elevatorSubsystem extends SubsystemBase {
    * @param speed the speed in percentage from 0-1 to set the motor speed
    */
   public void setMotor(double rightSpeed) {
+
+    if (Constants.smartEnable){
+      SmartDashboard.putNumber("Elevator Raw Speed", rightSpeed);
+    }
 
     motorRight.set(rightSpeed);
     motorLeft.set(rightSpeed);

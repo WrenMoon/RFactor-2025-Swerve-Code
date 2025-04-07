@@ -35,21 +35,19 @@ public class Constants {
   public static class Arm {
     public static final int ArmID = 11;
     public static final double maxSpeed = 0.5;
-    public static final boolean armInvert = false;
-    public static final double MaxPose = -22;
-    public static final double MinPose = 0;
+    public static final boolean armInvert = true;
     public static final double MaxSpeed = 0.2;
     public static final double kp = 0.012;
     public static final double kd = 0.0015;
     public static final double Kg = 0.027;
     public static final double degreesPerEncoder = 180 / 22;
-    public static final double zeroEncoder = -15.1;
+    public static final double zeroEncoder = -16.1;
 
     public static class poses {
-      public final double zero = 123;
-      public final double elevate = 96;
+      public final double zero = 127;
+      public final double elevate = 99;
       public final double L1 = 70;
-      public final double L4 = 80;
+      public final double L4 = 26.7;
       public final double algae = -40;
       public static final double maxPose = 120;
       public static final double minPose = -40;
@@ -65,18 +63,18 @@ public class Constants {
     public static final boolean leftInvert = true;
     public static final double kp = 0.045;
     public static final double kd = 0.005;
-    public static final double Kg = 0.01;
+    public static final double Kg = 0.04;
 
     public static class poses {
       public final double L1 = 0;
-      public final double L2 = 31;
-      public final double L3 = 105;
-      public final double L4a = 150;
-      public final double L4b = 225;
-      public final static double maxPose = 225;
+      public final double L2 = 12;
+      public final double L3 = 41 ;
+      public final double L4a = 150 *3/5;
+      public final double L4b = 100;
+      public final static double maxPose = 105;
       public final static double minPose = 0;
-      public final double algae1 = 66;
-      public final double algae2 = 138;
+      public final double algae1 = 66 *3/5;
+      public final double algae2 = 138 *3/5;
       // public final static double maxPose = 5000;
       // public final static double minPose = -5000;
     }

@@ -11,6 +11,7 @@ public class elevatorPosCmd extends Command {
   private final elevatorSubsystem elevator;
   private final double targetPose;
   private final PIDController PIDelevator;
+  private final boolean holdPID;
   private boolean endLoop = false;
   private double maxSpeed;
   
@@ -19,10 +20,13 @@ public class elevatorPosCmd extends Command {
    * 
    * @param elevator The elevator subsystem to move
    * @param targetPose the target setpoint to move to in encoder ticks
+   * @param holdPID whether or not to hold the PID loop after acceptable error
+   *                   is achieved
    */
-  public elevatorPosCmd(elevatorSubsystem elevator, double targetPose, double maxSpeed){
+  public elevatorPosCmd(elevatorSubsystem elevator, double targetPose, double maxSpeed, boolean holdPID){
     this.elevator = elevator;
     this.targetPose = targetPose;
+    this.holdPID = holdPID;
     PIDelevator = new PIDController(Constants.Elevator.kp, 0, Constants.Elevator.kd);
     this.maxSpeed = maxSpeed;
 
@@ -55,7 +59,7 @@ public class elevatorPosCmd extends Command {
       SmartDashboard.putNumber("Elevator Ks", ((speed > 0)? Constants.Elevator.MinSpeed : -Constants.Elevator.MinSpeed));
     }
 
-    if (Math.abs(elevator.getEncoder() - targetPose) < 1) { //endcase when setpoint achieved.
+    if (Math.abs(elevator.getEncoder() - targetPose) < 1 && !holdPID) { //endcase when setpoint achieved.
       endLoop = true;
     }
 
