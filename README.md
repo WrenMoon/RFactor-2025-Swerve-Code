@@ -1,5 +1,12 @@
 ﻿# RFactor-2025-Swerve-Code
 
-A full-fledged Swerve code using YAGSL Library for teleop control of a swerve drive using Neos, sparkmaxes, and CANCoders
+The complete code used by team 6024 RFactor in the Long Island and Phantom Lakes regionals in 2025.
 
-Additionally present are skeleton subsytems and commands for other robot Mechanisms
+### Key program features include:
+- Field relative and heading controlled swerve drive using YAGSL
+- April tag alignment to Reef
+- Swerve and Vision Odometry
+- Pathplanner autonomous
+- Pathfinder navigation in teleop
+- Motor control using PID and gravity correction feedforward
+- Automatic setpoints for subsystems
