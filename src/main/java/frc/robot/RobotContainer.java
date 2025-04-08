@@ -91,16 +91,22 @@ public class RobotContainer {
     SequentialCommandGroup L3 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelCommandGroup(new elevatorPosCmd(elevator, elevatorPoses.L3, Constants.Elevator.MaxSpeed, true), new armPosCmd(arm, armPoses.elevate, true)));
     // SequentialCommandGroup L4 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, elevatorPoses.L4a, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.elevate, true)), new armPosCmd(arm, armPoses.L4, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, elevatorPoses.L4b, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.L4, true)), new armPosCmd(arm, armPoses.L4, true));
     SequentialCommandGroup L4 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, elevatorPoses.L4b, Constants.Elevator.MaxSpeed, false), new armPosCmd(arm, armPoses.elevate, true)), new ParallelCommandGroup(new elevatorPosCmd(elevator, elevatorPoses.L4b, Constants.Elevator.MaxSpeed, true), new armPosCmd(arm, armPoses.L4, true)));
-    SequentialCommandGroup L0 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, 2.5, Constants.Elevator.MaxSpeed, false), new armPosCmd(arm, armPoses.elevate, true)), new armPosCmd(arm, armPoses.zero, false));
+    SequentialCommandGroup L0 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, 5, Constants.Elevator.MaxSpeed, false), new armPosCmd(arm, armPoses.elevate, true)), new armPosCmd(arm, armPoses.zero, false));
 
 
     NamedCommands.registerCommand("L0", new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, 0, Constants.Elevator.MaxSpeed, false), new armPosCmd(arm, armPoses.elevate, true)), new armPosCmd(arm, armPoses.zero, false))); // registering L0 command group for auto
     NamedCommands.registerCommand("ElevatorMid", new elevatorPosCmd(elevator, elevatorPoses.L4a, Constants.Elevator.MaxSpeed, false));
     NamedCommands.registerCommand("Intake", new intakeCmd(intake, 0.3, false)); // registering intake command for auto
+    NamedCommands.registerCommand("IntakeAlgae", new intakeCmd(intake, -0.3, false)); // registering intake command for auto
     NamedCommands.registerCommand("IntakeCoral", new intakeCmd(intake, 0.3, true)); // registering intake command for auto
     NamedCommands.registerCommand("L4", L4);
     NamedCommands.registerCommand("Right Align", new reefAlign(swerve, false, Constants.CV.rightAngle));
     NamedCommands.registerCommand("Left Align", new reefAlign(swerve, false, Constants.CV.leftAngle));
+    NamedCommands.registerCommand("Middle Align", new reefAlign(swerve, false, Constants.CV.middleAngle));
+    NamedCommands.registerCommand("Lge2", Lge2);
+    NamedCommands.registerCommand("Lge1", Lge1);
+
+
     NamedCommands.registerCommand("Slow Forward", swerve.driveCommand(
       () -> 0.2,
       () -> 0,
