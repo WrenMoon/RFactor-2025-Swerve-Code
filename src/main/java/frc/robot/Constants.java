@@ -29,7 +29,7 @@ public class Constants {
     public static boolean Invert = false;
     public static final double angleOffset = 40;
     public static final double Kg = 0.03;
-    public static final double waitCount = 6;
+    public static final double waitCount = 4;
   }
 
   public static class Arm {
@@ -68,7 +68,7 @@ public class Constants {
     public static class poses {
       public final double L1 = 0;
       public final double L2 = 12;
-      public final double L3 = 43.5;
+      public final double L3 = 41;
       public final double L4a = 60;
       public final double L4b = 97;
       public final static double maxPose = 97;
@@ -101,7 +101,7 @@ public class Constants {
     public static final Pose2d reef5l = new Pose2d(new Translation2d(Meter.of(5.005), Meter.of(2.812)), Rotation2d.fromDegrees(120));
     public static final Pose2d reef5r = new Pose2d(new Translation2d(Meter.of(5.288), Meter.of(2.964)), Rotation2d.fromDegrees(120));
     public static final Pose2d reef6l = new Pose2d(new Translation2d(Meter.of(3.683), Meter.of(2.95)), Rotation2d.fromDegrees(60));
-    public static final Pose2d reef6r = new Pose2d(new Translation2d(Meter.of(3.973), Meter.of(2.79)), Rotation2d.fromDegrees(60));
+    public static final Pose2d reef6r = new Pose2d(new Translation2d(Meter.of(4.03), Meter.of(2.8)), Rotation2d.fromDegrees(60));
     public static final Pose2d stationRight = new Pose2d(new Translation2d(Meter.of(1.213), Meter.of(1.010)), Rotation2d.fromDegrees(55));
     public static final Pose2d stationLeft = new Pose2d(new Translation2d(Meter.of(1.213), Meter.of(7.09)), Rotation2d.fromDegrees(-55));
 

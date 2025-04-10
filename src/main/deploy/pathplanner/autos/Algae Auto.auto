@@ -9,7 +9,7 @@
           "data": {
             "commands": [
               {
-                "type": "sequential",
+                "type": "parallel",
                 "data": {
                   "commands": [
                     {
@@ -19,22 +19,9 @@
                       }
                     },
                     {
-                      "type": "deadline",
+                      "type": "wait",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 2.0
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "Slow Forward"
-                            }
-                          }
-                        ]
+                        "waitTime": 4.0
                       }
                     }
                   ]
@@ -85,13 +72,13 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 2.5
+                        "waitTime": 3.5
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "Lge2"
+                        "name": "Lge1"
                       }
                     }
                   ]
@@ -121,7 +108,7 @@
                           {
                             "type": "wait",
                             "data": {
-                              "waitTime": 2.0
+                              "waitTime": 1.0
                             }
                           },
                           {
@@ -160,7 +147,7 @@
       ]
     }
   },
-  "resetOdom": true,
+  "resetOdom": false,
   "folder": null,
   "choreoAuto": false
 }

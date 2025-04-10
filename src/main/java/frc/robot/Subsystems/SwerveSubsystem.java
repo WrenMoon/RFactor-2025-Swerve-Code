@@ -117,7 +117,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        if (Constants.VisionOdometry && !DriverStation.isAutonomous()){ 
+        if (Constants.VisionOdometry){ 
             AHRS navx = (AHRS) swerveDrive.swerveDriveConfiguration.imu.getIMU();
 
             LimelightHelpers.SetRobotOrientation("limelight", swerveDrive.getOdometryHeading().getDegrees(),

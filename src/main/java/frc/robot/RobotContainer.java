@@ -106,7 +106,7 @@ public class RobotContainer {
 
     NamedCommands.registerCommand("L0", new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, 0, Constants.Elevator.MaxSpeed, false), new armPosCmd(arm, armPoses.elevate, true)), new armPosCmd(arm, armPoses.zero, false))); // registering L0 command group for auto
     NamedCommands.registerCommand("ElevatorMid", new elevatorPosCmd(elevator, elevatorPoses.L4a, Constants.Elevator.MaxSpeed, false));
-    NamedCommands.registerCommand("Intake", new intakeCmd(intake, 0.3, false)); // registering intake command for auto
+    NamedCommands.registerCommand("Intake", new intakeCmd(intake, 0.15, false)); // registering intake command for auto
     NamedCommands.registerCommand("IntakeAlgae", new intakeCmd(intake, -0.3, false)); // registering intake command for auto
     NamedCommands.registerCommand("IntakeCoral", new intakeCmd(intake, 0.3, true)); // registering intake command for auto
     NamedCommands.registerCommand("L4", L4);
@@ -175,7 +175,7 @@ public class RobotContainer {
    * @return Autonomous Command of the robot for the command scheduler
    */
   public Command getAutonomousCommand() {
-    return swerve.getAutonomousCommand("Middle Auto");
+    return swerve.getAutonomousCommand("Algae Auto");
   }
 
   public double getHeadingAngleX(){

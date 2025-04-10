@@ -65,7 +65,7 @@ public class PathfindPose extends Command {
                 targetPose = leftAlign ? Constants.PosesBlue.reef5l : Constants.PosesBlue.reef5r;
                 poseUpdated = true;
             } else if (HeadingY.getAsDouble() == 0.5773502691896258 && HeadingX.getAsDouble() == 1) {
-                targetPose = leftAlign ? Constants.PosesBlue.reef3l : Constants.PosesBlue.reef3r;
+                targetPose = leftAlign ? Constants.PosesBlue.reef6l : Constants.PosesBlue.reef6r;
                 poseUpdated = true;
             }
 
