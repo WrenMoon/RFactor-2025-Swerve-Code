@@ -57,7 +57,7 @@ public class Constants {
   public static class Elevator {
     public static final int elevatorLeft = 10;
     public static final int elevatorRight = 9;
-    public static final double MaxSpeed = 0.5;
+    public static final double MaxSpeed = 0.7;
     public static final double MinSpeed = 0.01;
     public static final boolean rightInvert = false;
     public static final boolean leftInvert = true;
@@ -69,12 +69,12 @@ public class Constants {
       public final double L1 = 0;
       public final double L2 = 12;
       public final double L3 = 43.5;
-      public final double L4a = 150 *3/5;
+      public final double L4a = 60;
       public final double L4b = 97;
       public final static double maxPose = 97;
       public final static double minPose = 0;
-      public final double algae1 = 66 *3/5;
-      public final double algae2 = 138 *3/5;
+      public final double algae1 = 28;
+      public final double algae2 = 60;
       // public final static double maxPose = 5000;
       // public final static double minPose = -5000;
     }
@@ -93,7 +93,7 @@ public class Constants {
     public static final Pose2d reef1l = new Pose2d(new Translation2d(Meter.of(3.167), Meter.of(4.19)), Rotation2d.fromDegrees(0));
     public static final Pose2d reef1r = new Pose2d(new Translation2d(Meter.of(3.167), Meter.of(3.85)), Rotation2d.fromDegrees(0));
     public static final Pose2d reef2l = new Pose2d(new Translation2d(Meter.of(3.973), Meter.of(5.245)), Rotation2d.fromDegrees(-60));
-    public static final Pose2d reef2r = new Pose2d(new Translation2d(Meter.of(3.676), Meter.of(5.093)), Rotation2d.fromDegrees(-60));
+    public static final Pose2d reef2r = new Pose2d(new Translation2d(Meter.of(3.676), Meter.of(5.036)), Rotation2d.fromDegrees(-60));
     public static final Pose2d reef3l = new Pose2d(new Translation2d(Meter.of(5.296), Meter.of(5.078)), Rotation2d.fromDegrees(-120));
     public static final Pose2d reef3r = new Pose2d(new Translation2d(Meter.of(4.998), Meter.of(5.253)), Rotation2d.fromDegrees(-120));
     public static final Pose2d reef4l = new Pose2d(new Translation2d(Meter.of(5.811), Meter.of(3.858)), Rotation2d.fromDegrees(180));

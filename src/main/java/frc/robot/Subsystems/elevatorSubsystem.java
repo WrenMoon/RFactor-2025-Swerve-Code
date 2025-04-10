@@ -30,8 +30,11 @@ public class elevatorSubsystem extends SubsystemBase {
     leftConfig.inverted(Constants.Elevator.leftInvert); //Setting the invert for the left motor as per the Constants file
     // leftConfig.follow(motorRight, false); //Setting the Config of the left motor to follow the right motor
 
+    
     motorLeft.configure(leftConfig, null, null); //Applying the configuration for the left SparkMax Motor
     motorRight.configure(rightConfig, null, null); //Applying the configuration for the right SparkMax Motor
+
+    
 
   }
 
@@ -67,5 +70,10 @@ public class elevatorSubsystem extends SubsystemBase {
    */
   public double getEncoder() {
     return motorRight.getEncoder().getPosition();
+  }
+
+  public void resetEncoder() {
+   motorLeft.getEncoder().setPosition(0);
+   motorRight.getEncoder().setPosition(0);
   }
 }

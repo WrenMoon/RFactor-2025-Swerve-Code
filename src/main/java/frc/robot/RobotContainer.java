@@ -120,7 +120,7 @@ public class RobotContainer {
       () -> 0, false, false));
     
 
-    WakakeController.touchpad().onTrue(Commands.runOnce(swerve::zeroGyro));
+    WakakeController.button(10).onTrue(Commands.runOnce(swerve::zeroGyro));
 
     WakakeController.L1().whileTrue(new PathfindPose(swerve, true, true, 
       () -> getHeadingAngleX(),
@@ -129,14 +129,11 @@ public class RobotContainer {
       () -> getHeadingAngleX(),
       () -> getHeadingAngleY()));
 
-    WakakeController.button(10).whileTrue(swerve.driveCommand(() -> 0,() -> 0, () -> 0,false, false));
+    WakakeController.touchpad().whileTrue(swerve.driveCommand(() -> 0,() -> 0, () -> 0,false, false));
     WakakeController.povUp().whileTrue(swerve.driveCommand(() -> 0.1,() -> 0, () -> 0,false, false));
     WakakeController.povDown().whileTrue(swerve.driveCommand(() -> -0.1,() -> 0, () -> 0,false, false));
     WakakeController.povLeft().whileTrue(swerve.driveCommand(() -> 0,() -> 0.1, () -> 0,false, false));
     WakakeController.povRight().whileTrue(swerve.driveCommand(() -> 0,() -> -0.1, () -> 0,false, false));
-
-
-
 
     AmaryanController.R2().whileTrue(new intakeCmd(intake, 0.3, true));
     AmaryanController.L2().whileTrue(new intakeCmd(intake, 0.6, true));
@@ -149,8 +146,9 @@ public class RobotContainer {
     AmaryanController.triangle().onTrue(L4);
     AmaryanController.square().onTrue(L1);
     AmaryanController.povDown().onTrue(L0);
-    AmaryanController.touchpad().whileTrue(new SequentialCommandGroup(new rawArmCmd(arm, () -> 0), new rawElevatorCmd(elevator, () -> 0)));    
-
+    AmaryanController.touchpad().whileTrue(new SequentialCommandGroup(new rawArmCmd(arm, () -> 0), new rawElevatorCmd(elevator, () -> 0))); 
+    AmaryanController.povRight().onTrue(Commands.runOnce(elevator::resetEncoder));
+    AmaryanController.povRight().onTrue(Commands.runOnce(arm::resetEncoder));
 
     // new JoystickButton(ButtonBoard, 12).whileTrue(swerve.driveToPose(Constants.PosesBlue.reef1r, 0));
     // new JoystickButton(ButtonBoard, 11).whileTrue(swerve.driveToPose(Constants.PosesBlue.reef1l, 0));
@@ -177,7 +175,7 @@ public class RobotContainer {
    * @return Autonomous Command of the robot for the command scheduler
    */
   public Command getAutonomousCommand() {
-    return swerve.getAutonomousCommand("New Auto");
+    return swerve.getAutonomousCommand("Middle Auto");
   }
 
   public double getHeadingAngleX(){

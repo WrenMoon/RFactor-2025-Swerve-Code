@@ -59,4 +59,8 @@ public class armSubsystem extends SubsystemBase {
     return zeroedEncoder * Constants.Arm.degreesPerEncoder;
   }
 
+  public void resetEncoder() {
+    motor.getEncoder().setPosition(0);
+  }
+
 }
