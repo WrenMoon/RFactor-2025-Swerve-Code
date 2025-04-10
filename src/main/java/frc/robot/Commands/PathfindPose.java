@@ -20,13 +20,10 @@ public class PathfindPose extends Command {
     private DoubleSupplier HeadingX;
     private DoubleSupplier HeadingY;
     private Pose2d targetPose;
+    private boolean poseUpdated;
 
-    /**
-     * A command to move the swerve horizontally to align it to an april tag
-     * 
-     * @param swerve the swerve subsystem to move
-     */
-    public PathfindPose(SwerveSubsystem swerve, boolean blueAlliance, boolean leftAlign, DoubleSupplier HeadingX, DoubleSupplier HeadingY) {
+    public PathfindPose(SwerveSubsystem swerve, boolean blueAlliance, boolean leftAlign, DoubleSupplier HeadingX,
+            DoubleSupplier HeadingY) {
         this.swerve = swerve;
         this.blueAlliance = blueAlliance;
         this.leftAlign = leftAlign;
@@ -38,41 +35,80 @@ public class PathfindPose extends Command {
 
     @Override
     public void initialize() {
-
+        poseUpdated = false;
     }
-    
+
     @Override
     public void execute() {
 
-        targetPose = Constants.PosesBlue.stationLeft;
-    
-        if (HeadingY.getAsDouble() == 0.7 && HeadingX.getAsDouble() == -1) {
-            targetPose = Constants.PosesBlue.stationLeft;
-        } else if (HeadingY.getAsDouble() == 0.7 && HeadingX.getAsDouble() == 1) {
-            targetPose = Constants.PosesBlue.stationRight;
-        } else if (HeadingY.getAsDouble() == 1 && HeadingX.getAsDouble() == 0) {
-            targetPose = leftAlign ? Constants.PosesBlue.reef1l : Constants.PosesBlue.reef1r;
-        } else if (HeadingY.getAsDouble() == 0.5773502691896258 && HeadingX.getAsDouble() == -1) {
-            targetPose = leftAlign ? Constants.PosesBlue.reef2l : Constants.PosesBlue.reef2r;
-        } else if (HeadingY.getAsDouble() == -0.5773502691896258 && HeadingX.getAsDouble() == -1) {
-            targetPose = leftAlign ? Constants.PosesBlue.reef3l : Constants.PosesBlue.reef3r;
-    
+        if (blueAlliance) {
+
+            if (HeadingY.getAsDouble() == 0.7 && HeadingX.getAsDouble() == -1) {
+                targetPose = Constants.PosesBlue.stationLeft;
+                poseUpdated = true;
+            } else if (HeadingY.getAsDouble() == 0.7 && HeadingX.getAsDouble() == 1) {
+                targetPose = Constants.PosesBlue.stationRight;
+                poseUpdated = true;
+            } else if (HeadingY.getAsDouble() == 1 && HeadingX.getAsDouble() == 0) {
+                targetPose = leftAlign ? Constants.PosesBlue.reef1l : Constants.PosesBlue.reef1r;
+                poseUpdated = true;
+            } else if (HeadingY.getAsDouble() == 0.5773502691896258 && HeadingX.getAsDouble() == -1) {
+                targetPose = leftAlign ? Constants.PosesBlue.reef2l : Constants.PosesBlue.reef2r;
+                poseUpdated = true;
+            } else if (HeadingY.getAsDouble() == -0.5773502691896258 && HeadingX.getAsDouble() == -1) {
+                targetPose = leftAlign ? Constants.PosesBlue.reef3l : Constants.PosesBlue.reef3r;
+                poseUpdated = true;
+            } else if (HeadingY.getAsDouble() == -1 && HeadingX.getAsDouble() == 0) {
+                targetPose = leftAlign ? Constants.PosesBlue.reef4l : Constants.PosesBlue.reef4r;
+                poseUpdated = true;
+            } else if (HeadingY.getAsDouble() == -0.5773502691896258 && HeadingX.getAsDouble() == 1) {
+                targetPose = leftAlign ? Constants.PosesBlue.reef5l : Constants.PosesBlue.reef5r;
+                poseUpdated = true;
+            } else if (HeadingY.getAsDouble() == 0.5773502691896258 && HeadingX.getAsDouble() == 1) {
+                targetPose = leftAlign ? Constants.PosesBlue.reef3l : Constants.PosesBlue.reef3r;
+                poseUpdated = true;
+            }
+
+        } else {
+
+            if (HeadingY.getAsDouble() == 0.7 && HeadingX.getAsDouble() == -1) {
+                targetPose = Constants.PosesRed.stationLeft;
+                poseUpdated = true;
+            } else if (HeadingY.getAsDouble() == 0.7 && HeadingX.getAsDouble() == 1) {
+                targetPose = Constants.PosesRed.stationRight;
+                poseUpdated = true;
+            } else if (HeadingY.getAsDouble() == 1 && HeadingX.getAsDouble() == 0) {
+                poseUpdated = true;
+                targetPose = leftAlign ? Constants.PosesRed.reef1l : Constants.PosesRed.reef1r;
+            } else if (HeadingY.getAsDouble() == 0.5773502691896258 && HeadingX.getAsDouble() == -1) {
+                poseUpdated = true;
+                targetPose = leftAlign ? Constants.PosesRed.reef2l : Constants.PosesRed.reef2r;
+            } else if (HeadingY.getAsDouble() == -0.5773502691896258 && HeadingX.getAsDouble() == -1) {
+                poseUpdated = true;
+                targetPose = leftAlign ? Constants.PosesRed.reef3l : Constants.PosesRed.reef3r;
+            } else if (HeadingY.getAsDouble() == -1 && HeadingX.getAsDouble() == 0) {
+                poseUpdated = true;
+                targetPose = leftAlign ? Constants.PosesRed.reef4l : Constants.PosesRed.reef4r;
+            } else if (HeadingY.getAsDouble() == -0.5773502691896258 && HeadingX.getAsDouble() == 1) {
+                poseUpdated = true;
+                targetPose = leftAlign ? Constants.PosesRed.reef5l : Constants.PosesRed.reef5r;
+            } else if (HeadingY.getAsDouble() == 0.5773502691896258 && HeadingX.getAsDouble() == 1) {
+                poseUpdated = true;
+                targetPose = leftAlign ? Constants.PosesRed.reef3l : Constants.PosesRed.reef3r;
+            }
+
         }
-        SmartDashboard.putNumber("Test X", HeadingX.getAsDouble());
-        SmartDashboard.putNumber("Test Y", HeadingY.getAsDouble());
-
-
-        CommandScheduler.getInstance().schedule(swerve.driveToPose(() -> targetPose, 0));
+        if (poseUpdated) {
+            CommandScheduler.getInstance().schedule(swerve.driveToPose(() -> targetPose, 0));
+        }
     }
 
     @Override
     public void end(boolean interrupted) {
-        swerve.drive(new Translation2d(0, 0), 0, false); // Stop the swerve when the command is stopped
     }
 
     @Override
     public boolean isFinished() {
-        return false; // End the command when the setpoint is achieved or if the limelight isnt seeing
-                      // anything
+        return false;
     }
 }

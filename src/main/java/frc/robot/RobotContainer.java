@@ -110,9 +110,6 @@ public class RobotContainer {
     NamedCommands.registerCommand("IntakeAlgae", new intakeCmd(intake, -0.3, false)); // registering intake command for auto
     NamedCommands.registerCommand("IntakeCoral", new intakeCmd(intake, 0.3, true)); // registering intake command for auto
     NamedCommands.registerCommand("L4", L4);
-    NamedCommands.registerCommand("Right Align", new reefAlign(swerve, false, Constants.CV.rightAngle));
-    NamedCommands.registerCommand("Left Align", new reefAlign(swerve, false, Constants.CV.leftAngle));
-    NamedCommands.registerCommand("Middle Align", new reefAlign(swerve, false, Constants.CV.middleAngle));
     NamedCommands.registerCommand("Lge2", Lge2);
     NamedCommands.registerCommand("Lge1", Lge1);
 
@@ -128,9 +125,18 @@ public class RobotContainer {
     WakakeController.L1().whileTrue(new PathfindPose(swerve, true, true, 
       () -> getHeadingAngleX(),
       () -> getHeadingAngleY()));
-    WakakeController.L1().whileTrue(new PathfindPose(swerve, true, false, 
+    WakakeController.R1().whileTrue(new PathfindPose(swerve, true, false, 
       () -> getHeadingAngleX(),
       () -> getHeadingAngleY()));
+
+    WakakeController.L3().whileTrue(swerve.driveCommand(() -> 0,() -> 0, () -> 0,false, false));
+    WakakeController.povUp().whileTrue(swerve.driveCommand(() -> 0.1,() -> 0, () -> 0,false, false));
+    WakakeController.povDown().whileTrue(swerve.driveCommand(() -> -0.1,() -> 0, () -> 0,false, false));
+    WakakeController.povLeft().whileTrue(swerve.driveCommand(() -> 0,() -> 0.1, () -> 0,false, false));
+    WakakeController.povRight().whileTrue(swerve.driveCommand(() -> 0,() -> -0.1, () -> 0,false, false));
+
+
+
 
     AmaryanController.R2().whileTrue(new intakeCmd(intake, 0.3, true));
     AmaryanController.L2().whileTrue(new intakeCmd(intake, 0.6, true));
@@ -224,9 +230,9 @@ public class RobotContainer {
 
       }
     }
-    if (Constants.smartEnable){
-      SmartDashboard.putNumber("Swerve Target HeadingX", headingX);
-    }
+
+    SmartDashboard.putNumber("Swerve Target HeadingX", headingX);
+    
     return headingX;
   }
 
@@ -282,9 +288,7 @@ public class RobotContainer {
       }
     }
 
-    if(Constants.smartEnable){
-      SmartDashboard.putNumber("Swerve Target HeadingY", headingY);
-    }
+    SmartDashboard.putNumber("Swerve Target HeadingY", headingY);
 
     return headingY;
   }

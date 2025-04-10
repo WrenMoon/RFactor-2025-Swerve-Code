@@ -17,14 +17,14 @@ public class rawArmCmd extends Command {
    * A command to move the arm with at a certain power along with gravity
    * compensation feedforawrd.
    * 
-   * @param subsystem the arm subsystem to move
+   * @param arm the arm subsystem to move
    * @param speed     the speed to move the arm at
    */
-  public rawArmCmd(armSubsystem subsystem, DoubleSupplier speed) {
-    this.arm = subsystem;
+  public rawArmCmd(armSubsystem arm, DoubleSupplier speed) {
+    this.arm = arm;
     this.speed = speed;
 
-    addRequirements(subsystem);
+    addRequirements(arm);
   }
 
   @Override
