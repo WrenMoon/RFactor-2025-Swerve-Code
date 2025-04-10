@@ -129,7 +129,7 @@ public class RobotContainer {
       () -> getHeadingAngleX(),
       () -> getHeadingAngleY()));
 
-    WakakeController.L3().whileTrue(swerve.driveCommand(() -> 0,() -> 0, () -> 0,false, false));
+    WakakeController.button(10).whileTrue(swerve.driveCommand(() -> 0,() -> 0, () -> 0,false, false));
     WakakeController.povUp().whileTrue(swerve.driveCommand(() -> 0.1,() -> 0, () -> 0,false, false));
     WakakeController.povDown().whileTrue(swerve.driveCommand(() -> -0.1,() -> 0, () -> 0,false, false));
     WakakeController.povLeft().whileTrue(swerve.driveCommand(() -> 0,() -> 0.1, () -> 0,false, false));
