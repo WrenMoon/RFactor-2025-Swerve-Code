@@ -84,7 +84,7 @@ public class SwerveSubsystem extends SubsystemBase {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        swerveDrive.setHeadingCorrection(false); // Heading correction should only be used while controlling the robot
+        swerveDrive.setHeadingCorrection(true); // Heading correction should only be used while controlling the robot
                                                  // via angle.
         swerveDrive.setCosineCompensator(true);// !SwerveDriveTelemetry.isSimulation); // Disables cosine compensation
                                                // for simulations since it causes discrepancies not seen in real life.
@@ -241,16 +241,17 @@ public class SwerveSubsystem extends SubsystemBase {
      * @param pose Target {@link Pose2d} to go to.
      * @return PathFinding command
      */
-    public Command driveToPose(Pose2d pose, double endVelocity)
+    public Command driveToPose(Supplier<Pose2d> targetPose, double endVelocity)
     {
   // Create the constraints to use while pathfinding
+
       PathConstraints constraints = new PathConstraints(
-          5, 4.0,
+          3, 3.0,
           Units.degreesToRadians(360), Units.degreesToRadians(720));
   
   // Since AutoBuilder is configured, we can use it to build pathfinding commands
       return AutoBuilder.pathfindToPose(
-          pose,
+          targetPose.get(),
           constraints,
           edu.wpi.first.units.Units.MetersPerSecond.of(endVelocity) // Goal end velocity in meters/sec
                                        );
@@ -376,7 +377,7 @@ public class SwerveSubsystem extends SubsystemBase {
      */
     public Command driveCommand(DoubleSupplier translationX, DoubleSupplier translationY,
             DoubleSupplier angularRotationX, boolean headingCorrection, boolean fieldRelativity) {
-        // swerveDrive.setHeadingCorrection(headingCorrection);
+        swerveDrive.setHeadingCorrection(headingCorrection);
         return run(() -> {
             // Make the robot move
             swerveDrive.drive(SwerveMath.scaleTranslation(new Translation2d(
@@ -554,6 +555,7 @@ public class SwerveSubsystem extends SubsystemBase {
      * If red alliance rotate the robot 180 after the drviebase zero command
      */
     public void zeroGyroWithAlliance() {
+        SmartDashboard.putString("Gyro Alliance", isRedAlliance()? "Red":"Blue");
         if (isRedAlliance()) {
             zeroGyro();
             // Set the pose 180 degrees

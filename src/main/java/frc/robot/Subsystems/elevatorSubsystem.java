@@ -37,6 +37,11 @@ public class elevatorSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+
+    if (Constants.smartEnable){
+    SmartDashboard.putNumber("Raw Left Elevator Encoder", motorLeft.getEncoder().getPosition());
+    SmartDashboard.putNumber("Raw Right Elevator Encoder", motorRight.getEncoder().getPosition());
+    }
   }
 
   /**

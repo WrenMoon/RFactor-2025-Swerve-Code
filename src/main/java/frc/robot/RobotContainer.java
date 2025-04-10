@@ -6,11 +6,13 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
@@ -37,7 +39,7 @@ public class RobotContainer {
   private final elevatorSubsystem elevator = new elevatorSubsystem();
   final CommandPS5Controller WakakeController = new CommandPS5Controller(0);
   final CommandPS5Controller AmaryanController = new CommandPS5Controller(1);
-  final CommandPS5Controller Testpad = new CommandPS5Controller(2);
+  final Joystick ButtonBoard = new Joystick(2);
 
 
   public RobotContainer() {
@@ -50,12 +52,20 @@ public class RobotContainer {
     //   () -> MathUtil.applyDeadband((-WakakeController.getLeftX() * (((WakakeController.getR2Axis()+ 1)/2) + 3)/4) * Math.max(1 - ((WakakeController.getL2Axis()+ 1)/2), 0.3), Constants.ControllerDeadband),
     //   () -> MathUtil.applyDeadband((-WakakeController.getRightX()) * Math.max(1 - ((WakakeController.getL2Axis()+ 1)/2), 0.3), Constants.ControllerDeadband), false, true); //Control heading with right joystick
 
+    // Command driveSwerve = swerve.driveCommand(
+    //   () -> MathUtil.applyDeadband(-WakakeController.getLeftY(), Constants.ControllerDeadband),
+    //   () -> MathUtil.applyDeadband(-WakakeController.getLeftX(), Constants.ControllerDeadband),
+    //   () -> (WakakeController.L1().getAsBoolean()? 1 : 0) - (WakakeController.R1().getAsBoolean()? 1 : 0), false, true);
+
+
+    // Main method of driving the swerve, uses heading control
     Command driveSwerve = swerve.driveCommand(
       () -> MathUtil.applyDeadband((-WakakeController.getLeftY() * (((WakakeController.getR2Axis()+ 1)/2) + 3)/4) * Math.max(1 - ((WakakeController.getL2Axis()+ 1)/2), 0.3), Constants.ControllerDeadband),
       () -> MathUtil.applyDeadband((-WakakeController.getLeftX() * (((WakakeController.getR2Axis()+ 1)/2) + 3)/4) * Math.max(1 - ((WakakeController.getL2Axis()+ 1)/2), 0.3), Constants.ControllerDeadband),
       () -> getHeadingAngleX(),
       () -> getHeadingAngleY()
     );
+    
     //Default Elevator Command to move the elevator with one axis
     Command elevate = new rawElevatorCmd(elevator,
         () -> -MathUtil.applyDeadband(AmaryanController.getRawAxis(5), Constants.ControllerDeadband));
@@ -91,7 +101,7 @@ public class RobotContainer {
     SequentialCommandGroup L3 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelCommandGroup(new elevatorPosCmd(elevator, elevatorPoses.L3, Constants.Elevator.MaxSpeed, true), new armPosCmd(arm, armPoses.elevate, true)));
     // SequentialCommandGroup L4 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, elevatorPoses.L4a, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.elevate, true)), new armPosCmd(arm, armPoses.L4, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, elevatorPoses.L4b, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.L4, true)), new armPosCmd(arm, armPoses.L4, true));
     SequentialCommandGroup L4 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, elevatorPoses.L4b, Constants.Elevator.MaxSpeed, false), new armPosCmd(arm, armPoses.elevate, true)), new ParallelCommandGroup(new elevatorPosCmd(elevator, elevatorPoses.L4b, Constants.Elevator.MaxSpeed, true), new armPosCmd(arm, armPoses.L4, true)));
-    SequentialCommandGroup L0 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, 5, Constants.Elevator.MaxSpeed, false), new armPosCmd(arm, armPoses.elevate, true)), new armPosCmd(arm, armPoses.zero, false));
+    SequentialCommandGroup L0 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, 2, Constants.Elevator.MaxSpeed, false), new armPosCmd(arm, armPoses.elevate, true)), new armPosCmd(arm, armPoses.zero, false));
 
 
     NamedCommands.registerCommand("L0", new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, 0, Constants.Elevator.MaxSpeed, false), new armPosCmd(arm, armPoses.elevate, true)), new armPosCmd(arm, armPoses.zero, false))); // registering L0 command group for auto
@@ -114,10 +124,13 @@ public class RobotContainer {
     
 
     WakakeController.touchpad().onTrue(Commands.runOnce(swerve::zeroGyro));
-    WakakeController.touchpad().onTrue(Commands.runOnce(swerve::setHeadingCorrection));
-    // WakakeController.povUp().whileTrue(new reefAlign(swerve, false, Constants.CV.middleAngle));
-    WakakeController.R1().whileTrue(new reefAlign(swerve, false, Constants.CV.rightAngle));
-    WakakeController.L1().whileTrue(new reefAlign(swerve, false, Constants.CV.leftAngle));
+
+    WakakeController.L1().whileTrue(new PathfindPose(swerve, true, true, 
+      () -> getHeadingAngleX(),
+      () -> getHeadingAngleY()));
+    WakakeController.L1().whileTrue(new PathfindPose(swerve, true, false, 
+      () -> getHeadingAngleX(),
+      () -> getHeadingAngleY()));
 
     AmaryanController.R2().whileTrue(new intakeCmd(intake, 0.3, true));
     AmaryanController.L2().whileTrue(new intakeCmd(intake, 0.6, true));
@@ -130,34 +143,26 @@ public class RobotContainer {
     AmaryanController.triangle().onTrue(L4);
     AmaryanController.square().onTrue(L1);
     AmaryanController.povDown().onTrue(L0);
-    AmaryanController.touchpad().whileTrue(new SequentialCommandGroup(new rawArmCmd(arm, () -> 0), new rawElevatorCmd(elevator, () -> 0)));
+    AmaryanController.touchpad().whileTrue(new SequentialCommandGroup(new rawArmCmd(arm, () -> 0), new rawElevatorCmd(elevator, () -> 0)));    
 
 
-    // RobotModeTriggers.autonomous().onTrue(swerve.setHeadingCorrection(false));
-    // WakakeController.L3().onTrue(swerve.setHeadingCorrection(true));
-    // RobotModeTriggers.teleop().onTrue(swerve.setHeadingCorrection(false));
-
-
-    // if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue){
-      // Testpad.cross().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef1, 0));
-      // Testpad.circle().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef6, 0));
-      // Testpad.triangle().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef5, 0));
-      // Testpad.povDown().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef2, 0));
-      // Testpad.povLeft().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef3, 0));
-      // // Testpad.povUp().whileTrue(swerve.driveToPose(Constants.PosesBlue.reef4, 0));
-      // Testpad.povRight().whileTrue(swerve.driveToPose(Constants.PosesBlue.stationLeft, 0));
-      // Testpad.square().whileTrue(swerve.driveToPose(Constants.PosesBlue.stationRight, 0));
-    // } else{ 
-      Testpad.cross().whileTrue(swerve.driveToPose(Constants.PosesRed.reef1, 0));
-      Testpad.circle().whileTrue(swerve.driveToPose(Constants.PosesRed.reef6, 0));
-      Testpad.triangle().whileTrue(swerve.driveToPose(Constants.PosesRed.reef5, 0));
-      Testpad.povDown().whileTrue(swerve.driveToPose(Constants.PosesRed.reef2, 0));
-      Testpad.povLeft().whileTrue(swerve.driveToPose(Constants.PosesRed.reef3, 0));
-      Testpad.povUp().whileTrue(swerve.driveToPose(Constants.PosesRed.reef4, 0));
-      Testpad.povRight().whileTrue(swerve.driveToPose(Constants.PosesRed.stationLeft, 0));
-      Testpad.square().whileTrue(swerve.driveToPose(Constants.PosesRed.stationRight, 0));
-    // // }
-
+    // new JoystickButton(ButtonBoard, 12).whileTrue(swerve.driveToPose(Constants.PosesBlue.reef1r, 0));
+    // new JoystickButton(ButtonBoard, 11).whileTrue(swerve.driveToPose(Constants.PosesBlue.reef1l, 0));
+    // new JoystickButton(ButtonBoard, 10).whileTrue(swerve.driveToPose(Constants.PosesBlue.reef2r, 0));
+    // new JoystickButton(ButtonBoard, 9).whileTrue(swerve.driveToPose(Constants.PosesBlue.reef2l, 0));
+    // new JoystickButton(ButtonBoard, 8).whileTrue(swerve.driveToPose(Constants.PosesBlue.reef3r, 0));
+    // new JoystickButton(ButtonBoard, 7).whileTrue(swerve.driveToPose(Constants.PosesBlue.reef3l, 0));
+    // new JoystickButton(ButtonBoard, 5).whileTrue(swerve.driveToPose(Constants.PosesBlue.stationLeft, 0));
+    
+    
+    // new JoystickButton(ButtonBoard, 12).whileTrue(swerve.driveToPose(Constants.PosesRed.reef1r, 0));
+    // new JoystickButton(ButtonBoard, 11).whileTrue(swerve.driveToPose(Constants.PosesRed.reef1l, 0));
+    // new JoystickButton(ButtonBoard, 10).whileTrue(swerve.driveToPose(Constants.PosesRed.reef2r, 0));
+    // new JoystickButton(ButtonBoard, 9).whileTrue(swerve.driveToPose(Constants.PosesRed.reef2l, 0));
+    // new JoystickButton(ButtonBoard, 8).whileTrue(swerve.driveToPose(Constants.PosesRed.reef3r, 0));
+    // new JoystickButton(ButtonBoard, 7).whileTrue(swerve.driveToPose(Constants.PosesRed.reef3l, 0));
+    // new JoystickButton(ButtonBoard, 5).whileTrue(swerve.driveToPose(Constants.PosesRed.stationLeft, 0));
+    
   }
 
 
@@ -171,7 +176,8 @@ public class RobotContainer {
 
   public double getHeadingAngleX(){
     
-    double headingX = 0;
+    double headingX = SmartDashboard.getNumber("Swerve Target HeadingX", 0);
+
     if(WakakeController.triangle().getAsBoolean()){
       headingX = 0;
     } else if (WakakeController.square().getAsBoolean()){
@@ -218,14 +224,15 @@ public class RobotContainer {
 
       }
     }
-
-    SmartDashboard.putNumber("HeadingX", headingX);
+    if (Constants.smartEnable){
+      SmartDashboard.putNumber("Swerve Target HeadingX", headingX);
+    }
     return headingX;
   }
 
   public double getHeadingAngleY(){
     
-    double headingY = 0;
+    double headingY = SmartDashboard.getNumber("Swerve Target HeadingY", 0);
     
     if(WakakeController.triangle().getAsBoolean()){
       headingY = 1;
@@ -273,10 +280,12 @@ public class RobotContainer {
         headingY = 1;
 
       }
-
-    SmartDashboard.putNumber("HeadingY", headingY);
-
     }
+
+    if(Constants.smartEnable){
+      SmartDashboard.putNumber("Swerve Target HeadingY", headingY);
+    }
+
     return headingY;
   }
 

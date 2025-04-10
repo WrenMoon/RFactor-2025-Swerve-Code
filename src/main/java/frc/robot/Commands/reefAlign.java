@@ -51,7 +51,7 @@ public class reefAlign extends Command {
                 endLoop = true;
             }
 
-            swerve.drive(new Translation2d(0.07, speed), 0, false); // Drive the swerve to align it
+            swerve.drive(new Translation2d(0.05, speed), 0, false); // Drive the swerve to align it
 
             // Smartdashboard for debuggign
             if (Constants.smartEnable) {

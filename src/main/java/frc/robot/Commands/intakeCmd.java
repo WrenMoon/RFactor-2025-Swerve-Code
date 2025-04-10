@@ -68,6 +68,8 @@ public class intakeCmd extends Command {
   public void end(boolean interrupted) {
     Intake.setMotor(0); // Stop the motor when the command is stopped
 
+    
+
     // Smartdashboard for debugging
     if (Constants.smartEnable) {
       SmartDashboard.putBoolean("IntakeCmd", false);
