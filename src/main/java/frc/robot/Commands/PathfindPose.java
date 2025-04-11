@@ -12,8 +12,11 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Commands.*;
 
-public class PathfindPose extends Command {
+
+public class pathfindPose extends Command {
     private final SwerveSubsystem swerve;
     private final boolean blueAlliance;
     private final boolean leftAlign;
@@ -22,7 +25,7 @@ public class PathfindPose extends Command {
     private Pose2d targetPose;
     private boolean poseUpdated;
 
-    public PathfindPose(SwerveSubsystem swerve, boolean blueAlliance, boolean leftAlign, DoubleSupplier HeadingX,
+    public pathfindPose(SwerveSubsystem swerve, boolean blueAlliance, boolean leftAlign, DoubleSupplier HeadingX,
             DoubleSupplier HeadingY) {
         this.swerve = swerve;
         this.blueAlliance = blueAlliance;
@@ -99,7 +102,8 @@ public class PathfindPose extends Command {
 
         }
         if (poseUpdated) {
-            CommandScheduler.getInstance().schedule(swerve.driveToPose(() -> targetPose, 0));
+            // CommandScheduler.getInstance().schedule(swerve.driveToPose(() -> targetPose, 0));
+            CommandScheduler.getInstance().schedule(new SequentialCommandGroup(swerve.driveToPose(() -> targetPose, 0), new alignPose(swerve, targetPose, HeadingX.getAsDouble(), HeadingY.getAsDouble())));
         }
     }
 

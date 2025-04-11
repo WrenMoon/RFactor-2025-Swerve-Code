@@ -41,8 +41,8 @@ public class intakeCmd extends Command {
 
     // Smartdashboard for debugging
     if (Constants.smartEnable) {
-      SmartDashboard.putBoolean("IntakeCmd", true);
-      SmartDashboard.putBoolean("Limit Start", limitStart);
+      SmartDashboard.putBoolean("Intake/IntakeCmd", true);
+      SmartDashboard.putBoolean("Intake/Limit Start", limitStart);
     }
 
     // start the delay counter if the switch is pressed

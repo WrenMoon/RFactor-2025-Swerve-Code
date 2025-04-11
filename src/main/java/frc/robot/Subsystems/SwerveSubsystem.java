@@ -134,24 +134,24 @@ public class SwerveSubsystem extends SubsystemBase {
                 swerveDrive.addVisionMeasurement(megaTagPose.pose, megaTagPose.timestampSeconds);
 
                     if (Constants.smartEnable){
-                        SmartDashboard.putBoolean("visionOdometry", true);
+                        SmartDashboard.putBoolean("Vision Odometry/Enabled", true);
                     }
                 }
                 
                 if(Constants.VisionOdometry){
-                    SmartDashboard.putNumber("VisionX:", megaTagPose.pose.getX());
-                    SmartDashboard.putNumber("VisionY:", megaTagPose.pose.getY());
-                    SmartDashboard.putNumber("VisionRotation:", megaTagPose.pose.getRotation().getDegrees());
-                    SmartDashboard.putNumber("MegaTagCount", megaTagPose.tagCount);
+                    SmartDashboard.putNumber("Vision Odometry/Pose X:", megaTagPose.pose.getX());
+                    SmartDashboard.putNumber("Vision Odometry/Pose Y:", megaTagPose.pose.getY());
+                    SmartDashboard.putNumber("Vision Odometry/Pose Heading:", megaTagPose.pose.getRotation().getDegrees());
+                    SmartDashboard.putNumber("Vision Odometry/MegaTagCount", megaTagPose.tagCount);
                 }
 
                 if (Constants.smartEnable){
-                    SmartDashboard.putBoolean("visionOdometry", false);
+                    SmartDashboard.putBoolean("Vision Odometry/Enabled", false);
                 }
         }
 
         if(Constants.smartEnable){
-            SmartDashboard.putNumber("NavX rate", navx.getRate());
+            SmartDashboard.putNumber("Vision Odometry/NavX Rate", navx.getRate());
         }
         }
     }
@@ -246,7 +246,7 @@ public class SwerveSubsystem extends SubsystemBase {
   // Create the constraints to use while pathfinding
 
       PathConstraints constraints = new PathConstraints(
-          3.5, 2.5,
+          4, 2,
           Units.degreesToRadians(360), Units.degreesToRadians(720));
   
   // Since AutoBuilder is configured, we can use it to build pathfinding commands
@@ -388,7 +388,7 @@ public class SwerveSubsystem extends SubsystemBase {
                     false);
         });
     }
-
+    
     /**
      * Command to drive the robot using translative values and heading as a
      * setpoint.
@@ -418,6 +418,24 @@ public class SwerveSubsystem extends SubsystemBase {
                     swerveDrive.getMaximumChassisVelocity()));
                     // 0.3));
         });
+    }
+
+    public void driveHeading(double translationX, double translationY, double headingX,
+            double headingY) {
+        // swerveDrive.setHeadingCorrection(true); // Normally you would want heading
+        // correction for this kind of control.
+
+            Translation2d scaledInputs = SwerveMath.scaleTranslation(new Translation2d(translationX,
+                    translationY), 0.8);
+
+            // Make the robot move
+            driveFieldOriented(swerveDrive.swerveController.getTargetSpeeds(scaledInputs.getX(), scaledInputs.getY(),
+                    headingX,
+                    headingY,
+                    swerveDrive.getOdometryHeading().getRadians(),
+                    swerveDrive.getMaximumChassisVelocity()));
+                    // 0.3));
+        
     }
 
     // public Command setHeadingCorrection(boolean headingCorrection){
@@ -555,7 +573,6 @@ public class SwerveSubsystem extends SubsystemBase {
      * If red alliance rotate the robot 180 after the drviebase zero command
      */
     public void zeroGyroWithAlliance() {
-        SmartDashboard.putString("Gyro Alliance", isRedAlliance()? "Red":"Blue");
         if (isRedAlliance()) {
             zeroGyro();
             // Set the pose 180 degrees

@@ -35,7 +35,7 @@ public class intakeSubsystem extends SubsystemBase {
 
     //Smartdashboard for debugging
     if (Constants.smartEnable){
-      SmartDashboard.putBoolean("Limit Switch", limitSwitch.get());
+      SmartDashboard.putBoolean("Intake/Raw Limit Switch", limitSwitch.get());
     }
   }
 
@@ -59,7 +59,7 @@ public class intakeSubsystem extends SubsystemBase {
     return run(() -> {
       motor.set(speed.getAsDouble());
       if (Constants.smartEnable) {
-        SmartDashboard.putNumber("IntakeSpeed", speed.getAsDouble());
+        SmartDashboard.putNumber("Intake/Raw IntakeSpeed", speed.getAsDouble());
       }
     });
   }

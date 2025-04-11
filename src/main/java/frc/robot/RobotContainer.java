@@ -122,10 +122,10 @@ public class RobotContainer {
 
     WakakeController.button(10).onTrue(Commands.runOnce(swerve::zeroGyro));
 
-    WakakeController.L1().whileTrue(new PathfindPose(swerve, true, true, 
+    WakakeController.L1().whileTrue(new pathfindPose(swerve, true, true, 
       () -> getHeadingAngleX(),
       () -> getHeadingAngleY()));
-    WakakeController.R1().whileTrue(new PathfindPose(swerve, true, false, 
+    WakakeController.R1().whileTrue(new pathfindPose(swerve, true, false, 
       () -> getHeadingAngleX(),
       () -> getHeadingAngleY()));
 

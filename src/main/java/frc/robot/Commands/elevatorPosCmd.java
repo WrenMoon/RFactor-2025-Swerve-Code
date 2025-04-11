@@ -52,11 +52,11 @@ public class elevatorPosCmd extends Command {
 
     //Smartdashboard for debugging
     if (Constants.smartEnable) {
-      SmartDashboard.putBoolean("elevatorPosCmd", true);
-      SmartDashboard.putNumber("Elevator encoder", elevator.getEncoder());
-      SmartDashboard.putNumber("Elevator Target Pose", targetPose);
-      SmartDashboard.putNumber("ELevator PID speed", speed);
-      SmartDashboard.putNumber("Elevator Ks", ((speed > 0)? Constants.Elevator.MinSpeed : -Constants.Elevator.MinSpeed));
+      SmartDashboard.putBoolean("Elevator/elevatorPosCmd", true);
+      SmartDashboard.putNumber("Elevator/Elevator encoder", elevator.getEncoder());
+      SmartDashboard.putNumber("Elevator/Elevator Target Pose", targetPose);
+      SmartDashboard.putNumber("Elevator/ELevator PID speed", speed);
+      SmartDashboard.putNumber("Elevator/Elevator Ks", ((speed > 0)? Constants.Elevator.MinSpeed : -Constants.Elevator.MinSpeed));
     }
 
     if (Math.abs(elevator.getEncoder() - targetPose) < 1 && !holdPID) { //endcase when setpoint achieved.
@@ -71,7 +71,7 @@ public class elevatorPosCmd extends Command {
     
     //Smartdashboard for debugging
     if (Constants.smartEnable) {
-      SmartDashboard.putBoolean("elevatorPosCmd", false);
+      SmartDashboard.putBoolean("Elevator/elevatorPosCmd", false);
     }
   }
 

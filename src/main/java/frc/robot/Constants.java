@@ -81,8 +81,10 @@ public class Constants {
    }
 
   public static class CV {
-    public static final double kp = 0.2;
-    public static final double kd = 0.03;
+    public static final double kp = 3;
+    public static final double kd = 2;
+    public static final double secondaryKp = 1.3;
+    public static final double secondaryKd = 0.2;
     public static final double MaxSpeed = 0.5;
     public static final double leftAngle = 8.22;
     public static final double rightAngle = -17.5;

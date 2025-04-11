@@ -40,9 +40,9 @@ public class rawElevatorCmd extends Command {
 
     // Smardashboard for debugging
     if (Constants.smartEnable) {
-      SmartDashboard.putBoolean("rawElevatorCmd", true);
-      SmartDashboard.putNumber("Elevator encoder", elevator.getEncoder());
-      SmartDashboard.putNumber("Elevator speed", speed.getAsDouble());
+      SmartDashboard.putBoolean("Elevator/rawElevatorCmd", true);
+      SmartDashboard.putNumber("Elevator/Elevator encoder", elevator.getEncoder());
+      SmartDashboard.putNumber("Elevator/Elevator speed", speed.getAsDouble());
     }
   }
 
@@ -52,7 +52,7 @@ public class rawElevatorCmd extends Command {
 
     // Smartdashboard for debugging
     if (Constants.smartEnable) {
-      SmartDashboard.putBoolean("rawElevatorCmd", false);
+      SmartDashboard.putBoolean("Elevator/rawElevatorCmd", false);
 
     }
   }

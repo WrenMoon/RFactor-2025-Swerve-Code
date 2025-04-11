@@ -42,8 +42,8 @@ public class elevatorSubsystem extends SubsystemBase {
   public void periodic() {
 
     if (Constants.smartEnable){
-    SmartDashboard.putNumber("Raw Left Elevator Encoder", motorLeft.getEncoder().getPosition());
-    SmartDashboard.putNumber("Raw Right Elevator Encoder", motorRight.getEncoder().getPosition());
+    SmartDashboard.putNumber("Elevator/Raw Left Elevator Encoder", motorLeft.getEncoder().getPosition());
+    SmartDashboard.putNumber("Elevator/Raw Right Elevator Encoder", motorRight.getEncoder().getPosition());
     }
   }
 
@@ -55,7 +55,7 @@ public class elevatorSubsystem extends SubsystemBase {
   public void setMotor(double rightSpeed) {
 
     if (Constants.smartEnable){
-      SmartDashboard.putNumber("Elevator Raw Speed", rightSpeed);
+      SmartDashboard.putNumber("Elevator/Elevator Raw Speed", rightSpeed);
     }
 
     motorRight.set(rightSpeed);

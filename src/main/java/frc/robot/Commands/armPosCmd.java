@@ -51,12 +51,12 @@ public class armPosCmd extends Command {
 
         // Smartdashboard for debugging
         if (Constants.smartEnable) {
-            SmartDashboard.putBoolean("armPosCmd", true);
-            SmartDashboard.putNumber("Arm encoder", arm.getEncoder());
-            SmartDashboard.putNumber("Arm Target Pose", targetPose);
-            SmartDashboard.putNumber("Arm PID speed", speed);
-            SmartDashboard.putNumber("Arm Degrees", arm.getDegrees());
-            SmartDashboard.putBoolean("Arm hold", holdPID);
+            SmartDashboard.putBoolean("Arm/armPosCmd", true);
+            SmartDashboard.putNumber("Arm/Arm encoder", arm.getEncoder());
+            SmartDashboard.putNumber("Arm/Arm Target Pose", targetPose);
+            SmartDashboard.putNumber("Arm/Arm PID speed", speed);
+            SmartDashboard.putNumber("Arm/Arm Degrees", arm.getDegrees());
+            SmartDashboard.putBoolean("Arm/Arm hold", holdPID);
         }
 
         if (Math.abs(targetPose - arm.getDegrees()) < 3.5 && !holdPID) { // endcase when setpoint achieved. Only if holdPID is false
@@ -72,7 +72,7 @@ public class armPosCmd extends Command {
 
         // Smartdashboard for debugging
         if (Constants.smartEnable) {
-            SmartDashboard.putBoolean("armPosCmd", false);
+            SmartDashboard.putBoolean("Arm/armPosCmd", false);
         }
     }
 

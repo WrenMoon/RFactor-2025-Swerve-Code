@@ -51,11 +51,11 @@ public class rawArmCmd extends Command {
 
     // Smartdashboard for debugging
     if (Constants.smartEnable) {
-      SmartDashboard.putBoolean("rawArmCmd", false);
-      SmartDashboard.putNumber("Arm encoder", arm.getEncoder());
-      SmartDashboard.putNumber("Arm speed", speed.getAsDouble());
-      SmartDashboard.putNumber("Arm Degrees", arm.getDegrees());
-      SmartDashboard.putNumber("Arm Correction", Constants.Arm.Kg * Math.cos(Math.toRadians(arm.getDegrees())));
+      SmartDashboard.putBoolean("Arm/rawArmCmd", false);
+      SmartDashboard.putNumber("Arm/Arm encoder", arm.getEncoder());
+      SmartDashboard.putNumber("Arm/Arm speed", speed.getAsDouble());
+      SmartDashboard.putNumber("Arm/Arm Degrees", arm.getDegrees());
+      SmartDashboard.putNumber("Arm/Arm Correction", Constants.Arm.Kg * Math.cos(Math.toRadians(arm.getDegrees())));
     }
   }
 
@@ -65,7 +65,7 @@ public class rawArmCmd extends Command {
 
     // Smartdashboard for debugging
     if (Constants.smartEnable) {
-      SmartDashboard.putBoolean("rawArmCmd", false);
+      SmartDashboard.putBoolean("Arm/rawArmCmd", false);
     }
   }
 
