@@ -112,16 +112,41 @@ public class RobotContainer {
     SequentialCommandGroup L0 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, 2, Constants.Elevator.MaxSpeed, false), new armPosCmd(arm, armPoses.elevate, true)), new armPosCmd(arm, armPoses.zero, false));
 
 
-    NamedCommands.registerCommand("L0", new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, 0, Constants.Elevator.MaxSpeed, false), new armPosCmd(arm, armPoses.elevate, true)), new armPosCmd(arm, armPoses.zero, false))); // registering L0 command group for auto
+    NamedCommands.registerCommand("L0", L0); // registering L0 command group for auto
     NamedCommands.registerCommand("ElevatorMid", new elevatorPosCmd(elevator, elevatorPoses.L4a, Constants.Elevator.MaxSpeed, false));
-    NamedCommands.registerCommand("Intake", new intakeCmd(intake, 0.15, false)); // registering intake command for auto
+    NamedCommands.registerCommand("Intake", new intakeCmd(intake, 0.3, false)); // registering intake command for auto
     NamedCommands.registerCommand("IntakeAlgae", new intakeCmd(intake, -0.3, false)); // registering intake command for auto
     NamedCommands.registerCommand("IntakeCoral", new intakeCmd(intake, 0.3, true)); // registering intake command for auto
+    NamedCommands.registerCommand("FaceBack", swerve.driveCommand(
+      () -> 0,
+      () -> 0,
+      () -> 0,
+      () -> -1
+    ));
+    NamedCommands.registerCommand("FaceForward", swerve.driveCommand(
+      () -> 0,
+      () -> 0,
+      () -> 0,
+      () -> 1
+    ));
+    NamedCommands.registerCommand("FaceLeft", swerve.driveCommand(
+      () -> 0,
+      () -> 0,
+      () -> 1,
+      () -> 0.5773502691896258
+    ));
+    NamedCommands.registerCommand("FaceRight", swerve.driveCommand(
+      () -> 0,
+      () -> 0,
+      () -> -1,
+      () -> 0.5773502691896258
+    ));
     NamedCommands.registerCommand("L4", L4);
+    NamedCommands.registerCommand("L2", L2);
     NamedCommands.registerCommand("Lge2", Lge2);
     NamedCommands.registerCommand("Lge1", Lge1);
-
-
+    NamedCommands.registerCommand("Align4r", new alignPose(swerve, Constants.PosesBlue.reef4r,0, -1));
+    NamedCommands.registerCommand("Align4l", new alignPose(swerve, Constants.PosesBlue.reef4l,0, -1));
     NamedCommands.registerCommand("Slow Forward", swerve.driveCommand(
       () -> 0.2,
       () -> 0,
@@ -183,14 +208,16 @@ public class RobotContainer {
    * @return Autonomous Command of the robot for the command scheduler
    */
   public Command getAutonomousCommand() {
-    return swerve.getAutonomousCommand("New Auto");
+    return swerve.getAutonomousCommand("Algae Auto");
   }
 
   public double getHeadingAngleX(){
     
     double headingX = SmartDashboard.getNumber("Swerve Target HeadingX", 0);
 
-    if(WakakeController.triangle().getAsBoolean()){
+    if (DriverStation.isAutonomous()){
+      headingX = 0;
+    } else if(WakakeController.triangle().getAsBoolean()){
       headingX = 0;
     } else if (WakakeController.square().getAsBoolean()){
       headingX = -1;
@@ -246,7 +273,9 @@ public class RobotContainer {
     
     double headingY = SmartDashboard.getNumber("Swerve Target HeadingY", 0);
     
-    if(WakakeController.triangle().getAsBoolean()){
+    if (DriverStation.isAutonomous()){
+      headingY = -1;
+    } else if(WakakeController.triangle().getAsBoolean()){
       headingY = 1;
     } else if (WakakeController.square().getAsBoolean()){
       headingY= 0.7;

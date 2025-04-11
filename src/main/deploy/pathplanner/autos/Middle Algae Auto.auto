@@ -9,7 +9,7 @@
           "data": {
             "commands": [
               {
-                "type": "parallel",
+                "type": "sequential",
                 "data": {
                   "commands": [
                     {
@@ -19,9 +19,48 @@
                       }
                     },
                     {
-                      "type": "wait",
+                      "type": "deadline",
                       "data": {
-                        "waitTime": 4.0
+                        "commands": [
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 2.0
+                            }
+                          },
+                          {
+                            "type": "sequential",
+                            "data": {
+                              "commands": [
+                                {
+                                  "type": "deadline",
+                                  "data": {
+                                    "commands": [
+                                      {
+                                        "type": "wait",
+                                        "data": {
+                                          "waitTime": 0.1
+                                        }
+                                      },
+                                      {
+                                        "type": "named",
+                                        "data": {
+                                          "name": "FaceBack"
+                                        }
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "Align4r"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
                       }
                     }
                   ]
@@ -43,7 +82,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 2.0
+                  "waitTime": 1.0
                 }
               },
               {
@@ -66,19 +105,32 @@
                 }
               },
               {
-                "type": "deadline",
+                "type": "sequential",
                 "data": {
                   "commands": [
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 3.5
+                        "waitTime": 0.5
                       }
                     },
                     {
-                      "type": "named",
+                      "type": "deadline",
                       "data": {
-                        "name": "Lge1"
+                        "commands": [
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 2.0
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "Lge1"
+                            }
+                          }
+                        ]
                       }
                     }
                   ]
@@ -108,7 +160,7 @@
                           {
                             "type": "wait",
                             "data": {
-                              "waitTime": 1.0
+                              "waitTime": 0.5
                             }
                           },
                           {
@@ -139,15 +191,47 @@
           }
         },
         {
-          "type": "named",
+          "type": "deadline",
           "data": {
-            "name": "Intake"
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "L0"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "FaceForward"
+                }
+              }
+            ]
           }
         }
       ]
     }
   },
-  "resetOdom": false,
+  "resetOdom": true,
   "folder": null,
   "choreoAuto": false
 }
