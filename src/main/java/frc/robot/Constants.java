@@ -100,7 +100,7 @@ public class Constants {
     public static final Pose2d reef3r = new Pose2d(new Translation2d(Meter.of(4.998), Meter.of(5.253)), Rotation2d.fromDegrees(-120));
     public static final Pose2d reef4l = new Pose2d(new Translation2d(Meter.of(5.78), Meter.of(3.858)), Rotation2d.fromDegrees(180));
     public static final Pose2d reef4r = new Pose2d(new Translation2d(Meter.of(5.811), Meter.of(4.26)), Rotation2d.fromDegrees(180));
-    public static final Pose2d reef5l = new Pose2d(new Translation2d(Meter.of(5.005), Meter.of(2.812)), Rotation2d.fromDegrees(120));
+    public static final Pose2d reef5l = new Pose2d(new Translation2d(Meter.of(4.993), Meter.of(2.819)), Rotation2d.fromDegrees(120));
     public static final Pose2d reef5r = new Pose2d(new Translation2d(Meter.of(5.288), Meter.of(2.964)), Rotation2d.fromDegrees(120));
     public static final Pose2d reef6l = new Pose2d(new Translation2d(Meter.of(3.683), Meter.of(2.95)), Rotation2d.fromDegrees(60));
     public static final Pose2d reef6r = new Pose2d(new Translation2d(Meter.of(4.03), Meter.of(2.8)), Rotation2d.fromDegrees(60));

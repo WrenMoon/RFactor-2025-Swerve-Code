@@ -112,7 +112,7 @@ public class RobotContainer {
     SequentialCommandGroup L0 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, 2, Constants.Elevator.MaxSpeed, false), new armPosCmd(arm, armPoses.elevate, true)), new armPosCmd(arm, armPoses.zero, false));
 
 
-    NamedCommands.registerCommand("L0", L0); // registering L0 command group for auto
+    NamedCommands.registerCommand("L0",  new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, 0.5, Constants.Elevator.MaxSpeed, false), new armPosCmd(arm, armPoses.elevate, true)), new armPosCmd(arm, armPoses.zero, false))); // registering L0 command group for auto
     NamedCommands.registerCommand("ElevatorMid", new elevatorPosCmd(elevator, elevatorPoses.L4a, Constants.Elevator.MaxSpeed, false));
     NamedCommands.registerCommand("Intake", new intakeCmd(intake, 0.3, false)); // registering intake command for auto
     NamedCommands.registerCommand("IntakeAlgae", new intakeCmd(intake, -0.3, false)); // registering intake command for auto
@@ -133,19 +133,21 @@ public class RobotContainer {
       () -> 0,
       () -> 0,
       () -> 1,
-      () -> 0.5773502691896258
+      () -> -0.5773502691896258
     ));
     NamedCommands.registerCommand("FaceRight", swerve.driveCommand(
       () -> 0,
       () -> 0,
       () -> -1,
-      () -> 0.5773502691896258
+      () -> -0.5773502691896258
     ));
     NamedCommands.registerCommand("L4", L4);
+    NamedCommands.registerCommand("L3", L3);
     NamedCommands.registerCommand("L2", L2);
     NamedCommands.registerCommand("Lge2", Lge2);
     NamedCommands.registerCommand("Lge1", Lge1);
     NamedCommands.registerCommand("Align4r", new alignPose(swerve, Constants.PosesBlue.reef4r,0, -1));
+    NamedCommands.registerCommand("Align5l", new alignPose(swerve, Constants.PosesBlue.reef5l,1, -0.5773502691896258));
     NamedCommands.registerCommand("Align4l", new alignPose(swerve, Constants.PosesBlue.reef4l,0, -1));
     NamedCommands.registerCommand("Slow Forward", swerve.driveCommand(
       () -> 0.2,
@@ -208,7 +210,7 @@ public class RobotContainer {
    * @return Autonomous Command of the robot for the command scheduler
    */
   public Command getAutonomousCommand() {
-    return swerve.getAutonomousCommand("Algae Auto");
+    return swerve.getAutonomousCommand("MRA");
   }
 
   public double getHeadingAngleX(){

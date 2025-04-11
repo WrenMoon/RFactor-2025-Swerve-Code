@@ -15,7 +15,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "M1"
+                        "pathName": "M1r"
                       }
                     },
                     {
@@ -101,7 +101,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "M2"
+                  "pathName": "M2r"
                 }
               },
               {
