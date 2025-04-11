@@ -77,7 +77,7 @@ public class alignPose extends Command {
             SmartDashboard.putNumber("Pose Align/Error Y", yPID.getError());
         }
 
-        swerve.driveHeading(translationX, translationY,HeadingX, HeadingY);
+        swerve.driveHeading(translationX, translationY,0, 0);
     }
 
     @Override

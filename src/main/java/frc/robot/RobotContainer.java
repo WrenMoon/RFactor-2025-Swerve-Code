@@ -58,13 +58,21 @@ public class RobotContainer {
     //   () -> (WakakeController.L1().getAsBoolean()? 1 : 0) - (WakakeController.R1().getAsBoolean()? 1 : 0), false, true);
 
 
-    // Main method of driving the swerve, uses heading control
+    // Main method of driving the swerve, using heading control for blue alliance
     Command driveSwerve = swerve.driveCommand(
       () -> MathUtil.applyDeadband((-WakakeController.getLeftY() * (((WakakeController.getR2Axis()+ 1)/2) + 3)/4) * Math.max(1 - ((WakakeController.getL2Axis()+ 1)/2), 0.3), Constants.ControllerDeadband),
       () -> MathUtil.applyDeadband((-WakakeController.getLeftX() * (((WakakeController.getR2Axis()+ 1)/2) + 3)/4) * Math.max(1 - ((WakakeController.getL2Axis()+ 1)/2), 0.3), Constants.ControllerDeadband),
       () -> getHeadingAngleX(),
       () -> getHeadingAngleY()
     );
+
+    // Main method of driving the swerve, using heading control for red alliance
+    // Command driveSwerve = swerve.driveCommand(
+    //   () -> -1* MathUtil.applyDeadband((-WakakeController.getLeftY() * (((WakakeController.getR2Axis()+ 1)/2) + 3)/4) * Math.max(1 - ((WakakeController.getL2Axis()+ 1)/2), 0.3), Constants.ControllerDeadband),
+    //   () -> -1* MathUtil.applyDeadband((-WakakeController.getLeftX() * (((WakakeController.getR2Axis()+ 1)/2) + 3)/4) * Math.max(1 - ((WakakeController.getL2Axis()+ 1)/2), 0.3), Constants.ControllerDeadband),
+    //   () -> -1* getHeadingAngleX(),
+    //   () -> -1* getHeadingAngleY()
+    // );
     
     //Default Elevator Command to move the elevator with one axis
     Command elevate = new rawElevatorCmd(elevator,
@@ -175,7 +183,7 @@ public class RobotContainer {
    * @return Autonomous Command of the robot for the command scheduler
    */
   public Command getAutonomousCommand() {
-    return swerve.getAutonomousCommand("Algae Auto");
+    return swerve.getAutonomousCommand("New Auto");
   }
 
   public double getHeadingAngleX(){

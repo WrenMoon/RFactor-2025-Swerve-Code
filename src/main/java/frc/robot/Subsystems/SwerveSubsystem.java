@@ -84,6 +84,7 @@ public class SwerveSubsystem extends SubsystemBase {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
         swerveDrive.setHeadingCorrection(true); // Heading correction should only be used while controlling the robot
                                                  // via angle.
         swerveDrive.setCosineCompensator(true);// !SwerveDriveTelemetry.isSimulation); // Disables cosine compensation
@@ -246,7 +247,7 @@ public class SwerveSubsystem extends SubsystemBase {
   // Create the constraints to use while pathfinding
 
       PathConstraints constraints = new PathConstraints(
-          4, 2,
+          3, 1,
           Units.degreesToRadians(360), Units.degreesToRadians(720));
   
   // Since AutoBuilder is configured, we can use it to build pathfinding commands
