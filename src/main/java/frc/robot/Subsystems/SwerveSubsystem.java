@@ -439,15 +439,6 @@ public class SwerveSubsystem extends SubsystemBase {
         
     }
 
-    // public Command setHeadingCorrection(boolean headingCorrection){
-    //     SmartDashboard.putBoolean("headingCorrection", headingCorrection);
-    //     return run(() -> {swerveDrive.setHeadingCorrection(headingCorrection);});
-    // }
-
-    public void setHeadingCorrection(){
-        swerveDrive.setHeadingCorrection(true);
-    }
-
     /**
      * The primary method for controlling the drivebase. Takes a
      * {@link Translation2d} and a rotation rate, and
