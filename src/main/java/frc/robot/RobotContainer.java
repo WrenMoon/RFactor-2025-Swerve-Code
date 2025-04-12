@@ -104,7 +104,7 @@ public class RobotContainer {
     SequentialCommandGroup L1 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, elevatorPoses.L1, Constants.Elevator.MaxSpeed, false), new armPosCmd(arm, armPoses.elevate, true)), new ParallelCommandGroup(new armPosCmd(arm, armPoses.L1, true), new elevatorPosCmd(elevator, elevatorPoses.L1, Constants.Elevator.MaxSpeed, true)));
     SequentialCommandGroup L2 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelCommandGroup(new elevatorPosCmd(elevator, elevatorPoses.L2, 0.6, true), new armPosCmd(arm, armPoses.elevate, true)));
     SequentialCommandGroup Lge1 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.algae, false), new ParallelCommandGroup(new elevatorPosCmd(elevator, elevatorPoses.algae1, Constants.Elevator.MaxSpeed, true), new armPosCmd(arm, armPoses.algae, true)));
-    SequentialCommandGroup Lge2 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, elevatorPoses.algae2, Constants.Elevator.MaxSpeed, false), new armPosCmd(arm, armPoses.elevate, true)), new ParallelCommandGroup(new armPosCmd(arm, armPoses.algae, true), new elevatorPosCmd(elevator, elevatorPoses.algae2, Constants.Elevator.MaxSpeed, true)));
+    SequentialCommandGroup Lge2 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.algae, false), new ParallelCommandGroup(new elevatorPosCmd(elevator, elevatorPoses.algae2, Constants.Elevator.MaxSpeed, true), new armPosCmd(arm, armPoses.algae, true)));
     SequentialCommandGroup L3 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelCommandGroup(new elevatorPosCmd(elevator, elevatorPoses.L3, Constants.Elevator.MaxSpeed, true), new armPosCmd(arm, armPoses.elevate, true)));
     // SequentialCommandGroup L4 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, elevatorPoses.L4a, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.elevate, true)), new armPosCmd(arm, armPoses.L4, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, elevatorPoses.L4b, Constants.Elevator.MaxSpeed), new armPosCmd(arm, armPoses.L4, true)), new armPosCmd(arm, armPoses.L4, true));
     SequentialCommandGroup L4 = new SequentialCommandGroup(new armPosCmd(arm, armPoses.elevate, false), new ParallelDeadlineGroup(new elevatorPosCmd(elevator, elevatorPoses.L4b, Constants.Elevator.MaxSpeed, false), new armPosCmd(arm, armPoses.elevate, true)), new ParallelCommandGroup(new elevatorPosCmd(elevator, elevatorPoses.L4b, Constants.Elevator.MaxSpeed, true), new armPosCmd(arm, armPoses.L4, true)));
@@ -209,7 +209,9 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return swerve.getAutonomousCommand("LLR");
-    // return (new intakeCmd(intake, 0.3, true));
+    //Remember to change the speed limits
+    //1+1 Auto has max speed 4, max accelaration 2
+    //1+Algae Auto has max speed 3, max acceleration 1
   }
 
   public double getHeadingAngleX(){
