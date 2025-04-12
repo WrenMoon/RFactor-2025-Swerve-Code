@@ -54,7 +54,7 @@
                                 {
                                   "type": "named",
                                   "data": {
-                                    "name": "Align5l"
+                                    "name": "Align5r"
                                   }
                                 }
                               ]
@@ -121,7 +121,7 @@
                           {
                             "type": "wait",
                             "data": {
-                              "waitTime": 2.0
+                              "waitTime": 3.0
                             }
                           },
                           {
@@ -171,6 +171,12 @@
                           }
                         ]
                       }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "L3"
+                      }
                     }
                   ]
                 }
@@ -182,12 +188,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "L3"
           }
         },
         {

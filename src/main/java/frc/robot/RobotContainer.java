@@ -39,7 +39,6 @@ public class RobotContainer {
   private final elevatorSubsystem elevator = new elevatorSubsystem();
   final CommandPS5Controller WakakeController = new CommandPS5Controller(0);
   final CommandPS5Controller AmaryanController = new CommandPS5Controller(1);
-  final Joystick ButtonBoard = new Joystick(2);
 
 
   public RobotContainer() {
@@ -146,9 +145,12 @@ public class RobotContainer {
     NamedCommands.registerCommand("L2", L2);
     NamedCommands.registerCommand("Lge2", Lge2);
     NamedCommands.registerCommand("Lge1", Lge1);
+    NamedCommands.registerCommand("Align3l", new alignPose(swerve, Constants.PosesBlue.reef3l,-1, -0.5773502691896258));
+    NamedCommands.registerCommand("Align3r", new alignPose(swerve, Constants.PosesBlue.reef3r,-1, -0.5773502691896258));
     NamedCommands.registerCommand("Align4r", new alignPose(swerve, Constants.PosesBlue.reef4r,0, -1));
-    NamedCommands.registerCommand("Align5l", new alignPose(swerve, Constants.PosesBlue.reef5l,1, -0.5773502691896258));
     NamedCommands.registerCommand("Align4l", new alignPose(swerve, Constants.PosesBlue.reef4l,0, -1));
+    NamedCommands.registerCommand("Align5l", new alignPose(swerve, Constants.PosesBlue.reef5l,1, -0.5773502691896258));
+    NamedCommands.registerCommand("Align5r", new alignPose(swerve, Constants.PosesBlue.reef5r,1, -0.5773502691896258));
     NamedCommands.registerCommand("Slow Forward", swerve.driveCommand(
       () -> 0.2,
       () -> 0,
@@ -185,23 +187,6 @@ public class RobotContainer {
     AmaryanController.povRight().onTrue(Commands.runOnce(elevator::resetEncoder));
     AmaryanController.povRight().onTrue(Commands.runOnce(arm::resetEncoder));
 
-    // new JoystickButton(ButtonBoard, 12).whileTrue(swerve.driveToPose(Constants.PosesBlue.reef1r, 0));
-    // new JoystickButton(ButtonBoard, 11).whileTrue(swerve.driveToPose(Constants.PosesBlue.reef1l, 0));
-    // new JoystickButton(ButtonBoard, 10).whileTrue(swerve.driveToPose(Constants.PosesBlue.reef2r, 0));
-    // new JoystickButton(ButtonBoard, 9).whileTrue(swerve.driveToPose(Constants.PosesBlue.reef2l, 0));
-    // new JoystickButton(ButtonBoard, 8).whileTrue(swerve.driveToPose(Constants.PosesBlue.reef3r, 0));
-    // new JoystickButton(ButtonBoard, 7).whileTrue(swerve.driveToPose(Constants.PosesBlue.reef3l, 0));
-    // new JoystickButton(ButtonBoard, 5).whileTrue(swerve.driveToPose(Constants.PosesBlue.stationLeft, 0));
-    
-    
-    // new JoystickButton(ButtonBoard, 12).whileTrue(swerve.driveToPose(Constants.PosesRed.reef1r, 0));
-    // new JoystickButton(ButtonBoard, 11).whileTrue(swerve.driveToPose(Constants.PosesRed.reef1l, 0));
-    // new JoystickButton(ButtonBoard, 10).whileTrue(swerve.driveToPose(Constants.PosesRed.reef2r, 0));
-    // new JoystickButton(ButtonBoard, 9).whileTrue(swerve.driveToPose(Constants.PosesRed.reef2l, 0));
-    // new JoystickButton(ButtonBoard, 8).whileTrue(swerve.driveToPose(Constants.PosesRed.reef3r, 0));
-    // new JoystickButton(ButtonBoard, 7).whileTrue(swerve.driveToPose(Constants.PosesRed.reef3l, 0));
-    // new JoystickButton(ButtonBoard, 5).whileTrue(swerve.driveToPose(Constants.PosesRed.stationLeft, 0));
-    
   }
 
 
@@ -210,7 +195,7 @@ public class RobotContainer {
    * @return Autonomous Command of the robot for the command scheduler
    */
   public Command getAutonomousCommand() {
-    return swerve.getAutonomousCommand("MRA");
+    return swerve.getAutonomousCommand("LRA");
   }
 
   public double getHeadingAngleX(){

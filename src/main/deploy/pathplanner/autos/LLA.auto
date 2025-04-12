@@ -15,7 +15,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "M1l"
+                        "pathName": "L1"
                       }
                     },
                     {
@@ -45,7 +45,7 @@
                                       {
                                         "type": "named",
                                         "data": {
-                                          "name": "FaceBack"
+                                          "name": "FaceLeft"
                                         }
                                       }
                                     ]
@@ -54,7 +54,7 @@
                                 {
                                   "type": "named",
                                   "data": {
-                                    "name": "Align4l"
+                                    "name": "Align5l"
                                   }
                                 }
                               ]
@@ -101,7 +101,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "M2l"
+                  "pathName": "L1.5"
                 }
               },
               {
@@ -121,13 +121,13 @@
                           {
                             "type": "wait",
                             "data": {
-                              "waitTime": 2.0
+                              "waitTime": 3.0
                             }
                           },
                           {
                             "type": "named",
                             "data": {
-                              "name": "Lge1"
+                              "name": "Lge2"
                             }
                           }
                         ]
@@ -150,7 +150,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "M3"
+                        "pathName": "L2"
                       }
                     },
                     {
@@ -175,7 +175,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "M4"
+                        "pathName": "L3"
                       }
                     }
                   ]
