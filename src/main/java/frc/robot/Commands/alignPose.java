@@ -12,6 +12,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.RobotContainer;
 
 
 public class alignPose extends Command {
@@ -21,6 +22,7 @@ public class alignPose extends Command {
     private Double HeadingX;
     private Double HeadingY;
     private Pose2d targetPose;
+    boolean endLoop = false;
 
     public alignPose(SwerveSubsystem swerve, Pose2d targetPose, double HeadingX, double HeadingY) {
         this.swerve = swerve;
@@ -37,8 +39,9 @@ public class alignPose extends Command {
     public void initialize() {
         xPID.setSetpoint(targetPose.getX());
         yPID.setSetpoint(targetPose.getY());
-        xPID.setTolerance(0.005);
-        yPID.setTolerance(0.005);
+        xPID.setTolerance(0.007);
+        yPID.setTolerance(0.007);
+        boolean endLoop = false;
     }
 
     @Override
@@ -78,6 +81,11 @@ public class alignPose extends Command {
         }
 
         swerve.driveHeading(translationX, translationY,0, 0);
+
+        if((xPID.atSetpoint() && yPID.atSetpoint())){
+            endLoop = true;
+            SmartDashboard.putBoolean("Pose Align/Aligned", true);
+        }
     }
 
     @Override
@@ -86,6 +94,6 @@ public class alignPose extends Command {
 
     @Override
     public boolean isFinished() {
-        return xPID.atSetpoint() && yPID.atSetpoint();
+        return endLoop;
     }
 }

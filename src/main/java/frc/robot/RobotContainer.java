@@ -140,6 +140,18 @@ public class RobotContainer {
       () -> -1,
       () -> -0.5773502691896258
     ));
+    NamedCommands.registerCommand("FaceRightStation", swerve.driveCommand(
+      () -> 0,
+      () -> 0,
+      () -> 1,
+      () -> 0.7
+    ));
+    NamedCommands.registerCommand("FaceLeftStation", swerve.driveCommand(
+      () -> 0,
+      () -> 0,
+      () -> -1,
+      () -> 0.7
+    ));
     NamedCommands.registerCommand("L4", L4);
     NamedCommands.registerCommand("L3", L3);
     NamedCommands.registerCommand("L2", L2);
@@ -151,6 +163,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Align4l", new alignPose(swerve, Constants.PosesBlue.reef4l,0, -1));
     NamedCommands.registerCommand("Align5l", new alignPose(swerve, Constants.PosesBlue.reef5l,1, -0.5773502691896258));
     NamedCommands.registerCommand("Align5r", new alignPose(swerve, Constants.PosesBlue.reef5r,1, -0.5773502691896258));
+    NamedCommands.registerCommand("Align6r", new alignPose(swerve, Constants.PosesBlue.reef6r,1, -0.5773502691896258));
     NamedCommands.registerCommand("Slow Forward", swerve.driveCommand(
       () -> 0.2,
       () -> 0,
@@ -195,16 +208,15 @@ public class RobotContainer {
    * @return Autonomous Command of the robot for the command scheduler
    */
   public Command getAutonomousCommand() {
-    return swerve.getAutonomousCommand("LRA");
+    return swerve.getAutonomousCommand("LLR");
+    // return (new intakeCmd(intake, 0.3, true));
   }
 
   public double getHeadingAngleX(){
     
     double headingX = SmartDashboard.getNumber("Swerve Target HeadingX", 0);
 
-    if (DriverStation.isAutonomous()){
-      headingX = 0;
-    } else if(WakakeController.triangle().getAsBoolean()){
+    if(WakakeController.triangle().getAsBoolean()){
       headingX = 0;
     } else if (WakakeController.square().getAsBoolean()){
       headingX = -1;
@@ -259,10 +271,7 @@ public class RobotContainer {
   public double getHeadingAngleY(){
     
     double headingY = SmartDashboard.getNumber("Swerve Target HeadingY", 0);
-    
-    if (DriverStation.isAutonomous()){
-      headingY = -1;
-    } else if(WakakeController.triangle().getAsBoolean()){
+    if(WakakeController.triangle().getAsBoolean()){
       headingY = 1;
     } else if (WakakeController.square().getAsBoolean()){
       headingY= 0.7;

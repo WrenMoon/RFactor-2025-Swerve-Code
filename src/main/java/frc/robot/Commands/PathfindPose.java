@@ -104,6 +104,7 @@ public class pathfindPose extends Command {
         if (poseUpdated) {
             // CommandScheduler.getInstance().schedule(swerve.driveToPose(() -> targetPose, 0));
             CommandScheduler.getInstance().schedule(new SequentialCommandGroup(swerve.driveToPose(() -> targetPose, 0), new alignPose(swerve, targetPose, HeadingX.getAsDouble(), HeadingY.getAsDouble())));
+            SmartDashboard.putBoolean("Pose Align/Aligned", false);
         }
     }
 

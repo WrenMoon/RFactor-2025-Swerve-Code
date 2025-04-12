@@ -44,7 +44,7 @@ public class Constants {
     public static final double zeroEncoder = -16.1;
 
     public static class poses {
-      public final double zero = 127.5;
+      public final double zero = 130;
       public final double elevate = 99;
       public final double L1 = 70;
       public final double L4 = 77.5;
