@@ -134,6 +134,7 @@ public class RobotContainer {
 
     if(Constants.blueAlliance){
 
+    NamedCommands.registerCommand("Align2l", new alignPose(swerve, Constants.PosesBlue.reef2l,-1, 0.5773502691896258));
     NamedCommands.registerCommand("Align3l", new alignPose(swerve, Constants.PosesBlue.reef3l,-1, -0.5773502691896258));
     NamedCommands.registerCommand("Align3r", new alignPose(swerve, Constants.PosesBlue.reef3r,-1, -0.5773502691896258));
     NamedCommands.registerCommand("Align4r", new alignPose(swerve, Constants.PosesBlue.reef4r,0, -1));
@@ -181,6 +182,7 @@ public class RobotContainer {
 
     } else {
       
+    NamedCommands.registerCommand("Align2l", new alignPose(swerve, Constants.PosesRed.reef2l,1, -0.5773502691896258));
     NamedCommands.registerCommand("Align3l", new alignPose(swerve, Constants.PosesRed.reef3l,1, 0.5773502691896258));
     NamedCommands.registerCommand("Align3r", new alignPose(swerve, Constants.PosesRed.reef3r,1, 0.5773502691896258));
     NamedCommands.registerCommand("Align4r", new alignPose(swerve, Constants.PosesRed.reef4r,0, 1));
