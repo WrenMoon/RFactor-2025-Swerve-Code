@@ -101,9 +101,12 @@ public class pathfindPose extends Command {
             }
 
         }
-        if (poseUpdated) {
+        if (poseUpdated && blueAlliance) {
             // CommandScheduler.getInstance().schedule(swerve.driveToPose(() -> targetPose, 0));
             CommandScheduler.getInstance().schedule(new SequentialCommandGroup(swerve.driveToPose(() -> targetPose, 0), new alignPose(swerve, targetPose, HeadingX.getAsDouble(), HeadingY.getAsDouble())));
+            SmartDashboard.putBoolean("Pose Align/Aligned", false);
+        } else if (poseUpdated && !blueAlliance){
+            CommandScheduler.getInstance().schedule(new SequentialCommandGroup(swerve.driveToPose(() -> targetPose, 0), new alignPose(swerve, targetPose, -HeadingX.getAsDouble(), -HeadingY.getAsDouble())));
             SmartDashboard.putBoolean("Pose Align/Aligned", false);
         }
     }

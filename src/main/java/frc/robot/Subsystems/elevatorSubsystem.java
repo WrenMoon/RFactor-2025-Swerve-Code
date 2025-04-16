@@ -69,7 +69,7 @@ public class elevatorSubsystem extends SubsystemBase {
    * @return encoder position in ticks
    */
   public double getEncoder() {
-    return motorRight.getEncoder().getPosition();
+    return motorLeft.getEncoder().getPosition();
   }
 
   public void resetEncoder() {

@@ -57,6 +57,8 @@ public class RobotContainer {
     //   () -> (WakakeController.L1().getAsBoolean()? 1 : 0) - (WakakeController.R1().getAsBoolean()? 1 : 0), false, true);
 
 
+    if(Constants.blueAlliance){
+
     // Main method of driving the swerve, using heading control for blue alliance
     Command driveSwerve = swerve.driveCommand(
       () -> MathUtil.applyDeadband((-WakakeController.getLeftY() * (((WakakeController.getR2Axis()+ 1)/2) + 3)/4) * Math.max(1 - ((WakakeController.getL2Axis()+ 1)/2), 0.3), Constants.ControllerDeadband),
@@ -64,14 +66,21 @@ public class RobotContainer {
       () -> getHeadingAngleX(),
       () -> getHeadingAngleY()
     );
+    swerve.setDefaultCommand(driveSwerve);
+
+    } else {
 
     // Main method of driving the swerve, using heading control for red alliance
-    // Command driveSwerve = swerve.driveCommand(
-    //   () -> -1* MathUtil.applyDeadband((-WakakeController.getLeftY() * (((WakakeController.getR2Axis()+ 1)/2) + 3)/4) * Math.max(1 - ((WakakeController.getL2Axis()+ 1)/2), 0.3), Constants.ControllerDeadband),
-    //   () -> -1* MathUtil.applyDeadband((-WakakeController.getLeftX() * (((WakakeController.getR2Axis()+ 1)/2) + 3)/4) * Math.max(1 - ((WakakeController.getL2Axis()+ 1)/2), 0.3), Constants.ControllerDeadband),
-    //   () -> -1* getHeadingAngleX(),
-    //   () -> -1* getHeadingAngleY()
-    // );
+    Command driveSwerve = swerve.driveCommand(
+      () -> -1* MathUtil.applyDeadband((-WakakeController.getLeftY() * (((WakakeController.getR2Axis()+ 1)/2) + 3)/4) * Math.max(1 - ((WakakeController.getL2Axis()+ 1)/2), 0.3), Constants.ControllerDeadband),
+      () -> -1* MathUtil.applyDeadband((-WakakeController.getLeftX() * (((WakakeController.getR2Axis()+ 1)/2) + 3)/4) * Math.max(1 - ((WakakeController.getL2Axis()+ 1)/2), 0.3), Constants.ControllerDeadband),
+      () -> -1* getHeadingAngleX(),
+      () -> -1* getHeadingAngleY()
+    );
+    swerve.setDefaultCommand(driveSwerve);
+
+
+    }
     
     //Default Elevator Command to move the elevator with one axis
     Command elevate = new rawElevatorCmd(elevator,
@@ -87,7 +96,6 @@ public class RobotContainer {
 
     //Applying all the default commands
     elevator.setDefaultCommand(elevate);
-    swerve.setDefaultCommand(driveSwerve);
     arm.setDefaultCommand(moveArm);
     intake.setDefaultCommand(holdCoral);
   }
@@ -116,6 +124,24 @@ public class RobotContainer {
     NamedCommands.registerCommand("Intake", new intakeCmd(intake, 0.3, false)); // registering intake command for auto
     NamedCommands.registerCommand("IntakeAlgae", new intakeCmd(intake, -0.3, false)); // registering intake command for auto
     NamedCommands.registerCommand("IntakeCoral", new intakeCmd(intake, 0.3, true)); // registering intake command for auto
+    
+    
+    NamedCommands.registerCommand("L4", L4);
+    NamedCommands.registerCommand("L3", L3);
+    NamedCommands.registerCommand("L2", L2);
+    NamedCommands.registerCommand("Lge2", Lge2);
+    NamedCommands.registerCommand("Lge1", Lge1);
+
+    if(Constants.blueAlliance){
+
+    NamedCommands.registerCommand("Align3l", new alignPose(swerve, Constants.PosesBlue.reef3l,-1, -0.5773502691896258));
+    NamedCommands.registerCommand("Align3r", new alignPose(swerve, Constants.PosesBlue.reef3r,-1, -0.5773502691896258));
+    NamedCommands.registerCommand("Align4r", new alignPose(swerve, Constants.PosesBlue.reef4r,0, -1));
+    NamedCommands.registerCommand("Align4l", new alignPose(swerve, Constants.PosesBlue.reef4l,0, -1));
+    NamedCommands.registerCommand("Align5l", new alignPose(swerve, Constants.PosesBlue.reef5l,1, -0.5773502691896258));
+    NamedCommands.registerCommand("Align5r", new alignPose(swerve, Constants.PosesBlue.reef5r,1, -0.5773502691896258));
+    NamedCommands.registerCommand("Align6r", new alignPose(swerve, Constants.PosesBlue.reef6r,1, -0.5773502691896258));
+
     NamedCommands.registerCommand("FaceBack", swerve.driveCommand(
       () -> 0,
       () -> 0,
@@ -152,18 +178,56 @@ public class RobotContainer {
       () -> -1,
       () -> 0.7
     ));
-    NamedCommands.registerCommand("L4", L4);
-    NamedCommands.registerCommand("L3", L3);
-    NamedCommands.registerCommand("L2", L2);
-    NamedCommands.registerCommand("Lge2", Lge2);
-    NamedCommands.registerCommand("Lge1", Lge1);
-    NamedCommands.registerCommand("Align3l", new alignPose(swerve, Constants.PosesBlue.reef3l,-1, -0.5773502691896258));
-    NamedCommands.registerCommand("Align3r", new alignPose(swerve, Constants.PosesBlue.reef3r,-1, -0.5773502691896258));
-    NamedCommands.registerCommand("Align4r", new alignPose(swerve, Constants.PosesBlue.reef4r,0, -1));
-    NamedCommands.registerCommand("Align4l", new alignPose(swerve, Constants.PosesBlue.reef4l,0, -1));
-    NamedCommands.registerCommand("Align5l", new alignPose(swerve, Constants.PosesBlue.reef5l,1, -0.5773502691896258));
-    NamedCommands.registerCommand("Align5r", new alignPose(swerve, Constants.PosesBlue.reef5r,1, -0.5773502691896258));
-    NamedCommands.registerCommand("Align6r", new alignPose(swerve, Constants.PosesBlue.reef6r,1, -0.5773502691896258));
+
+    } else {
+      
+    NamedCommands.registerCommand("Align3l", new alignPose(swerve, Constants.PosesRed.reef3l,1, 0.5773502691896258));
+    NamedCommands.registerCommand("Align3r", new alignPose(swerve, Constants.PosesRed.reef3r,1, 0.5773502691896258));
+    NamedCommands.registerCommand("Align4r", new alignPose(swerve, Constants.PosesRed.reef4r,0, 1));
+    NamedCommands.registerCommand("Align4l", new alignPose(swerve, Constants.PosesRed.reef4l,0, 1));
+    NamedCommands.registerCommand("Align5l", new alignPose(swerve, Constants.PosesRed.reef5l,-1, 0.5773502691896258));
+    NamedCommands.registerCommand("Align5r", new alignPose(swerve, Constants.PosesRed.reef5r,-1, 0.5773502691896258));
+    NamedCommands.registerCommand("Align6r", new alignPose(swerve, Constants.PosesRed.reef6r,-1, 0.5773502691896258));
+
+    NamedCommands.registerCommand("FaceBack", swerve.driveCommand(
+      () -> 0,
+      () -> 0,
+      () -> 0,
+      () -> 1
+    ));
+    NamedCommands.registerCommand("FaceForward", swerve.driveCommand(
+      () -> 0,
+      () -> 0,
+      () -> 0,
+      () -> -1
+    ));
+    NamedCommands.registerCommand("FaceLeft", swerve.driveCommand(
+      () -> 0,
+      () -> 0,
+      () -> -1,
+      () -> 0.5773502691896258
+    ));
+    NamedCommands.registerCommand("FaceRight", swerve.driveCommand(
+      () -> 0,
+      () -> 0,
+      () -> 1,
+      () -> 0.5773502691896258
+    ));
+    NamedCommands.registerCommand("FaceRightStation", swerve.driveCommand(
+      () -> 0,
+      () -> 0,
+      () -> -1,
+      () -> -0.7
+    ));
+    NamedCommands.registerCommand("FaceLeftStation", swerve.driveCommand(
+      () -> 0,
+      () -> 0,
+      () -> 1,
+      () -> -0.7
+    ));
+
+    }
+
     NamedCommands.registerCommand("Slow Forward", swerve.driveCommand(
       () -> 0.2,
       () -> 0,
@@ -172,10 +236,10 @@ public class RobotContainer {
 
     WakakeController.button(10).onTrue(Commands.runOnce(swerve::zeroGyro));
 
-    WakakeController.L1().whileTrue(new pathfindPose(swerve, true, true, 
+    WakakeController.L1().whileTrue(new pathfindPose(swerve, Constants.blueAlliance, true, 
       () -> getHeadingAngleX(),
       () -> getHeadingAngleY()));
-    WakakeController.R1().whileTrue(new pathfindPose(swerve, true, false, 
+    WakakeController.R1().whileTrue(new pathfindPose(swerve, Constants.blueAlliance, false, 
       () -> getHeadingAngleX(),
       () -> getHeadingAngleY()));
 
@@ -184,6 +248,9 @@ public class RobotContainer {
     WakakeController.povDown().whileTrue(swerve.driveCommand(() -> -0.1,() -> 0, () -> 0,false, false));
     WakakeController.povLeft().whileTrue(swerve.driveCommand(() -> 0,() -> 0.1, () -> 0,false, false));
     WakakeController.povRight().whileTrue(swerve.driveCommand(() -> 0,() -> -0.1, () -> 0,false, false));
+    WakakeController.button(20).whileTrue(swerve.driveCommand(() -> 0,() -> 0, () -> 1,false, false));
+    WakakeController.button(20).whileTrue(swerve.driveCommand(() -> 0,() -> 0, () -> -1,false, false));
+
 
     AmaryanController.R2().whileTrue(new intakeCmd(intake, 0.3, true));
     AmaryanController.L2().whileTrue(new intakeCmd(intake, 0.6, true));
@@ -208,10 +275,7 @@ public class RobotContainer {
    * @return Autonomous Command of the robot for the command scheduler
    */
   public Command getAutonomousCommand() {
-    return swerve.getAutonomousCommand("LLR");
-    //Remember to change the speed limits
-    //1+1 Auto has max speed 4, max accelaration 2
-    //1+Algae Auto has max speed 3, max acceleration 1
+    return swerve.getAutonomousCommand("MLA");
   }
 
   public double getHeadingAngleX(){
